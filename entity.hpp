@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <bitset>
+#include "component.hpp"
 
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.
@@ -14,13 +15,16 @@ class Entity
 {
 private:
     unsigned int mUiIDEntity;
-    std::bitset<16> mBitSetComponent;
-    std::vector< Component > mVectComponent;
+    std::bitset< 16 > mBitSetComponent;
+    //std::vector< Component > mVectComponent;
 public:
     Entity();
+    Entity( unsigned int uiIdEntity );
+    void displayEntity()const;
+    void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent();
     bool bRmComponent( unsigned int uiIdComponent );
-    bool bRmAllComponent();
+    void RmAllComponent();
 };
 
 #endif // ENTITY_HPP

@@ -2,6 +2,7 @@
 #define SYSTEMMANAGER_HPP
 
 #include <vector>
+#include "system.hpp"
 
 /**
  * @brief La classe SystemManager gère les systèmes actifs.
@@ -11,7 +12,7 @@
  */
 class SystemManager
 {
-    std::vector< System > mVectSystem;
+    //std::vector< System > mVectSystem;
 public:
     SystemManager();
     bool bAddSystem();

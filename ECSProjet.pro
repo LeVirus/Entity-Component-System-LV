@@ -3,6 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CXXFLAGS *= -Wall -Wextra -pedantic -g
+
 SOURCES += main.cpp \
     entity.cpp \
     engine.cpp \

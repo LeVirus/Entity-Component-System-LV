@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include "systemmanager.hpp"
 #include "entity.hpp"
 
 /**
@@ -19,9 +20,11 @@ private:
     SystemManager mSystemManager;
 public:
     Engine();
-    bool bAddEntity( unsigned int uiIdEntity );
+    void synchronizeVectorEntity();
+    void AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );
-    bool bRmAllEntity();
+    void RmAllEntity();
+    void displayVectEntity()const;
 };
 
 #endif // ENGINE_HPP
