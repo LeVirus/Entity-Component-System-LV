@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include "entity.hpp"
 
 /**
  * @brief La classe Engine est la classe de base de la bibliothèque.
@@ -18,7 +19,7 @@ private:
     SystemManager mSystemManager;
 public:
     Engine();
-    bool bAddEntity();
+    bool bAddEntity( unsigned int uiIdEntity );
     bool bRmEntity( unsigned int uiIdEntity );
     bool bRmAllEntity();
 };
