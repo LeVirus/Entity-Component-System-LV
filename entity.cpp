@@ -1,5 +1,8 @@
 #include <iostream>
 #include "entity.hpp"
+#include "constantes.hpp"
+#include "displaycomponent.hpp"
+#include "positioncomponent.hpp"
 
 /**
  * @brief Entity::Entity Constructeur de la classe Engine.
@@ -35,18 +38,35 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
 
 /**
  * @brief Entity::bAddComponent Fonction d'ajout d'un composant dans l'entité.
+ * @param uiTypeComponent le type de composant à créer.
  * @return true si le composant a été créé avec succés, false sinon.
  */
-bool Entity::bAddComponent(){
-
+bool Entity::bAddComponent( unsigned int uiTypeComponent ){
+    bool breturn = true;
+    switch( uiTypeComponent ){
+    case DISPLAY_COMPONENT :{
+        std::unique_ptr< DisplayComponent > ptrDC( new DisplayComponent );
+        mVectComponent.push_back( std::move( ptrDC ) );
+        break;
+    }
+    case POSITION_COMPONENT :{
+        // mVectComponent.push_back( PositionComponent() );
+        break;
+    }
+    default :{
+        breturn = false;
+        break;
+    }
+    }
+    return breturn;
 }
 
 /**
  * @brief Entity::bRmComponent Fonction de suppression d'un composant dans l'entité.
- * @param uiIdComponent L'identifiant du composant a supprimer.
+ * @param uiTypeComponent L'identifiant du composant a supprimer.
  * @return true si le composant a été trouvé, false sinon.
  */
-bool Entity::bRmComponent( unsigned int uiIdComponent ){
+bool Entity::bRmComponent( unsigned int uiTypeComponent ){
 
 }
 

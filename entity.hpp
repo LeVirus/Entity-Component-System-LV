@@ -4,7 +4,6 @@
 #include <vector>
 #include <bitset>
 #include <memory>
-
 #include "component.hpp"
 
 /**
@@ -25,8 +24,8 @@ public:
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
     void attributeIDEntity( unsigned int uiIdEntity );
-    bool bAddComponent();
-    bool bRmComponent( unsigned int uiIdComponent );
+    bool bAddComponent( unsigned int uiTypeComponent );
+    bool bRmComponent( unsigned int uiTypeComponent );
     void RmAllComponent();
 };
 
