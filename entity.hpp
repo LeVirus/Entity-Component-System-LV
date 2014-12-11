@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <bitset>
+#include <memory>
+
 #include "component.hpp"
 
 /**
@@ -16,8 +18,9 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< 16 > mBitSetComponent;
-    //std::vector< Component > mVectComponent;
 public:
+    std::vector< std::unique_ptr< Component > > mVectComponent;
+    
     Entity();
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;

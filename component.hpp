@@ -7,9 +7,8 @@
  * Elle est abstraite, et comporte un identifiant de type.
  */
 struct Component{
-public:
-
     unsigned int muiTypeComponent, muiIDComponent;
+    Component() = delete;   //pour empécher l'instanciation.
 };
 
 #endif // COMPONENT_HPP
