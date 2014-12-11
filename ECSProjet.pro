@@ -3,7 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-QMAKE_CXXFLAGS *= -std=c++14
+QMAKE_CXXFLAGS += -std=c++14 -lsfml-graphics -lsfml-window
 
 QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 
@@ -21,5 +21,8 @@ HEADERS += \
     systemmanager.hpp \
     system.hpp \
     component.hpp \
-    node.hpp
+    node.hpp \
+    displaycomponent.hpp \
+    constantes.hpp \
+    positioncomponent.hpp
 

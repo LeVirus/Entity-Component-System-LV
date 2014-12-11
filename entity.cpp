@@ -22,6 +22,7 @@ Entity::Entity( unsigned int uiIdEntity ){
  */
 void Entity::displayEntity()const{
    std::cout << "Identifiant::" << mUiIDEntity << std::endl;
+   //A compléter pour afficher les composants
 }
 
 /**
@@ -54,5 +55,5 @@ bool Entity::bRmComponent( unsigned int uiIdComponent ){
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
 void Entity::RmAllComponent(){
-
+    mVectComponent.clear();
 }

@@ -8,7 +8,7 @@
  */
 struct Component{
     unsigned int muiTypeComponent, muiIDComponent;
-    Component() = delete;   //pour empécher l'instanciation.
+    Component() = delete;   //pour bloquer l'instanciation.
 };
 
 #endif // COMPONENT_HPP
