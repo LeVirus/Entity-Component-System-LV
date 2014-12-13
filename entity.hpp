@@ -23,6 +23,8 @@ public:
     Entity();
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
+    unsigned int searchCaseComponent( unsigned int uiTypeComponent )const;
+    Component *searchComponentByType(unsigned int uiTypeComponent);
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );
     bool bRmComponent( unsigned int uiTypeComponent );
