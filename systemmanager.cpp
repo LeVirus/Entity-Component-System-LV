@@ -1,5 +1,5 @@
 #include "systemmanager.hpp"
 
-SystemManager::SystemManager()
-{
+SystemManager::SystemManager(){
+
 }
