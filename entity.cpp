@@ -37,45 +37,19 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
 }
 
 /**
- * @brief Entity::searchComponentByType
- * Fonction renvoyant la référence du contenant recherché, la fonction
- * searchCaseComponent retourne le numéro de case, et la fonction courante
- * renvoie le composant avec un dynamic_cast.
- * @param uiTypeComponent le type de composant a rechercher.
- * @return la référence du composant recherché.
- */
-Component *Entity::searchComponentByType( unsigned int uiTypeComponent ){
-    Component *ptrComp = nullptr;
-    unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
-
-    switch( uiCaseComponent ){
-    case DISPLAY_COMPONENT:
-        ptrComp = dynamic_cast< DisplayComponent* >( mVectComponent[ uiCaseComponent ] );
-        break;
-    case POSITION_COMPONENT:
-
-        break;
-    default:
-        break;
-    }
-    return ptrComp;
-
-}
-
-/**
  * @brief Entity::searchCaseComponent
  * Fonction recherchant l'emplacement du composant dont le type est envoyé en paramètre.
  * @param uiTypeComponent le type de composant a rechercher.
  * @return Le numéro de la case ou est présent le composants,
- * 1000 si le composant n'a pas été trouvée.
+ * 1000( COMPONENT_NOT_FOUND ) si le composant n'a pas été trouvée.
  */
 unsigned int Entity::searchCaseComponent( unsigned int uiTypeComponent )const{
     for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
-        if ( mVectComponent[ i ].muiTypeComponent == uiTypeComponent ){
+        if ( mVectComponent[ i ] -> muiTypeComponent == uiTypeComponent ){
             return i;
         }
     }
-    return 1000;
+    return COMPONENT_NOT_FOUND;
 }
 
 /**
@@ -85,14 +59,14 @@ unsigned int Entity::searchCaseComponent( unsigned int uiTypeComponent )const{
  */
 bool Entity::bAddComponent( unsigned int uiTypeComponent ){
     bool breturn = true;
-    if( searchCaseComponent( uiTypeComponent ) != 1000 ){
+    if( searchCaseComponent( uiTypeComponent ) != COMPONENT_NOT_FOUND ){
         return false;
     }
 
     switch( uiTypeComponent ){
     case DISPLAY_COMPONENT :{
-        std::unique_ptr< DisplayComponent > ptrDC( new DisplayComponent );
-        mVectComponent.push_back( std::move( ptrDC ) );
+        //std::unique_ptr< DisplayComponent > ptrDC( new DisplayComponent );
+        mVectComponent.push_back( std::make_unique< DisplayComponent >() );
         break;
     }
     case POSITION_COMPONENT :{
@@ -113,7 +87,13 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
  * @return true si le composant a été trouvé, false sinon.
  */
 bool Entity::bRmComponent( unsigned int uiTypeComponent ){
-
+    bool breturn = false;
+    unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
+    if( uiCaseComponent != COMPONENT_NOT_FOUND ){
+        mVectComponent.erase( mVectComponent.begin() + uiCaseComponent );
+        breturn = true;
+    }
+    return breturn;
 }
 
 /**

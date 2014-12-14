@@ -7,9 +7,10 @@
  * Elle est abstraite, et comporte un identifiant de type.
  */
 struct Component{
-    //static unsigned int muiNumberComponent = 0;
     unsigned int muiTypeComponent, muiIDComponent;
+    //static unsigned int muiNumberComponent = 0;
 protected:
+
     inline Component(){}// = delete;   //pour bloquer l'instanciation.
     //inline void initComponent(){ muiIDComponent = muiNumberComponent; muiNumberComponent++; }
 };

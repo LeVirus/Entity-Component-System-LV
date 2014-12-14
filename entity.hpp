@@ -24,11 +24,28 @@ public:
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
     unsigned int searchCaseComponent( unsigned int uiTypeComponent )const;
-    Component *searchComponentByType(unsigned int uiTypeComponent);
+
+
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );
     bool bRmComponent( unsigned int uiTypeComponent );
     void RmAllComponent();
+
+    /**
+     * @brief Entity::searchComponentByType
+     * Fonction renvoyant la référence du contenant recherché, la fonction
+     * searchCaseComponent retourne le numéro de case, et la fonction courante
+     * renvoie le composant avec un dynamic_cast.
+     * @param uiTypeComponent le type de composant a rechercher.
+     * @return la référence du composant recherché.
+     */
+    template < typename componentTemplate >
+    componentTemplate &searchComponentByType(unsigned int uiTypeComponent){
+        unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
+            //return *mVectComponent[ uiCaseComponent ];
+            return static_cast< componentTemplate& >( *mVectComponent[ uiCaseComponent ] );
+    }
+
 };
 
 #endif // ENTITY_HPP
