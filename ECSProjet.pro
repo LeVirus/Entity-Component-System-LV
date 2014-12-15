@@ -3,9 +3,13 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-QMAKE_CXXFLAGS += -std=c++14 -lsfml-graphics -lsfml-window -lsfml-system
+QMAKE_CXXFLAGS += -std=c++14
+
+
 
 QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
+
+#LIBS += -lsfml-graphics -lsfml-window -lsfml-system
 
 SOURCES += main.cpp \
     entity.cpp \

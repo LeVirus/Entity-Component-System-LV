@@ -40,10 +40,12 @@ public:
      * @return la référence du composant recherché.
      */
     template < typename componentTemplate >
-    componentTemplate &searchComponentByType(unsigned int uiTypeComponent){
+    componentTemplate &searchComponentByType( unsigned int uiTypeComponent ){
         unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
-            //return *mVectComponent[ uiCaseComponent ];
-            return static_cast< componentTemplate& >( *mVectComponent[ uiCaseComponent ] );
+        //return *mVectComponent[ uiCaseComponent ];
+        static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
+
+        return static_cast< componentTemplate& >( *mVectComponent[ uiCaseComponent ] );
     }
 
 };
