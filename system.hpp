@@ -4,16 +4,20 @@
 #include "node.hpp"
 #include <vector>
 
+/**
+ * @brief La classe System est la classe mère(abstraite) de tous système.
+ * Cette classe permet de récupération des composants nécessaires de chaque entités.
+ */
 class System{
 protected:
     unsigned int muiPriority, muiIdSystem, muiTypeSystem;
     //std::vector< Node > mVectNode;
-    std::vector< unsigned int > mVectNode;
+    std::vector< unsigned int > mVectTypeComponent;
 public:
-    inline System(){}
-    virtual void refreshNode() = 0;
+    System();
+    void refreshNode();
     virtual void execSystem() = 0;
-    virtual void displaySystem()const = 0;
+    void displaySystem()const;
 
     inline unsigned int uiGetPriority()const{ return muiPriority; }
     inline unsigned int uiGetIdSystem()const{ return muiIdSystem; }

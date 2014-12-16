@@ -14,7 +14,9 @@ QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 SOURCES += main.cpp \
     entity.cpp \
     engine.cpp \
-    systemmanager.cpp
+    systemmanager.cpp \
+    displaysystem.cpp \
+    system.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -28,5 +30,6 @@ HEADERS += \
     node.hpp \
     displaycomponent.hpp \
     constantes.hpp \
-    positioncomponent.hpp
+    positioncomponent.hpp \
+    displaysystem.hpp
 
