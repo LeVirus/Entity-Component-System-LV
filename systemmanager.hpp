@@ -12,12 +12,13 @@
  */
 class SystemManager
 {
-    //std::vector< System > mVectSystem;
+    std::vector< System > mVectSystem;
 public:
     SystemManager();
+    bool bSystemExist( unsigned int uiIdSystem );
     bool bAddSystem();
     bool bRmSystem( unsigned int uiIdSystem );
-    bool bRmAllSystem();
+    void RmAllSystem();
     bool bExexSystem( unsigned int uiIdSystem );
     bool bExecAllSystem();
 };
