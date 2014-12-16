@@ -13,11 +13,13 @@ protected:
     unsigned int muiPriority, muiIdSystem, muiTypeSystem;
     //std::vector< Node > mVectNode;
     std::vector< unsigned int > mVectTypeComponent;
+    bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:
     System();
-    void refreshNode();
+    bool bRefreshNode();
     virtual void execSystem() = 0;
     void displaySystem()const;
+    bool bComponentAlreadyExist( unsigned int uiTypeComponent );
 
     inline unsigned int uiGetPriority()const{ return muiPriority; }
     inline unsigned int uiGetIdSystem()const{ return muiIdSystem; }

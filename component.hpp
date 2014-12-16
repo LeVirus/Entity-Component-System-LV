@@ -11,7 +11,7 @@ struct Component{
     //static unsigned int muiNumberComponent = 0;
 protected:
 
-    inline Component(){}// = delete;   //pour bloquer l'instanciation.
+    inline Component(){}// = delete;
     //inline void initComponent(){ muiIDComponent = muiNumberComponent; muiNumberComponent++; }
 };
 
