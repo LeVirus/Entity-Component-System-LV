@@ -18,7 +18,7 @@ SystemManager::SystemManager(){
 bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
     unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
-    if( uiSystemExist( uiIdSystem ) != SYSTEM_NOT_FOUND ){//A MODIFIER
+    if( uiSystemExist( uiIdSystem ) != SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
         bReturn = true;
         switch( uiTypeComponent ){
         case : DISPLAY_SYSTEM:
