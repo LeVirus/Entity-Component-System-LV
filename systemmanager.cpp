@@ -20,8 +20,8 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
     unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
     if( uiSystemExist( uiIdSystem ) != SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
         bReturn = true;
-        switch( uiTypeComponent ){
-        case : DISPLAY_SYSTEM:
+        switch( uiIdSystem ){
+        case DISPLAY_SYSTEM:
                 break;
         default:
             bReturn = false;
@@ -41,7 +41,7 @@ bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
     unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
     if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
-        mVectSystem.erase( mVectSystem[ uiNumCaseSystem ] );
+        mVectSystem.erase( mVectSystem.begin() + uiNumCaseSystem );
         bReturn = true;
     }
     return bReturn;

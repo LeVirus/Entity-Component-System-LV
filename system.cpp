@@ -40,9 +40,9 @@ bool System::bAddComponentToSystem( unsigned int uiTypeComponent ){
     if( ! bComponentAlreadyExist( uiTypeComponent ) ){//A MODIFIER
         bReturn = true;
         switch( uiTypeComponent ){
-        case : DISPLAY_COMPONENT:
+        case DISPLAY_COMPONENT:
                 break;
-        case : POSITION_COMPONENT:
+        case POSITION_COMPONENT:
                 break;
         default:
             bReturn = false;

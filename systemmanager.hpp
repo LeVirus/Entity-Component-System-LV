@@ -15,8 +15,8 @@ class SystemManager
     std::vector< System > mVectSystem;
 public:
     SystemManager();
-    bool bSystemExist( unsigned int uiIdSystem );
-    bool bAddSystem();
+    unsigned int uiSystemExist( unsigned int uiIdSystem );
+    bool bAddSystem( unsigned int uiIdSystem );
     bool bRmSystem( unsigned int uiIdSystem );
     void RmAllSystem();
     bool bExexSystem( unsigned int uiIdSystem );
