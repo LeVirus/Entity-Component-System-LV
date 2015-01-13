@@ -11,6 +11,14 @@ SystemManager::SystemManager(){
 }
 
 /**
+ * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
+ * @param ptrEngine Un pointeur d'Engine
+ */
+void SystemManager::linkEngine( std::unique_ptr< Engine > ptrEngine ){
+    mptrEngine = ptrEngine;
+}
+
+/**
  * @brief SystemManager::bAddSystem Fonction d'ajout d'un système dans SystemManager.
  * La fonction vérifie si le numéro envoyé en paramètre correspond bien à un système existant,
  * et si le système n'est pas déja présent dans le tableau.
@@ -32,6 +40,11 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
             break;
         }
     }
+    //envoie du pointeur de systemManager vers tous les systèmes créé
+    if( bReturn ){
+        mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
+    }
+
     return bReturn;
 }
 
@@ -48,6 +61,7 @@ bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
         unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
         if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
             mVectSystem.erase( mVectSystem.begin() + uiNumCaseSystem );
+            mBitSetSystem[ uiIdSystem ] = false;
             bReturn = true;
         }
     }

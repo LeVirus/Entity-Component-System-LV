@@ -9,6 +9,14 @@ System::System(){
 }
 
 /**
+ * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
+ * @param ptrEngine Un pointeur d'Engine
+ */
+void System::linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManager ){
+    mptrSystemManager = ptrSystemManager;
+}
+
+/**
  * @brief System::refreshNode Fonction de synchronisation des entités à modifier par le système.
  * La fonction va rechercher les entités et récupérer les références des composants nécessaires
  * @return false si le tableau des composants( à récupérer ) est vide, true sinon.
