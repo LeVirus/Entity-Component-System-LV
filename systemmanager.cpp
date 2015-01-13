@@ -1,5 +1,7 @@
 #include "systemmanager.hpp"
 #include "constantes.hpp"
+#include "displaysystem.hpp"
+#include <memory>
 
 /**
  * @brief SystemManager::SystemManager Constructeur de la classe SystemManager.
@@ -17,11 +19,13 @@ SystemManager::SystemManager(){
  */
 bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
-    unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
-    if( uiSystemExist( uiIdSystem ) != SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
+    unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
+    if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
         bReturn = true;
         switch( uiIdSystem ){
         case DISPLAY_SYSTEM:
+            mVectSystem.push_back( std::make_unique< DisplaySystem >() );
+            mBitSetSystem[ DISPLAY_SYSTEM ] = true;
                 break;
         default:
             bReturn = false;
@@ -39,11 +43,15 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
  */
 bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
-    unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
-    if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
-        mVectSystem.erase( mVectSystem.begin() + uiNumCaseSystem );
-        bReturn = true;
+
+    if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == true ){
+        unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
+        if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
+            mVectSystem.erase( mVectSystem.begin() + uiNumCaseSystem );
+            bReturn = true;
+        }
     }
+
     return bReturn;
 }
 
@@ -52,6 +60,7 @@ bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
  */
 void SystemManager::RmAllSystem(){
     mVectSystem.clear();
+    mBitSetSystem.reset();
 }
 
 /**
@@ -62,9 +71,9 @@ void SystemManager::RmAllSystem(){
  */
 bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
-    unsigned int uiNumCaseSystem = uiSystemExist( uiIdSystem );
+    unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
     if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
-        mVectSystem[ uiNumCaseSystem ].execSystem();
+        mVectSystem[ uiNumCaseSystem ] -> execSystem();
         bReturn = true;
     }
     return bReturn;
@@ -75,12 +84,16 @@ bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
  * @param uiIdSystem Le numéro du système.
  * @return Le numéro de la case ou le système a été trouvé, 1000 si le systèmme n'existe pas.
  */
-unsigned int SystemManager::uiSystemExist( unsigned int uiIdSystem ){
+unsigned int SystemManager::uiGetNumCaseSystem( unsigned int uiIdSystem ){
     unsigned int uiNumCaseSystem = SYSTEM_NOT_FOUND;
-    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
-        if( mVectSystem[ i ].uiGetIdSystem() == uiIdSystem ){
-            uiNumCaseSystem = i;
-            break;
+
+    if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == true ){
+
+        for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+            if( mVectSystem[ i ] -> uiGetIdSystem() == uiIdSystem ){
+                uiNumCaseSystem = i;
+                break;
+            }
         }
     }
     return uiNumCaseSystem;
@@ -91,7 +104,12 @@ unsigned int SystemManager::uiSystemExist( unsigned int uiIdSystem ){
  * @return false si la liste des système est vide, true sinon.
  */
 bool SystemManager::bExecAllSystem(){
-    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
-        mVectSystem[ i ].execSystem();
+    bool bReturn = false;
+    if( ! mVectSystem.empty() ){
+        for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+            mVectSystem[ i ] ->  execSystem();
+        }
+        bReturn = true;
     }
+    return bReturn;
 }

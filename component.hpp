@@ -17,10 +17,10 @@ struct Component{
     }
 
     inline unsigned int muiGetTypeComponent()const{ return muiTypeComponent; }
-protected:
-    unsigned int muiTypeComponent, muiIDComponent;
-    inline Component(){}// = delete;
-    //inline void initComponent(){ muiIDComponent = muiNumberComponent; muiNumberComponent++; }
+    protected:
+        unsigned int muiTypeComponent, muiIDComponent;
+        inline Component(){}// = delete;
+        //inline void initComponent(){ muiIDComponent = muiNumberComponent; muiNumberComponent++; }
 };
 
 #endif // COMPONENT_HPP

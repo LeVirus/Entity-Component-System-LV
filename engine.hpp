@@ -26,6 +26,7 @@ public:
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
+    SystemManager &GetSystemManager();
 };
 
 #endif // ENGINE_HPP

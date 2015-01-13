@@ -80,3 +80,12 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
 void Engine::RmAllEntity(){
     mVectEntity.clear();
 }
+
+/**
+ * @brief Engine::GetSystemManager Fonction renvoyant une référence de SystemManager.
+ * @return une référence du SystemManager.
+ */
+SystemManager &Engine::GetSystemManager(){
+    return mSystemManager;
+}
+

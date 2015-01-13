@@ -47,9 +47,12 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
  * 1000( COMPONENT_NOT_FOUND ) si le composant n'a pas été trouvée.
  */
 unsigned int Entity::searchCaseComponent( unsigned int uiTypeComponent )const{
-    for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
-        if ( mVectComponent[ i ] -> muiGetTypeComponent() == uiTypeComponent ){
-            return i;
+    //vérification de la présence du component dans le bitset
+    if( uiTypeComponent < mBitSetComponent.size() && mBitSetComponent[ uiTypeComponent ] == true ){
+        for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
+            if ( mVectComponent[ i ] -> muiGetTypeComponent() == uiTypeComponent ){
+                return i;
+            }
         }
     }
     return COMPONENT_NOT_FOUND;
@@ -70,11 +73,13 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
     case DISPLAY_COMPONENT :{
         //std::unique_ptr< DisplayComponent > ptrDC( new DisplayComponent );
         mVectComponent.push_back( std::make_unique< DisplayComponent >() );
+        mBitSetComponent[ DISPLAY_COMPONENT ] = true;
         break;
     }
     case POSITION_COMPONENT :{
         // mVectComponent.push_back( PositionComponent() );
         mVectComponent.push_back( std::make_unique< PositionComponent >() );
+        mBitSetComponent[ POSITION_COMPONENT ] = true;
         break;
     }
     default :{
@@ -95,6 +100,7 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
     unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
     if( uiCaseComponent != COMPONENT_NOT_FOUND ){
         mVectComponent.erase( mVectComponent.begin() + uiCaseComponent );
+        mBitSetComponent[ uiTypeComponent ] = false;
         breturn = true;
     }
     return breturn;
@@ -106,4 +112,5 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
  */
 void Entity::RmAllComponent(){
     mVectComponent.clear();
+    mBitSetComponent.reset();
 }

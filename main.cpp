@@ -11,8 +11,6 @@ int main()
     engine.displayVectEntity();
     engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
     engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
-    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
-    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
     engine.displayVectEntity();
     engine.RmAllEntity();
     return 0;

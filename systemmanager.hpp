@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "system.hpp"
+#include <bitset>
+#include <memory>
 
 /**
  * @brief La classe SystemManager gère les systèmes actifs.
@@ -12,10 +14,11 @@
  */
 class SystemManager
 {
-    std::vector< System > mVectSystem;
+    std::vector< std::unique_ptr< System > > mVectSystem;
+    std::bitset< 16 > mBitSetSystem;
 public:
     SystemManager();
-    unsigned int uiSystemExist( unsigned int uiIdSystem );
+    unsigned int uiGetNumCaseSystem( unsigned int uiIdSystem );
     bool bAddSystem( unsigned int uiIdSystem );
     bool bRmSystem( unsigned int uiIdSystem );
     void RmAllSystem();
