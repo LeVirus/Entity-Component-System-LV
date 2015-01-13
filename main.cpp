@@ -1,20 +1,20 @@
 #include <iostream>
 #include "engine.hpp"
-
-using namespace std;
+#include "constantes.hpp"
 
 int main()
 {
-    cout << "Hello World!" << endl;
     Engine engine;
     engine.AddEntity();
     engine.AddEntity();
     engine.AddEntity();
     engine.displayVectEntity();
-    engine.bRmEntity(1);
+    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
+    engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
+    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
+    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
     engine.displayVectEntity();
     engine.RmAllEntity();
-    engine.displayVectEntity();
     return 0;
 }
 

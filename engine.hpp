@@ -24,6 +24,7 @@ public:
     void AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );
     void RmAllEntity();
+    bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
 };
 

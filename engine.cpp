@@ -1,4 +1,5 @@
 #include "engine.hpp"
+#include "constantes.hpp"
 #include <iostream>
 
 /**
@@ -51,6 +52,26 @@ void Engine::synchronizeVectorEntity(){
         mVectEntity[ i ].attributeIDEntity( i );
     }
 }
+
+/**
+ * @brief Engine::bAddComponentToEntity Fonction d'ajout d'un composant a une entité présente dans Engine.
+ * La fonction vérifie si l'entité est bien présente dans le vector, et si le composant n'est pas déja dans l'entité.
+ * @param uiIdEntity Le numéro de l'entité à modifier.
+ * @return true si le composant a été ajouté avec succés, false sinon.
+ */
+bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent ){
+    bool bReturn = true;
+    //vérification si l'entité demandé est bien dans le vector
+    if( uiIdEntity >= mVectEntity.size() ){
+        bReturn = false;
+    }
+    //vérification si le composant a ajouter n'est pas déja dans l'entité
+    if( bReturn && ! mVectEntity[ uiIdEntity ].bAddComponent( uiTypeComponent ) ){
+        bReturn = false;
+    }
+    return bReturn;
+}
+
 
 /**
  * @brief Engine::bRmAllEntity Fonction supprimant toutes les entitées présentes dans Engine.

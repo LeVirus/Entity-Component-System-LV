@@ -35,7 +35,7 @@ public:
      * @brief Entity::searchComponentByType
      * Fonction renvoyant la référence du contenant recherché, la fonction
      * searchCaseComponent retourne le numéro de case, et la fonction courante
-     * renvoie le composant avec un dynamic_cast.
+     * renvoie le composant avec un static_cast.
      * @param uiTypeComponent le type de composant a rechercher.
      * @return la référence du composant recherché.
      */

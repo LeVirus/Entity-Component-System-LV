@@ -26,6 +26,9 @@ Entity::Entity( unsigned int uiIdEntity ){
 void Entity::displayEntity()const{
    std::cout << "Identifiant::" << mUiIDEntity << std::endl;
    //A compléter pour afficher les composants
+   for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
+       mVectComponent[ i ] -> displayComponent();
+   }
 }
 
 /**
@@ -45,7 +48,7 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
  */
 unsigned int Entity::searchCaseComponent( unsigned int uiTypeComponent )const{
     for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
-        if ( mVectComponent[ i ] -> muiTypeComponent == uiTypeComponent ){
+        if ( mVectComponent[ i ] -> muiGetTypeComponent() == uiTypeComponent ){
             return i;
         }
     }
@@ -71,6 +74,7 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
     }
     case POSITION_COMPONENT :{
         // mVectComponent.push_back( PositionComponent() );
+        mVectComponent.push_back( std::make_unique< PositionComponent >() );
         break;
     }
     default :{
