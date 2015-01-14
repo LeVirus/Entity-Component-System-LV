@@ -20,6 +20,7 @@ private:
     SystemManager mSystemManager;
 public:
     Engine();
+    const std::vector< Entity > & getVectEntity()const;
     void synchronizeVectorEntity();
     void AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );

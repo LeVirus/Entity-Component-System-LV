@@ -1,8 +1,7 @@
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
 
-#include "node.hpp"
-//#include "systemmanager.hpp"
+#include "systemmanager.hpp"
 #include <vector>
 #include <bitset>
 #include <memory>
@@ -16,15 +15,14 @@ class SystemManager;
 class System{
 protected:
     unsigned int muiPriority, muiIdSystem, muiTypeSystem;
-    //std::vector< Node > mVectNode;
-    std::vector< unsigned int > mVectTypeComponent;
+    std::vector< unsigned int > mVectNumEntity;
     std::bitset< 16 > mBitSetComponentSystem;
     std::unique_ptr< SystemManager > mptrSystemManager;
     bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:
     System();
     void linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManager );
-    bool bRefreshNode();
+    void refreshEntity();
     virtual void execSystem() = 0;
     void displaySystem()const;
     bool bComponentAlreadyExist( unsigned int uiTypeComponent );

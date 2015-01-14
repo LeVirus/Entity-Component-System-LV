@@ -8,9 +8,8 @@ int main()
     engine.AddEntity();
     engine.AddEntity();
     engine.AddEntity();
-    engine.displayVectEntity();
-    engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT );
-    engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
+    if( ! engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT ))std::cout<<"aa"<<std::endl;
+    if( ! engine.bAddComponentToEntity( 0, POSITION_COMPONENT ))std::cout<<"bb"<<std::endl;
     engine.displayVectEntity();
     engine.RmAllEntity();
     return 0;

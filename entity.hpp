@@ -18,35 +18,38 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< 16 > mBitSetComponent;
+    bool mbActive;
 public:
     std::vector< std::unique_ptr< Component > > mVectComponent;
     
     Entity();
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
-    unsigned int searchCaseComponent( unsigned int uiTypeComponent )const;
+    bool ComponentExist( unsigned int uiTypeComponent )const;
 
 
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );
     bool bRmComponent( unsigned int uiTypeComponent );
     void RmAllComponent();
+    bool bEntityIsActive()const;
 
     /**
      * @brief Entity::searchComponentByType
      * Fonction renvoyant la référence du contenant recherché, la fonction
-     * searchCaseComponent retourne le numéro de case, et la fonction courante
+     * ComponentExist vérifie si le composant existe dans l'entité, et la fonction courante
      * renvoie le composant avec un static_cast.
      * @param uiTypeComponent le type de composant a rechercher.
      * @return la référence du composant recherché.
      */
     template < typename componentTemplate >
+
     componentTemplate &searchComponentByType( unsigned int uiTypeComponent ){
-        unsigned int uiCaseComponent = searchCaseComponent( uiTypeComponent );
-        //return *mVectComponent[ uiCaseComponent ];
+
+        if( ! ComponentExist( uiTypeComponent ) )return;
         static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
 
-        return static_cast< componentTemplate& >( *mVectComponent[ uiCaseComponent ] );
+        return static_cast< componentTemplate& >( *mVectComponent[ uiTypeComponent ] );
     }
 
 };

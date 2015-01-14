@@ -13,20 +13,15 @@ System::System(){
  * @param ptrEngine Un pointeur d'Engine
  */
 void System::linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManager ){
-    mptrSystemManager = ptrSystemManager;
+    ptrSystemManager.swap( mptrSystemManager );
 }
 
 /**
  * @brief System::refreshNode Fonction de synchronisation des entités à modifier par le système.
- * La fonction va rechercher les entités et récupérer les références des composants nécessaires
- * @return false si le tableau des composants( à récupérer ) est vide, true sinon.
+ * La fonction va rechercher les numéros d'entités à modifier, et les stocker dans mVectNumEntity.
  */
-bool System::bRefreshNode(){
-    bool bReturn = false;
-    if( mVectTypeComponent.size() != 0 ){
+void System::refreshEntity(){
 
-        bReturn = true;
-    }
 }
 
 /**
@@ -47,35 +42,18 @@ bool System::bAddComponentToSystem( unsigned int uiTypeComponent ){
     bool bReturn = false;
     if( ! bComponentAlreadyExist( uiTypeComponent ) ){//A MODIFIER
         bReturn = true;
-        switch( uiTypeComponent ){
-        case DISPLAY_COMPONENT:
-                break;
-        case POSITION_COMPONENT:
-                break;
-        default:
-            bReturn = false;
-            break;
-        }
-    }
-    if( bReturn ){
-        mVectTypeComponent.push_back( uiTypeComponent );
+        mBitSetComponentSystem[ uiTypeComponent ] = true;
+
     }
     return bReturn;
 }
 
 /**
  * @brief System::bAlreadyExist Fonction vérifiant si le numéro de composant(paramètre)
- * est déja présent dans le tableau de stockage des composants.
+ * est déja présent dans le tableau de stockage des composants(bitset).
  * @param uiTypeComponent Le numéro du composant à vérifier.
  * @return true si le composant est présent, false sinon.
  */
 bool System::bComponentAlreadyExist( unsigned int uiTypeComponent ){
-    bool bReturn = false;
-    for( unsigned int i = 0 ; i < mVectTypeComponent.size() ; ++i ){
-        if( uiTypeComponent == mVectTypeComponent[ i ] ){
-            bReturn = true;
-            break;
-        }
-    }
-    return bReturn;
+    return mBitSetComponentSystem[ uiTypeComponent ];
 }

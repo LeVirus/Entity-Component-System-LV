@@ -14,9 +14,9 @@ SystemManager::SystemManager(){
  * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
  * @param ptrEngine Un pointeur d'Engine
  */
-void SystemManager::linkEngine( std::unique_ptr< Engine > ptrEngine ){
-    mptrEngine = ptrEngine;
-}
+/*void SystemManager::linkEngine( std::unique_ptr< Engine > ptrEngine ){
+    //mptrEngine = ptrEngine;
+}*/
 
 /**
  * @brief SystemManager::bAddSystem Fonction d'ajout d'un système dans SystemManager.
@@ -42,7 +42,7 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
     }
     //envoie du pointeur de systemManager vers tous les systèmes créé
     if( bReturn ){
-        mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
+        //mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
     }
 
     return bReturn;
