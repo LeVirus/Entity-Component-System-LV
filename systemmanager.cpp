@@ -14,9 +14,9 @@ SystemManager::SystemManager(){
  * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
  * @param ptrEngine Un pointeur d'Engine
  */
-/*void SystemManager::linkEngine( std::unique_ptr< Engine > ptrEngine ){
-    //mptrEngine = ptrEngine;
-}*/
+void SystemManager::linkEngine( Engine* ptrEngine ){
+    mptrEngine = ptrEngine;
+}
 
 /**
  * @brief SystemManager::bAddSystem Fonction d'ajout d'un système dans SystemManager.
@@ -25,28 +25,41 @@ SystemManager::SystemManager(){
  * @param uiIdSystem Le numéro du système à ajouter.
  * @return true si le système a été ajouté, false sinon.
  */
-bool SystemManager::bAddSystem( unsigned int uiIdSystem ){
+bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
+
     bool bReturn = false;
     unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
-    if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
+    if( uiNumCaseSystem == SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
+
         bReturn = true;
         switch( uiIdSystem ){
         case DISPLAY_SYSTEM:
+
             mVectSystem.push_back( std::make_unique< DisplaySystem >() );
             mBitSetSystem[ DISPLAY_SYSTEM ] = true;
                 break;
         default:
+
             bReturn = false;
             break;
         }
     }
     //envoie du pointeur de systemManager vers tous les systèmes créé
     if( bReturn ){
-        //mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
+        mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
     }
 
     return bReturn;
 }
+
+/**
+ * @brief SystemManager::getptrEngine fonction renvoyant un pointeur vers Engine.
+ * @return Un pointeur vers Engine.
+ */
+Engine* SystemManager::getptrEngine(){
+    return mptrEngine;
+}
+
 
 /**
  * @brief SystemManager::bRmSystem Fonction de suppression d'un système de SystemManager.
@@ -121,7 +134,9 @@ bool SystemManager::bExecAllSystem(){
     bool bReturn = false;
     if( ! mVectSystem.empty() ){
         for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+            mVectSystem[ i ] ->  refreshEntity();
             mVectSystem[ i ] ->  execSystem();
+            mVectSystem[ i ] ->  displaySystem();
         }
         bReturn = true;
     }

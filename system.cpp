@@ -1,19 +1,22 @@
 #include "system.hpp"
 #include "constantes.hpp"
+#include "entity.hpp"
+#include "engine.hpp"
+#include <bitset>
 
 /**
  * @brief System::System Constructeur de la classe System
  */
 System::System(){
-
+    mVectNumEntity.resize( 50 );
 }
 
 /**
  * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
  * @param ptrEngine Un pointeur d'Engine
  */
-void System::linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManager ){
-    ptrSystemManager.swap( mptrSystemManager );
+void System::linkSystemManager( SystemManager* ptrSystemManager ){
+    mptrSystemManager = ptrSystemManager;
 }
 
 /**
@@ -21,7 +24,26 @@ void System::linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManage
  * La fonction va rechercher les numéros d'entités à modifier, et les stocker dans mVectNumEntity.
  */
 void System::refreshEntity(){
+    bool granted;
+    unsigned int count = 0;
+    const std::vector< Entity > &vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
+    for( unsigned int i = 0 ; i < vectEntity.size() ; ++i ){
+        granted = true;
+        //récupération du bitset de l'entité
+        const std::bitset< 16 > & bitSetEntity = vectEntity[ i ].getEntityBitSet();
+        for( unsigned int j = 0 ; j < bitSetEntity.size() ; ++j ){
+            //si le composant nécessaire au système n'est pas présent dans l'entité
+            if( mBitSetComponentSystem[ j ] == true &&  bitSetEntity[ j ] == false ){
+                granted = false;
+                break;
+            }
+        }
+        if( granted ){
+            mVectNumEntity[ count ] = i;
+            count++;
+        }
+    }
 }
 
 /**
@@ -29,7 +51,9 @@ void System::refreshEntity(){
  * Affichage des composants nécessaire au système et descriptif de la fonction du système.
  */
 void System::displaySystem()const{
-
+    for( unsigned int i = 0 ; i < 2/*vectEntity.size()*/ ; ++i ){
+        std::cout << mVectNumEntity[ i ] << std::endl;
+    }
 }
 
 /**

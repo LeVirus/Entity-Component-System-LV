@@ -17,11 +17,11 @@ protected:
     unsigned int muiPriority, muiIdSystem, muiTypeSystem;
     std::vector< unsigned int > mVectNumEntity;
     std::bitset< 16 > mBitSetComponentSystem;
-    std::unique_ptr< SystemManager > mptrSystemManager;
+    SystemManager* mptrSystemManager;
     bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:
     System();
-    void linkSystemManager( std::unique_ptr< SystemManager > ptrSystemManager );
+    void linkSystemManager( SystemManager* ptrSystemManager );
     void refreshEntity();
     virtual void execSystem() = 0;
     void displaySystem()const;

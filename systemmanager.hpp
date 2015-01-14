@@ -20,10 +20,11 @@ class SystemManager
 {
     std::vector< std::unique_ptr< System > > mVectSystem;
     std::bitset< 16 > mBitSetSystem;
-    //std::unique_ptr< Engine > mptrEngine;
+    Engine* mptrEngine;
 public:
     SystemManager();
-    void linkEngine( std::unique_ptr< Engine > ptrEngine );
+    Engine* getptrEngine();
+    void linkEngine( Engine* ptrEngine );
     unsigned int uiGetNumCaseSystem( unsigned int uiIdSystem );
     bool bAddSystem( unsigned int uiIdSystem );
     bool bRmSystem( unsigned int uiIdSystem );

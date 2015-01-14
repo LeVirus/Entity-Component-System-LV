@@ -8,10 +8,13 @@ int main()
     engine.AddEntity();
     engine.AddEntity();
     engine.AddEntity();
-    if( ! engine.bAddComponentToEntity( 0, DISPLAY_COMPONENT ))std::cout<<"aa"<<std::endl;
-    if( ! engine.bAddComponentToEntity( 0, POSITION_COMPONENT ))std::cout<<"bb"<<std::endl;
-    engine.displayVectEntity();
-    engine.RmAllEntity();
+    engine.bAddComponentToEntity( 1, DISPLAY_COMPONENT );
+    engine.bAddComponentToEntity( 1, POSITION_COMPONENT );
+    engine.bAddComponentToEntity( 2, DISPLAY_COMPONENT );
+    engine.bAddComponentToEntity( 2, POSITION_COMPONENT );
+    //engine.displayVectEntity();
+    if( ! engine.GetSystemManager().bAddSystem( DISPLAY_SYSTEM ) ) std::cout << "sdf" << std::endl;
+    engine.GetSystemManager() . bExecAllSystem();
     return 0;
 }
 

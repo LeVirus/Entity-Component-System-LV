@@ -6,7 +6,7 @@
  * @brief Engine::Engine Constructeur de la classe Engine.
  */
 Engine::Engine(){
-    //mSystemManager.linkEngine( this );
+    mSystemManager.linkEngine( this );
 }
 
 /**

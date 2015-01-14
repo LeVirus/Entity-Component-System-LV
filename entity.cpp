@@ -56,6 +56,14 @@ bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
 }
 
 /**
+ * @brief Entity::getEntityBitSet Fonction retournant le bitset(représentant les composants de l'entité) associé a l'entité.
+ * @return Une référence constante du bitset.
+ */
+const std::bitset< 16 > & Entity::getEntityBitSet()const{
+    return mBitSetComponent;
+}
+
+/**
  * @brief Entity::bEntityIsActive Fonction de vérifiant si l'entité est activé
  * (si elle doit être traité par les systèmes)
  * @return true si l'entité est activée, false sinon.

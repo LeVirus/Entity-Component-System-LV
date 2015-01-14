@@ -21,7 +21,8 @@ private:
     bool mbActive;
 public:
     std::vector< std::unique_ptr< Component > > mVectComponent;
-    
+    const std::bitset< 16 > & getEntityBitSet()const;
+
     Entity();
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
