@@ -17,7 +17,6 @@ int main()
     engine.GetSystemManager() . bExecAllSystem();
     engine.GetSystemManager().bRmSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
     engine.GetSystemManager() . bExecAllSystem();
-
     return 0;
 }
 
