@@ -25,12 +25,12 @@ public:
     SystemManager();
     Engine* getptrEngine();
     void linkEngine( Engine* ptrEngine );
-    unsigned int uiGetNumCaseSystem( unsigned int uiIdSystem );
+    //unsigned int uiGetNumCaseSystem( unsigned int uiIdSystem );
     bool bAddSystem( unsigned int uiIdSystem );
     bool bRmSystem( unsigned int uiIdSystem );
     void RmAllSystem();
     bool bExexSystem( unsigned int uiIdSystem );
-    bool bExecAllSystem();
+    void bExecAllSystem();
 };
 
 #endif // SYSTEMMANAGER_HPP

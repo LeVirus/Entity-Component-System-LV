@@ -23,7 +23,7 @@ public:
     System();
     void linkSystemManager( SystemManager* ptrSystemManager );
     void refreshEntity();
-    virtual void execSystem() = 0;
+    virtual void execSystem();
     void displaySystem()const;
     bool bComponentAlreadyExist( unsigned int uiTypeComponent );
 

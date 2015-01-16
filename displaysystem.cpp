@@ -12,10 +12,11 @@ DisplaySystem::DisplaySystem(){
 }
 
 /**
- * @brief DisplaySystem::execSystem Fonction(surchargée) d'exécution du système sur les noeuds stockés
- * dans le système.
- * La fonction va mettre a jour les noeud(fonction de la classe mère System::bRefreshNode) avant de lancer l'exécution.
+ * @brief DisplaySystem::execSystem Fonction(surchargée) d'exécution du système sur les entités concernées
+ * par le système.
+ * La fonction va modifier les données contenus dans les composants(associés aux entités).
+ * La fonction de la classe mère System::execSystem est appelé en début de fonction.
  */
 void DisplaySystem::execSystem(){
-
+    System::execSystem();
 }

@@ -73,6 +73,14 @@ bool System::bAddComponentToSystem( unsigned int uiTypeComponent ){
 }
 
 /**
+ * @brief System::execSystem Fonction de base d'execution d'un systeme. Cette fonction appelle System::refreshEntity.
+ */
+void System::execSystem(){
+    refreshEntity();
+    displaySystem();
+}
+
+/**
  * @brief System::bAlreadyExist Fonction vérifiant si le numéro de composant(paramètre)
  * est déja présent dans le tableau de stockage des composants(bitset).
  * @param uiTypeComponent Le numéro du composant à vérifier.

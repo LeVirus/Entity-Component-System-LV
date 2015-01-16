@@ -7,7 +7,7 @@
  * @brief SystemManager::SystemManager Constructeur de la classe SystemManager.
  */
 SystemManager::SystemManager(){
-
+    mVectSystem.resize( NUMBR_SYSTEM );
 }
 
 /**
@@ -28,14 +28,12 @@ void SystemManager::linkEngine( Engine* ptrEngine ){
 bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
 
     bool bReturn = false;
-    unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
-    if( uiNumCaseSystem == SYSTEM_NOT_FOUND ){//A MODIFIER trouver un moyen de savoir le nombre de type de composant
-
+    if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == false ){
         bReturn = true;
         switch( uiIdSystem ){
         case DISPLAY_SYSTEM:
 
-            mVectSystem.push_back( std::make_unique< DisplaySystem >() );
+            mVectSystem[ DISPLAY_SYSTEM ] = std::make_unique< DisplaySystem >();
             mBitSetSystem[ DISPLAY_SYSTEM ] = true;
                 break;
         default:
@@ -43,12 +41,9 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
             bReturn = false;
             break;
         }
+        //envoie du pointeur de systemManager vers tous les systèmes créé
+        mVectSystem[ uiIdSystem ] -> linkSystemManager( this );
     }
-    //envoie du pointeur de systemManager vers tous les systèmes créé
-    if( bReturn ){
-        mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
-    }
-
     return bReturn;
 }
 
@@ -69,24 +64,23 @@ Engine* SystemManager::getptrEngine(){
  */
 bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
-
     if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == true ){
-        unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
-        if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
-            mVectSystem.erase( mVectSystem.begin() + uiNumCaseSystem );
-            mBitSetSystem[ uiIdSystem ] = false;
-            bReturn = true;
-        }
+        mBitSetSystem[ uiIdSystem ] = false;
+        mVectSystem[ uiIdSystem ].reset();
+        bReturn = true;
     }
 
     return bReturn;
 }
 
 /**
- * @brief SystemManager::bRmAllSystem Fonction supprimant tous les systèmes de SystemManager.
+ * @brief SystemManager::bRmAllSystem Fonction supprimant tous les systèmes de SystemManager, mBitSetSystem est réinitialisé.
  */
 void SystemManager::RmAllSystem(){
-    mVectSystem.clear();
+    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+        if( mVectSystem[ i ] )
+            mVectSystem[ i ].reset();
+    }
     mBitSetSystem.reset();
 }
 
@@ -98,47 +92,23 @@ void SystemManager::RmAllSystem(){
  */
 bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
     bool bReturn = false;
-    unsigned int uiNumCaseSystem = uiGetNumCaseSystem( uiIdSystem );
-    if( uiNumCaseSystem != SYSTEM_NOT_FOUND ){
-        mVectSystem[ uiNumCaseSystem ] -> execSystem();
+    if( uiIdSystem < mVectSystem.size() && mVectSystem[ uiIdSystem ] ){
+        mVectSystem[ uiIdSystem ] -> execSystem();
         bReturn = true;
     }
     return bReturn;
-}
-
-/**
- * @brief SystemManager::bSystemExist Fonction de vérification de l'existance du système dont l'identifiant est envoyé en paramètre.
- * @param uiIdSystem Le numéro du système.
- * @return Le numéro de la case ou le système a été trouvé, 1000 si le systèmme n'existe pas.
- */
-unsigned int SystemManager::uiGetNumCaseSystem( unsigned int uiIdSystem ){
-    unsigned int uiNumCaseSystem = SYSTEM_NOT_FOUND;
-
-    if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == true ){
-
-        for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
-            if( mVectSystem[ i ] -> uiGetIdSystem() == uiIdSystem ){
-                uiNumCaseSystem = i;
-                break;
-            }
-        }
-    }
-    return uiNumCaseSystem;
 }
 
 /**
  * @brief SystemManager::bExecAllSystem Fonction déclanchant les exécutions de tous les systèmes présents dans SystemManager.
  * @return false si la liste des système est vide, true sinon.
  */
-bool SystemManager::bExecAllSystem(){
-    bool bReturn = false;
-    if( ! mVectSystem.empty() ){
-        for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
-            mVectSystem[ i ] ->  refreshEntity();
+void SystemManager::bExecAllSystem(){
+    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+        if( mVectSystem[ i ] ){
+            //mVectSystem[ i ] ->  refreshEntity();//MOdifier execsystem
             mVectSystem[ i ] ->  execSystem();
-            mVectSystem[ i ] ->  displaySystem();
+            //mVectSystem[ i ] ->  displaySystem();
         }
-        bReturn = true;
     }
-    return bReturn;
 }
