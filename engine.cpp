@@ -94,10 +94,18 @@ void Engine::RmAllEntity(){
 }
 
 /**
- * @brief Engine::GetSystemManager Fonction renvoyant une référence de SystemManager.
- * @return une référence du SystemManager.
+ * @brief Engine::GetSystemManager Fonction renvoyant une référence de mSystemManager.
+ * @return Une référence du SystemManager.
  */
-SystemManager &Engine::GetSystemManager(){
+SystemManager &Engine::getSystemManager(){
     return mSystemManager;
+}
+
+/**
+ * @brief Engine::getComponentManager Fonction renvoyant une référence de mComponentManager.
+ * @return Une référence du ComponentManager.
+ */
+ComponentManager &Engine::getComponentManager(){
+    return mComponentManager;
 }
 

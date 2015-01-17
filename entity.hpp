@@ -5,6 +5,7 @@
 #include <bitset>
 #include <memory>
 #include "component.hpp"
+#include "constantes.hpp"
 
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.
@@ -18,17 +19,16 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
-    bool mbActive;
-    static bool upToDate;
+    bool mbActive, mbUpToDate;
 public:
-    //std::vector< std::unique_ptr< Component > > mVectComponent;
+    std::vector< std::unique_ptr< Component > > mVectComponent;
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
 
     Entity();
     Entity( unsigned int uiIdEntity );
     void displayEntity()const;
     bool ComponentExist( unsigned int uiTypeComponent )const;
-
+    bool bEntityIsUpToDate()const;
 
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );

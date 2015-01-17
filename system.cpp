@@ -31,7 +31,7 @@ void System::refreshEntity(){
     for( unsigned int i = 0 ; i < vectEntity.size() ; ++i ){
         granted = true;
         //récupération du bitset de l'entité
-        const std::bitset< 16 > & bitSetEntity = vectEntity[ i ].getEntityBitSet();
+        const std::bitset< NUMBR_COMPONENT > & bitSetEntity = vectEntity[ i ].getEntityBitSet();
         for( unsigned int j = 0 ; j < bitSetEntity.size() ; ++j ){
             //si le composant nécessaire au système n'est pas présent dans l'entité
             if( mBitSetComponentSystem[ j ] == true &&  bitSetEntity[ j ] == false ){

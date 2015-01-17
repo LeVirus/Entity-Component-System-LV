@@ -2,7 +2,9 @@
 #define COMPONENTMANAGER_H
 
 #include "constantes.hpp"
+#include "component.hpp"
 #include <vector>
+#include <memory>
 
 class Engine;
 
@@ -14,6 +16,8 @@ public:
     ComponentManager();
     bool bUpdateComponentFromEntity();
     void linkEngineToComponentManager( Engine *ptrEngine );
+    void instanciateComponent( unsigned int uiNumCase );
+    void displayComponent()const;
     //bool bAddComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
     //bool bRmComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
 

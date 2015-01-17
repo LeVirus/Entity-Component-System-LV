@@ -10,7 +10,7 @@
 Entity::Entity(){
     mbActive = false;
     mVectComponent.resize( NUMBR_COMPONENT );
-    upToDate = false;
+    mbUpToDate = false;
 }
 
 /**
@@ -20,7 +20,7 @@ Entity::Entity(){
 Entity::Entity( unsigned int uiIdEntity ){
     mUiIDEntity = uiIdEntity;
     mVectComponent.resize( NUMBR_COMPONENT );
-    upToDate = false;
+    mbUpToDate = false;
 }
 
 /**
@@ -43,6 +43,15 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
 }
 
 /**
+ * @brief Entity::bEntityIsUpToDate Fonction de vérification si
+ * l'entité est à mettre à jour dans ComponentManager.
+ * @return true si une mise à jour est nécessaire, false sinon.
+ */
+bool Entity::bEntityIsUpToDate()const{
+    return mbUpToDate;
+}
+
+/**
  * @brief Entity::ComponentExist
  * Fonction vérifiant si le composant dont le type est envoyé en paramètre est bien présent dans l'entité.
  * @param uiTypeComponent le type de composant à vérifier.
@@ -61,7 +70,7 @@ bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
  * @brief Entity::getEntityBitSet Fonction retournant le bitset(représentant les composants de l'entité) associé a l'entité.
  * @return Une référence constante du bitset.
  */
-const std::bitset< 16 > & Entity::getEntityBitSet()const{
+const std::bitset< NUMBR_COMPONENT > & Entity::getEntityBitSet()const{
     return mBitSetComponent;
 }
 
@@ -99,7 +108,7 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
             break;
         }
         }
-        upToDate = false;
+        mbUpToDate = false;
     }
     return breturn;
 }
@@ -115,7 +124,7 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
         mVectComponent[ uiTypeComponent ].reset();
         mBitSetComponent[ uiTypeComponent ] = false;
         breturn = true;
-        upToDate = false;
+        mbUpToDate = false;
     }
     return breturn;
 }
@@ -129,5 +138,5 @@ void Entity::RmAllComponent(){
         mVectComponent[ i ].reset();
     }
     mBitSetComponent.reset();
-    upToDate = false;
+    mbUpToDate = false;
 }

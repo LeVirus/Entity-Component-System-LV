@@ -5,6 +5,7 @@
 #include <vector>
 #include "systemmanager.hpp"
 #include "entity.hpp"
+#include "componentmanager.hpp"
 
 /**
  * @brief La classe Engine est la classe de base de la bibliothèque.
@@ -18,6 +19,7 @@ class Engine
 private:
     std::vector< Entity > mVectEntity;
     SystemManager mSystemManager;
+    ComponentManager mComponentManager;
 public:
     Engine();
     const std::vector< Entity > & getVectEntity()const;
@@ -27,7 +29,8 @@ public:
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
-    SystemManager &GetSystemManager();
+    SystemManager &getSystemManager();
+    ComponentManager &getComponentManager();
 };
 
 #endif // ENGINE_HPP
