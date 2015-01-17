@@ -20,7 +20,7 @@ private:
     std::bitset< 16 > mBitSetComponent;
     bool mbActive;
 public:
-    std::vector< std::unique_ptr< Component > > mVectComponent;
+    //std::vector< std::unique_ptr< Component > > mVectComponent;
     const std::bitset< 16 > & getEntityBitSet()const;
 
     Entity();

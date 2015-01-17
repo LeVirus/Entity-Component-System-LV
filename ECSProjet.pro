@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     engine.cpp \
     systemmanager.cpp \
     displaysystem.cpp \
-    system.cpp
+    system.cpp \
+    componentmanager.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -31,5 +32,6 @@ HEADERS += \
     displaycomponent.hpp \
     constantes.hpp \
     positioncomponent.hpp \
-    displaysystem.hpp
+    displaysystem.hpp \
+    componentmanager.hpp
 
