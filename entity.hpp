@@ -17,11 +17,12 @@ class Entity
 {
 private:
     unsigned int mUiIDEntity;
-    std::bitset< 16 > mBitSetComponent;
+    std::bitset< NUMBR_COMPONENT > mBitSetComponent;
     bool mbActive;
+    static bool upToDate;
 public:
     //std::vector< std::unique_ptr< Component > > mVectComponent;
-    const std::bitset< 16 > & getEntityBitSet()const;
+    const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
 
     Entity();
     Entity( unsigned int uiIdEntity );

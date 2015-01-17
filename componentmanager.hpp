@@ -4,15 +4,18 @@
 #include "constantes.hpp"
 #include <vector>
 
+class Engine;
+
 class ComponentManager{
 private:
+    Engine * mptrEngine;
     std::vector< std::unique_ptr< Component > > mVectComponent;
 public:
     ComponentManager();
-    bool bsetNumEntity();
-    bool bAddComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
-    bool bRmComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
-    //void rmAllComponent();
+    bool bUpdateComponentFromEntity();
+    void linkEngineToComponentManager( Engine *ptrEngine );
+    //bool bAddComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
+    //bool bRmComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
 
     /**
      * @brief ComponentManager::searchComponentByType

@@ -10,6 +10,7 @@
 Entity::Entity(){
     mbActive = false;
     mVectComponent.resize( NUMBR_COMPONENT );
+    upToDate = false;
 }
 
 /**
@@ -19,6 +20,7 @@ Entity::Entity(){
 Entity::Entity( unsigned int uiIdEntity ){
     mUiIDEntity = uiIdEntity;
     mVectComponent.resize( NUMBR_COMPONENT );
+    upToDate = false;
 }
 
 /**
@@ -97,6 +99,7 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
             break;
         }
         }
+        upToDate = false;
     }
     return breturn;
 }
@@ -112,6 +115,7 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
         mVectComponent[ uiTypeComponent ].reset();
         mBitSetComponent[ uiTypeComponent ] = false;
         breturn = true;
+        upToDate = false;
     }
     return breturn;
 }
@@ -125,4 +129,5 @@ void Entity::RmAllComponent(){
         mVectComponent[ i ].reset();
     }
     mBitSetComponent.reset();
+    upToDate = false;
 }
