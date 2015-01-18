@@ -13,12 +13,12 @@ int main(){
     engine.bAddComponentToEntity( 2, DISPLAY_COMPONENT );
     engine.bAddComponentToEntity( 2, POSITION_COMPONENT );
 
-    //engine.displayVectEntity();
     //engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
     //engine.getSystemManager() . bExecAllSystem();
     //engine.getSystemManager().bRmSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
     //engine.getSystemManager() . bExecAllSystem();
-    engine.getComponentManager().bUpdateComponentFromEntity();
+     std::cout << "sdf" << std::endl;
+    engine.getComponentManager().updateComponentFromEntity(); std::cout << "sdfdgf" << std::endl;
     engine.getComponentManager().displayComponent();
     return 0;
 }

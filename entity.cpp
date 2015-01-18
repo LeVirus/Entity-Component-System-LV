@@ -9,7 +9,6 @@
  */
 Entity::Entity(){
     mbActive = false;
-    mVectComponent.resize( NUMBR_COMPONENT );
     mbUpToDate = false;
 }
 
@@ -18,9 +17,17 @@ Entity::Entity(){
  * @param uiIdEntity L'identifiant à attribuer à la nouvelle entité.
  */
 Entity::Entity( unsigned int uiIdEntity ){
+    mbActive = false;
     mUiIDEntity = uiIdEntity;
-    mVectComponent.resize( NUMBR_COMPONENT );
     mbUpToDate = false;
+}
+
+/**
+ * @brief Entity::setUpToDate Fonctionn modifiant la valeur de mbUpToDate a true.
+ * Cette fonction est appelée aprés la mise à jour de ComponentManager sur toutes les entités.
+ */
+void Entity::setUpToDate(){
+    mbUpToDate = true;
 }
 
 /**
@@ -28,10 +35,11 @@ Entity::Entity( unsigned int uiIdEntity ){
  * Elle affiche l'ID de l'entité ainsi que la liste de ses composants.
  */
 void Entity::displayEntity()const{
-   std::cout << "Identifiant::" << mUiIDEntity << std::endl;
-   for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
-       if( NULL != mVectComponent[ i ] )mVectComponent[ i ] -> displayComponent();
+   std::cout << "Identifiant::" << mUiIDEntity << "\n";
+   for( unsigned int i = 0 ; i < mBitSetComponent.size() ; ++i ){
+       std::cout << mBitSetComponent[ i ];
    }
+   std::cout << "\n";
 }
 
 /**
@@ -93,21 +101,6 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
     if( ! ComponentExist( uiTypeComponent ) ){
         breturn = true;
         mBitSetComponent[ uiTypeComponent ] = true;
-
-        switch( uiTypeComponent ){
-        case DISPLAY_COMPONENT :{
-            mVectComponent[ DISPLAY_COMPONENT ] = std::make_unique< DisplayComponent >();
-            break;
-        }
-        case POSITION_COMPONENT :{
-            mVectComponent[ POSITION_COMPONENT ] = std::make_unique< PositionComponent >();
-            break;
-        }
-        default :{
-            breturn = false;
-            break;
-        }
-        }
         mbUpToDate = false;
     }
     return breturn;
@@ -121,7 +114,6 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
 bool Entity::bRmComponent( unsigned int uiTypeComponent ){
     bool breturn = false;
     if( ComponentExist( uiTypeComponent ) ){
-        mVectComponent[ uiTypeComponent ].reset();
         mBitSetComponent[ uiTypeComponent ] = false;
         breturn = true;
         mbUpToDate = false;
@@ -134,9 +126,6 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
 void Entity::RmAllComponent(){
-    for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
-        mVectComponent[ i ].reset();
-    }
     mBitSetComponent.reset();
     mbUpToDate = false;
 }

@@ -1,5 +1,6 @@
 #include "componentmanager.hpp"
 #include "engine.hpp"
+#include "entity.hpp"
 #include "displaycomponent.hpp"
 #include "positioncomponent.hpp"
 #include <iostream>
@@ -14,13 +15,12 @@ ComponentManager::ComponentManager(){
  * si ce n'est pas le cas la mise a jour ne sera pas effectué.
  * @return true si la mise à jour est effectuée, false sinon.
  */
-bool ComponentManager::bUpdateComponentFromEntity(){
+void ComponentManager::updateComponentFromEntity(){
 
-    bool breturn = true;
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
-    for( unsigned int i = 0 ; i < vectEntitycst.size() ; ++i ){
+    for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
         //si l'entité est à jour
-        if( vectEntitycst[ i ].bEntityIsUpToDate() )continue;
+        if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;
         const std::bitset< NUMBR_COMPONENT > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
         for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
             //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
@@ -32,8 +32,8 @@ bool ComponentManager::bUpdateComponentFromEntity(){
                 mVectComponent[ i * NUMBR_COMPONENT + j ].reset();
             }
         }
-
     }
+    mptrEngine -> setEntityUpToDate();
 }
 
 /**
@@ -62,11 +62,14 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
  * @brief ComponentManager::displayComponent Affichage des composant contenu dans le vector.
  */
 void ComponentManager::displayComponent()const{
-    std::cout << "DEBUT AFFICH COMPONENT\n";
+    std::cout << "DEBUT AFFICHAGE COMPONENT\n";
     for( unsigned int i = 0 ; i < mVectComponent.size() ; ++i ){
         if( ! mVectComponent[ i ] )continue;
-        std::cout << "i\n";
+        std::cout << "i::" << i << "\n";
+        mVectComponent[ i ] -> displayComponent();
     }
+    std::cout << "FIN AFFICHAGE COMPONENT\n";
+
 }
 
 /**

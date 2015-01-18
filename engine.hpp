@@ -22,13 +22,14 @@ private:
     ComponentManager mComponentManager;
 public:
     Engine();
-    const std::vector< Entity > & getVectEntity()const;
+    const std::vector<Entity> & getVectEntity()const;
     void synchronizeVectorEntity();
     void AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
+    void setEntityUpToDate();
     SystemManager &getSystemManager();
     ComponentManager &getComponentManager();
 };

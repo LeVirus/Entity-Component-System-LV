@@ -7,6 +7,7 @@
  */
 Engine::Engine(){
     mSystemManager.linkEngine( this );
+    mComponentManager.linkEngineToComponentManager( this );
 }
 
 /**
@@ -21,7 +22,7 @@ void Engine::AddEntity(){
  * @brief Engine::getVectEntity Fonction retournant le vector d'entité en référence constante.
  * @return Une référence constante du vector d'entité.
  */
-const std::vector< Entity > & Engine::getVectEntity()const{
+const std::vector<Entity> & Engine::getVectEntity()const{
    return mVectEntity;
 }
 
@@ -45,12 +46,22 @@ bool Engine::bRmEntity( unsigned int uiIdEntity ){
  * @brief Engine::displayVectEntity fonction d'affichage des entités présente dans le vector.
  */
 void Engine::displayVectEntity()const{
-    std::cout << "DEBUT AFFICHAGE" << std::endl;
-
+    std::cout << "DEBUT AFFICHAGE\n" ;
+    std::cout << "Taille vector::  " << mVectEntity.size() << "\n" ;
     for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
         mVectEntity[ i ].displayEntity();
     }
-    std::cout << "FIN AFFICHAGE" << std::endl;
+    std::cout << "FIN AFFICHAGE\n" ;
+}
+
+/**
+ * @brief Engine::setEntityUpToDate Appel de la fonction setUpToDate sur toutes les entités.
+ */
+void Engine::setEntityUpToDate(){
+    for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
+        //informer l'entité que celle ci est à jour dans ComponentManager
+        mVectEntity[ i ] . setUpToDate();
+    }
 }
 
 /**

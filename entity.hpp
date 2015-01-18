@@ -21,7 +21,7 @@ private:
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
     bool mbActive, mbUpToDate;
 public:
-    std::vector< std::unique_ptr< Component > > mVectComponent;
+    //std::vector< std::unique_ptr< Component > > mVectComponent;
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
 
     Entity();
@@ -30,30 +30,12 @@ public:
     bool ComponentExist( unsigned int uiTypeComponent )const;
     bool bEntityIsUpToDate()const;
 
+    void setUpToDate();
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );
     bool bRmComponent( unsigned int uiTypeComponent );
     void RmAllComponent();
     bool bEntityIsActive()const;
-
-    /**
-     * @brief Entity::searchComponentByType
-     * Fonction renvoyant la référence du contenant recherché, la fonction
-     * ComponentExist vérifie si le composant existe dans l'entité, et la fonction courante
-     * renvoie le composant avec un static_cast.
-     * @param uiTypeComponent le type de composant a rechercher.
-     * @return la référence du composant recherché.
-     */
-    template < typename componentTemplate >
-
-    componentTemplate &searchComponentByType( unsigned int uiTypeComponent ){
-
-        if( ! ComponentExist( uiTypeComponent ) )return;
-        static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
-
-        return static_cast< componentTemplate& >( *mVectComponent[ uiTypeComponent ] );
-    }
-
 };
 
 #endif // ENTITY_HPP

@@ -14,7 +14,7 @@ private:
     std::vector< std::unique_ptr< Component > > mVectComponent;
 public:
     ComponentManager();
-    bool bUpdateComponentFromEntity();
+    void updateComponentFromEntity();
     void linkEngineToComponentManager( Engine *ptrEngine );
     void instanciateComponent( unsigned int uiNumCase );
     void displayComponent()const;
