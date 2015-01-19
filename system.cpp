@@ -51,9 +51,11 @@ void System::refreshEntity(){
  * Affichage des composants nécessaire au système et descriptif de la fonction du système.
  */
 void System::displaySystem()const{
-    for( unsigned int i = 0 ; i < 2/*vectEntity.size()*/ ; ++i ){
-        std::cout << mVectNumEntity[ i ] << std::endl;
+    std::cout << "Affichage numéro des entités a traiter par le systeme \n" ;
+    for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
+        std::cout << mVectNumEntity[ i ] ;
     }
+    std::cout << "\n";
 }
 
 /**

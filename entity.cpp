@@ -8,8 +8,7 @@
  * @brief Entity::Entity Constructeur de la classe Engine.
  */
 Entity::Entity(){
-    mbActive = false;
-    mbUpToDate = false;
+    initEntity();
 }
 
 /**
@@ -17,9 +16,36 @@ Entity::Entity(){
  * @param uiIdEntity L'identifiant à attribuer à la nouvelle entité.
  */
 Entity::Entity( unsigned int uiIdEntity ){
-    mbActive = false;
     mUiIDEntity = uiIdEntity;
+    initEntity();
+}
+
+/**
+ * @brief initEntity Fonction initialisant les variables booléenne de la classe Entity
+ */
+void Entity::initEntity(){
+    mbActive = true;
     mbUpToDate = false;
+    bEntityInUse = true;
+}
+
+/**
+ * @brief Entity::bInUse Fonction informant si l'emplacement de l'entité est utilisé.
+ * @return Le booléen bEntityInUse.
+ */
+bool Entity::bInUse()const{
+    return bEntityInUse;
+}
+
+/**
+ * @brief setEntityFree Définie l'emplacement de l'entité comme libre:
+ * en cas d'ajout d'une nouvelle entité cette dernière pourra être placé dans cet emplacement.
+ * mBitSetComponent est remis à 0.
+ */
+void Entity::modifyEntityFree( bool bFree ){
+    bEntityInUse = bFree;
+    if( bEntityInUse )mBitSetComponent.reset();
+    else initEntity();
 }
 
 /**
@@ -97,13 +123,14 @@ bool Entity::bEntityIsActive()const{
  * @return true si le composant a été créé avec succés, false sinon.
  */
 bool Entity::bAddComponent( unsigned int uiTypeComponent ){
-    bool breturn = false;
-    if( ! ComponentExist( uiTypeComponent ) ){
-        breturn = true;
+    bool bReturn = true;
+     if( ! bInUse() || uiTypeComponent >= mBitSetComponent . size() )bReturn = false;
+    if( bReturn && ! ComponentExist( uiTypeComponent ) ){
+        bReturn = true;
         mBitSetComponent[ uiTypeComponent ] = true;
         mbUpToDate = false;
     }
-    return breturn;
+    return bReturn;
 }
 
 /**
@@ -113,7 +140,7 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
  */
 bool Entity::bRmComponent( unsigned int uiTypeComponent ){
     bool breturn = false;
-    if( ComponentExist( uiTypeComponent ) ){
+    if( bInUse() && ComponentExist( uiTypeComponent ) ){
         mBitSetComponent[ uiTypeComponent ] = false;
         breturn = true;
         mbUpToDate = false;

@@ -19,7 +19,7 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
-    bool mbActive, mbUpToDate;
+    bool mbActive, mbUpToDate, bEntityInUse;
 public:
     //std::vector< std::unique_ptr< Component > > mVectComponent;
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
@@ -29,7 +29,10 @@ public:
     void displayEntity()const;
     bool ComponentExist( unsigned int uiTypeComponent )const;
     bool bEntityIsUpToDate()const;
+    bool bInUse()const;
+    void initEntity();
 
+    void modifyEntityFree( bool bFree );
     void setUpToDate();
     void attributeIDEntity( unsigned int uiIdEntity );
     bool bAddComponent( unsigned int uiTypeComponent );

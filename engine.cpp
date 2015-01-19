@@ -15,6 +15,12 @@ Engine::Engine(){
  * @return true si l'entité a été créée avec succés, false sinon.
  */
 void Engine::AddEntity(){
+    for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
+       if( ! mVectEntity[ i ] . bInUse() ){
+           mVectEntity[ i ] . modifyEntityFree( false );
+           return;
+       }
+    }
     mVectEntity.push_back( Entity( mVectEntity.size() ) );
 }
 
@@ -28,15 +34,14 @@ const std::vector<Entity> & Engine::getVectEntity()const{
 
 /**
  * @brief Engine::bRmEntity Fonction de suppression d'une entité dans le conteneur.
- * La fonction synchronizeVectorEntity est appelée.
+ * L'entité n'est pas supprimée de la mémoire, le booléen bEntityInUse est mis à true.
  * @param uiIdEntity Le numéro d'identifiant unique qui sera attribué à l'entité.
  * @return true si l'entité a été supprimé avec succés, false sinon.
  */
 bool Engine::bRmEntity( unsigned int uiIdEntity ){
     bool bReturn = false;
     if( uiIdEntity < mVectEntity.size() ){
-        mVectEntity.erase( mVectEntity.begin() + uiIdEntity );
-        synchronizeVectorEntity();
+        mVectEntity[ uiIdEntity ] . modifyEntityFree( true );
         bReturn = true;
     }
     return bReturn;
@@ -49,7 +54,8 @@ void Engine::displayVectEntity()const{
     std::cout << "DEBUT AFFICHAGE\n" ;
     std::cout << "Taille vector::  " << mVectEntity.size() << "\n" ;
     for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
-        mVectEntity[ i ].displayEntity();
+        if( mVectEntity[ i ] . bInUse() )std::cout << i << "  Entité libre" ;
+        else mVectEntity[ i ].displayEntity();
     }
     std::cout << "FIN AFFICHAGE\n" ;
 }
@@ -88,7 +94,7 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
         std::cout << "false" << std::endl;
     }
     //vérification si le composant a ajouter n'est pas déja dans l'entité
-    if( bReturn && ! mVectEntity[ uiIdEntity ].bAddComponent( uiTypeComponent ) ){
+    if( ! bReturn || ! mVectEntity[ uiIdEntity ].bAddComponent( uiTypeComponent ) ){
         std::cout << "false2" << std::endl;
         bReturn = false;
     }

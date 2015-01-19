@@ -106,9 +106,7 @@ bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
 void SystemManager::bExecAllSystem(){
     for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
         if( mVectSystem[ i ] ){
-            //mVectSystem[ i ] ->  refreshEntity();//MOdifier execsystem
             mVectSystem[ i ] ->  execSystem();
-            //mVectSystem[ i ] ->  displaySystem();
         }
     }
 }
