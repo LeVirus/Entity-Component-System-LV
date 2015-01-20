@@ -26,26 +26,32 @@ Entity::Entity( unsigned int uiIdEntity ){
 void Entity::initEntity(){
     mbActive = true;
     mbUpToDate = false;
-    bEntityInUse = true;
+    mbEntityInUse = true;
 }
 
 /**
  * @brief Entity::bInUse Fonction informant si l'emplacement de l'entité est utilisé.
- * @return Le booléen bEntityInUse.
+ * @return Le booléen mbEntityInUse.
  */
 bool Entity::bInUse()const{
-    return bEntityInUse;
+    return mbEntityInUse;
 }
 
 /**
- * @brief setEntityFree Définie l'emplacement de l'entité comme libre:
+ * @brief modifyEntityInUse Définie l'emplacement de l'entité comme libre:
  * en cas d'ajout d'une nouvelle entité cette dernière pourra être placé dans cet emplacement.
  * mBitSetComponent est remis à 0.
+ * @param bInUse La nouvelle valeur à associé à mbEntityInUse
  */
-void Entity::modifyEntityFree( bool bFree ){
-    bEntityInUse = bFree;
-    if( bEntityInUse )mBitSetComponent.reset();
-    else initEntity();
+void Entity::modifyEntityInUse( bool bInUse ){
+    if( bInUse ){
+        mBitSetComponent.reset();
+        mbEntityInUse = bInUse;
+    }
+    else {
+        initEntity();
+        mbEntityInUse = bInUse;
+    }
 }
 
 /**

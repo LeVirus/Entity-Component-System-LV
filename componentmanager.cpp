@@ -33,7 +33,6 @@ void ComponentManager::updateComponentFromEntity(){
             }
         }
     }
-    mptrEngine -> setEntityUpToDate();
 }
 
 /**

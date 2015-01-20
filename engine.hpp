@@ -28,8 +28,10 @@ public:
     bool bRmEntity( unsigned int uiIdEntity );
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
+    bool bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
     void setEntityUpToDate();
+    void execIteration();
     SystemManager &getSystemManager();
     ComponentManager &getComponentManager();
 };

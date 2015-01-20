@@ -17,7 +17,7 @@ Engine::Engine(){
 void Engine::AddEntity(){
     for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
        if( ! mVectEntity[ i ] . bInUse() ){
-           mVectEntity[ i ] . modifyEntityFree( false );
+           mVectEntity[ i ] . modifyEntityInUse( true );
            return;
        }
     }
@@ -41,7 +41,7 @@ const std::vector<Entity> & Engine::getVectEntity()const{
 bool Engine::bRmEntity( unsigned int uiIdEntity ){
     bool bReturn = false;
     if( uiIdEntity < mVectEntity.size() ){
-        mVectEntity[ uiIdEntity ] . modifyEntityFree( true );
+        mVectEntity[ uiIdEntity ] . modifyEntityInUse( false );
         bReturn = true;
     }
     return bReturn;
@@ -54,7 +54,7 @@ void Engine::displayVectEntity()const{
     std::cout << "DEBUT AFFICHAGE\n" ;
     std::cout << "Taille vector::  " << mVectEntity.size() << "\n" ;
     for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
-        if( mVectEntity[ i ] . bInUse() )std::cout << i << "  Entité libre" ;
+        if( ! mVectEntity[ i ] . bInUse() )std::cout << i << "  Entité libre\n" ;
         else mVectEntity[ i ].displayEntity();
     }
     std::cout << "FIN AFFICHAGE\n" ;
@@ -71,6 +71,18 @@ void Engine::setEntityUpToDate(){
 }
 
 /**
+ * @brief Engine::execIteration Exécution d'une itération. Appel des fonctions de mise a jours des composants,
+ * d'exécution des systèmes(en passant par une mise à jour des entités à traiter), et modification
+ * de l'état(booléen) des entités en "UpToDate".
+ */
+void Engine::execIteration(){
+    mComponentManager . updateComponentFromEntity();
+    mSystemManager . bExecAllSystem();
+    setEntityUpToDate();
+}
+
+
+/**
  * @brief Engine::synchronizeVectorEntity Fonction de synchronisation entre les identifiants unique
  * des entités et les numéro de case du vector.
  */
@@ -81,9 +93,10 @@ void Engine::synchronizeVectorEntity(){
 }
 
 /**
- * @brief Engine::bAddComponentToEntity Fonction d'ajout d'un composant a une entité présente dans Engine.
- * La fonction vérifie si l'entité est bien présente dans le vector, et si le composant n'est pas déja dans l'entité.
+ * @brief Engine::bAddComponentToEntity Fonction d'ajout d'un composant à une entité présente dans Engine.
+ * La fonction vérifie si l'entité est bien présente dans le vector.
  * @param uiIdEntity Le numéro de l'entité à modifier.
+ * @param uiTypeComponent Le numéro du type de composant à ajouter à l'entité.
  * @return true si le composant a été ajouté avec succés, false sinon.
  */
 bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent ){
@@ -101,6 +114,27 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
     return bReturn;
 }
 
+/**
+ * @brief Engine::bRmComponentToEntity Fonction de suppression d'un component à une entité.
+ * La fonction vérifie si l'entité est bien présente dans le vector.
+ * @param uiIdEntity Le numéro de l'entité à modifier.
+ * @param uiTypeComponent Le numéro du type de composant à ajouter à l'entité.
+ * @return true si le composant a bien été supprimé, false sinon.
+ */
+bool Engine::bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent ){
+    bool bReturn = true;
+    //vérification si l'entité demandé est bien dans le vector
+    if( uiIdEntity >= mVectEntity.size() ){
+        bReturn = false;
+        std::cout << "false" << std::endl;
+    }
+    //vérification si le composant a supprimer existe bien dans l'entité
+    if( ! bReturn || ! mVectEntity[ uiIdEntity ].bRmComponent( uiTypeComponent ) ){
+        std::cout << "false2" << std::endl;
+        bReturn = false;
+    }
+    return bReturn;
+}
 
 /**
  * @brief Engine::bRmAllEntity Fonction supprimant toutes les entitées présentes dans Engine.

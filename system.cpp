@@ -29,6 +29,7 @@ void System::refreshEntity(){
     const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
     for( unsigned int i = 0 ; i < vectEntity . size() ; ++i ){
+        if( vectEntity[ i ] . bEntityIsUpToDate() )continue;
         granted = true;
         //récupération du bitset de l'entité
         const std::bitset< NUMBR_COMPONENT > & bitSetEntity = vectEntity[ i ] . getEntityBitSet();
