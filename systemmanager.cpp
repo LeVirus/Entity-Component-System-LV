@@ -2,6 +2,7 @@
 #include "constantes.hpp"
 #include "displaysystem.hpp"
 #include <memory>
+#include <iostream>
 
 /**
  * @brief SystemManager::SystemManager Constructeur de la classe SystemManager.

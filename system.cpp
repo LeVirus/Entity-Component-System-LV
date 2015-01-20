@@ -8,7 +8,6 @@
  * @brief System::System Constructeur de la classe System
  */
 System::System(){
-    mVectNumEntity.resize( 50 );
 }
 
 /**
@@ -29,7 +28,6 @@ void System::refreshEntity(){
     const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
     for( unsigned int i = 0 ; i < vectEntity . size() ; ++i ){
-        if( vectEntity[ i ] . bEntityIsUpToDate() )continue;
         granted = true;
         //récupération du bitset de l'entité
         const std::bitset< NUMBR_COMPONENT > & bitSetEntity = vectEntity[ i ] . getEntityBitSet();
@@ -41,10 +39,15 @@ void System::refreshEntity(){
             }
         }
         if( granted ){
+            if( count >=  mVectNumEntity.size() ){
+               mVectNumEntity.resize( count + 1 );
+            }
             mVectNumEntity[ count ] = i;
             count++;
+            std::cout << "num Entité System::" << i << "\n";
         }
     }
+    if( mVectNumEntity.size() != count )mVectNumEntity.resize( count );
 }
 
 /**
