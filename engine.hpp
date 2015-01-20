@@ -24,7 +24,7 @@ public:
     Engine();
     const std::vector<Entity> & getVectEntity()const;
     void synchronizeVectorEntity();
-    void AddEntity();
+    unsigned int AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );

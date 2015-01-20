@@ -44,13 +44,12 @@ bool Entity::bInUse()const{
  * @param bInUse La nouvelle valeur à associé à mbEntityInUse
  */
 void Entity::modifyEntityInUse( bool bInUse ){
-    if( bInUse ){
+    if( ! bInUse ){
         mBitSetComponent.reset();
         mbEntityInUse = bInUse;
     }
     else {
         initEntity();
-        mbEntityInUse = bInUse;
     }
 }
 

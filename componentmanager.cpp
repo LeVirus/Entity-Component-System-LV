@@ -6,7 +6,6 @@
 #include <iostream>
 
 ComponentManager::ComponentManager(){
-    mVectComponent.resize( 20 );
 }
 
 /**
@@ -16,8 +15,10 @@ ComponentManager::ComponentManager(){
  * @return true si la mise à jour est effectuée, false sinon.
  */
 void ComponentManager::updateComponentFromEntity(){
-
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
+    if( mVectComponent.size() < vectEntitycst.size() * 4 ){
+        mVectComponent.resize( vectEntitycst.size() * 4 );
+    }
     for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
         //si l'entité est à jour
         if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;

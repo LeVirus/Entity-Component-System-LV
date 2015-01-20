@@ -12,16 +12,17 @@ Engine::Engine(){
 
 /**
  * @brief Engine::bAddEntity Fonction d'ajout d'une entité dans le conteneur.
- * @return true si l'entité a été créée avec succés, false sinon.
+ * @return true Le numéro de case ou a été créé ou placer la nouvelle entité.
  */
-void Engine::AddEntity(){
+unsigned int Engine::AddEntity(){
     for( unsigned int i = 0 ; i < mVectEntity.size() ; ++i ){
        if( ! mVectEntity[ i ] . bInUse() ){
            mVectEntity[ i ] . modifyEntityInUse( true );
-           return;
+           return i;
        }
     }
     mVectEntity.push_back( Entity( mVectEntity.size() ) );
+    return mVectEntity.size() - 1;
 }
 
 /**
