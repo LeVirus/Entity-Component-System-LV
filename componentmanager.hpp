@@ -35,8 +35,8 @@ public:
 
     componentTemplate &searchComponentByType( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
 
-        if( ( uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ) <  mVectComponent.size() &&
-                mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )return;
+        //if( ( uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ) <  mVectComponent.size() &&
+          //      mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )return NULL;
         static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
 
         return static_cast< componentTemplate& >( *mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] );

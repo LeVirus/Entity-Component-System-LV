@@ -1,7 +1,12 @@
 #include "displaysystem.hpp"
 #include "constantes.hpp"
+#include "engine.hpp"
 #include <iostream>
 
+/**
+ * @brief DisplaySystem::DisplaySystem Constructeur de la classe DisplaySystem.
+ * Ajout des composants au système.
+ */
 DisplaySystem::DisplaySystem(){
     if( bAddComponentToSystem( POSITION_COMPONENT ) ){
         std::cout << "DisplaySystem ajout positionComponent." << std::endl;
@@ -19,4 +24,7 @@ DisplaySystem::DisplaySystem(){
  */
 void DisplaySystem::execSystem(){
     System::execSystem();
+
+    DisplayComponent & displayComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
 }

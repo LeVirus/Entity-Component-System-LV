@@ -1,6 +1,7 @@
 #ifndef DISPLAYSYSTEM_HPP
 #define DISPLAYSYSTEM_HPP
 
+#include "displaycomponent.hpp"
 #include "system.hpp"
 
 /**
