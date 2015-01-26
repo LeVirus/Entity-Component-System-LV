@@ -25,6 +25,7 @@ DisplaySystem::DisplaySystem(){
 void DisplaySystem::execSystem(){
     System::execSystem();
 
-    DisplayComponent & displayComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
-            searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
+    DisplayComponent & displayComp = stairwayToComponentManager() . searchComponentByType < DisplayComponent > ( 0, DISPLAY_COMPONENT );
+
+    displayComp .displayComponent();
 }

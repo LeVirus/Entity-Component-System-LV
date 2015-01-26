@@ -95,3 +95,13 @@ void System::execSystem(){
 bool System::bComponentAlreadyExist( unsigned int uiTypeComponent ){
     return mBitSetComponentSystem[ uiTypeComponent ];
 }
+
+/**
+ * @brief System::stairwayToComponentManager Fonction d'envoie d'une référence vers le gestionnaire de composant.
+ * (Cette fonction a été faite pour une question de lisibilité du code).
+ * @return Une référence vers le gestionnaire de composant( mComponentManager ).
+ */
+ComponentManager & System::stairwayToComponentManager(){
+    mptrSystemManager -> getptrEngine() -> getComponentManager();
+        //searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
+}

@@ -2,6 +2,7 @@
 #define SYSTEM_HPP
 
 #include "systemmanager.hpp"
+#include "componentmanager.hpp"
 #include <vector>
 #include <bitset>
 #include <memory>
@@ -26,6 +27,7 @@ public:
     virtual void execSystem();
     void displaySystem()const;
     bool bComponentAlreadyExist( unsigned int uiTypeComponent );
+    ComponentManager & stairwayToComponentManager();
 
     inline unsigned int uiGetPriority()const{ return muiPriority; }
     inline unsigned int uiGetIdSystem()const{ return muiIdSystem; }
