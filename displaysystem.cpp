@@ -9,10 +9,10 @@
  */
 DisplaySystem::DisplaySystem(){
     if( bAddComponentToSystem( POSITION_COMPONENT ) ){
-        std::cout << "DisplaySystem ajout positionComponent." << std::endl;
+        std::cout << "DisplaySystem ajout positionComponent." << "\n";
     }
     if( bAddComponentToSystem( DISPLAY_COMPONENT ) ){
-        std::cout << "DisplaySystem ajout displayComponent." << std::endl;
+        std::cout << "DisplaySystem ajout displayComponent." << "\n";
     }
 }
 
@@ -24,8 +24,13 @@ DisplaySystem::DisplaySystem(){
  */
 void DisplaySystem::execSystem(){
     System::execSystem();
-
-    DisplayComponent & displayComp = stairwayToComponentManager() . searchComponentByType < DisplayComponent > ( 0, DISPLAY_COMPONENT );
-
-    displayComp .displayComponent();
+    for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
+        DisplayComponent * displayComp = stairwayToComponentManager() . searchComponentByType < DisplayComponent > ( 2, DISPLAY_COMPONENT );
+        std::cout << mVectNumEntity[ i ] << "\n";
+        if( ! displayComp ){
+            std::cout << "erreur pointeur NULL" << mVectNumEntity[ i ] << "\n";
+            continue;
+        }
+        displayComp -> displayComponent();
+    }
 }

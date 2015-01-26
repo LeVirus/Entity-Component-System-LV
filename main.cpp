@@ -19,7 +19,7 @@ int main(){
     engine.displayVectEntity();
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
     engine.execIteration();
-    engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
+    //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
     engine.execIteration();
     return 0;
 }
