@@ -8,11 +8,11 @@
  * Ajout des composants au système.
  */
 DisplaySystem::DisplaySystem(){
-    if( bAddComponentToSystem( POSITION_COMPONENT ) ){
-        std::cout << "DisplaySystem ajout positionComponent." << "\n";
+    if( ! bAddComponentToSystem( POSITION_COMPONENT ) ){
+        std::cout << "Erreur displaySystem ajout positionComponent." << "\n";
     }
-    if( bAddComponentToSystem( DISPLAY_COMPONENT ) ){
-        std::cout << "DisplaySystem ajout displayComponent." << "\n";
+    if( ! bAddComponentToSystem( DISPLAY_COMPONENT ) ){
+        std::cout << "Erreur displaySystem ajout displayComponent." << "\n";
     }
 }
 
@@ -31,6 +31,5 @@ void DisplaySystem::execSystem(){
             std::cout << "erreur pointeur NULL" << mVectNumEntity[ i ] << "\n";
             continue;
         }
-        displayComp -> displayComponent();
     }
 }

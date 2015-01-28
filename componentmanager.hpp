@@ -26,7 +26,6 @@ public:
      * Fonction renvoyant la référence du contenant recherché.
      * Une vérification est effectué avant l'envoie:
      * -Les paramètres renvoie bien a une case du tableau(pas de dépassement de mémoire).
-     * -La case est bien un composant instancié.
      * La fonction renvoie le composant avec un static_cast.
      * @param uiTypeComponent le type de composant a rechercher.
      * @return la référence du composant recherché.

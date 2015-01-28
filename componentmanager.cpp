@@ -69,7 +69,6 @@ void ComponentManager::displayComponent()const{
         mVectComponent[ i ] -> displayComponent();
     }
     std::cout << "FIN AFFICHAGE COMPONENT\n";
-
 }
 
 /**

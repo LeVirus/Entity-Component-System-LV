@@ -66,11 +66,24 @@ void Entity::setUpToDate(){
  * Elle affiche l'ID de l'entité ainsi que la liste de ses composants.
  */
 void Entity::displayEntity()const{
-   std::cout << "Identifiant::" << mUiIDEntity << "\n";
-   for( unsigned int i = 0 ; i < mBitSetComponent.size() ; ++i ){
-       std::cout << mBitSetComponent[ i ];
-   }
-   std::cout << "\n";
+    std::cout << "Identifiant::" << mUiIDEntity << "\n";
+    for( unsigned int i = 0 ; i < mBitSetComponent.size() ; ++i ){
+        switch( i ){
+        case DISPLAY_COMPONENT :{
+            std::cout << "Display Component::";
+            break;
+        }
+        case POSITION_COMPONENT :{
+            std::cout << "Position Component::";
+            break;
+        }
+        default :{
+            std::cout << "MISSINGNO";
+            break;
+        }
+        }
+        std::cout << mBitSetComponent[ i ] << "\n";
+    }
 }
 
 /**
