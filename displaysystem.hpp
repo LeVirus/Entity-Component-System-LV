@@ -14,7 +14,7 @@ class DisplaySystem : public System{
 public:
     DisplaySystem();
     void execSystem() override;
-
+    const std::map< DisplayComponent *, PositionComponent * > & getMapComponentDisplaySystem()const;
 };
 
 #endif // DISPLAYSYSTEM_HPP

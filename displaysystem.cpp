@@ -42,3 +42,13 @@ void DisplaySystem::execSystem(){
         }
     }
 }
+
+/**
+ * @brief DisplaySystem::getMapComponentDisplaySystem Fonction renvoyant une référence constante du conteneur
+ * map contenant les pointeurs des composants nécessaire au système "DisplaySystem".
+ * @return référence constante de mMapComponentDisplaySystem.
+ */
+const std::map< DisplayComponent *, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
+    return mMapComponentDisplaySystem;
+}
+

@@ -83,7 +83,7 @@ bool System::bAddComponentToSystem( unsigned int uiTypeComponent ){
  */
 void System::execSystem(){
     refreshEntity();
-    displaySystem();
+    //displaySystem();
 }
 
 /**
@@ -102,6 +102,6 @@ bool System::bComponentAlreadyExist( unsigned int uiTypeComponent ){
  * @return Une référence vers le gestionnaire de composant( mComponentManager ).
  */
 ComponentManager & System::stairwayToComponentManager(){
-    mptrSystemManager -> getptrEngine() -> getComponentManager();
+   return mptrSystemManager -> getptrEngine() -> getComponentManager();
         //searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
 }
