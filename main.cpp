@@ -22,20 +22,29 @@ int main(){
     engine.bRmEntity( 0 );
     //engine.displayVectEntity();
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
+    compMan . updateComponentFromEntity();
+    //engine.execIteration();
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 1, POSITION_COMPONENT );
-    posComp -> mfPositionX = 100;
-    posComp -> mfPositionY = 158;
+    if( posComp ){
+        posComp -> mfPositionX = 100;
+        posComp -> mfPositionY = 158;
+    }
     PositionComponent * posComp2 = compMan . searchComponentByType< PositionComponent >( 2, POSITION_COMPONENT );
-    posComp2 -> mfPositionX = 10;
-    posComp2 -> mfPositionY = 298;
+    if( posComp2 ){
+        posComp2 -> mfPositionX = 10;
+        posComp2 -> mfPositionY = 298;
+    }
     DisplayComponent * dispComp = compMan . searchComponentByType< DisplayComponent >( 1, DISPLAY_COMPONENT );
-    dispComp -> muiNumSprite = 3;
+    if( dispComp ){
+        dispComp -> muiNumSprite = 3;
+    }
     DisplayComponent * dispComp2 = compMan . searchComponentByType< DisplayComponent >( 2, DISPLAY_COMPONENT );
-    dispComp2 -> muiNumSprite = 8;
+    if( dispComp2 ){
+        dispComp2 -> muiNumSprite = 8;
+    }
     compMan . displayComponent();
 
     //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
     engine.execIteration();
     return 0;
 }
-

@@ -1,4 +1,5 @@
 #include "displaysystem.hpp"
+#include "positioncomponent.hpp"
 #include "constantes.hpp"
 #include "engine.hpp"
 #include <iostream>
@@ -25,11 +26,19 @@ DisplaySystem::DisplaySystem(){
 void DisplaySystem::execSystem(){
     System::execSystem();
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
-        DisplayComponent * displayComp = stairwayToComponentManager() . searchComponentByType < DisplayComponent > ( 2, DISPLAY_COMPONENT );
         std::cout << mVectNumEntity[ i ] << "\n";
-        if( ! displayComp ){
-            std::cout << "erreur pointeur NULL" << mVectNumEntity[ i ] << "\n";
-            continue;
+        DisplayComponent * displayComp = stairwayToComponentManager() .
+                searchComponentByType < DisplayComponent > ( mVectNumEntity[ i ], DISPLAY_COMPONENT );
+        if( displayComp ){
+            std::cout << " pointeur non NULL dis" << "\n";
+        }
+        PositionComponent * positionComp = stairwayToComponentManager() .
+                searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
+        if( positionComp ){
+            std::cout << " pointeur non NULL pos" << "\n";
+        }
+        if( displayComp && positionComp ){
+            mMapComponentDisplaySystem.insert( std::map< DisplayComponent *,PositionComponent * >::value_type( displayComp, positionComp ) );
         }
     }
 }
