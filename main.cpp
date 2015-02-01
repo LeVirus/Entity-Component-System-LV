@@ -4,6 +4,7 @@
 #include "componentmanager.hpp"
 #include "positioncomponent.hpp"
 #include "displaycomponent.hpp"
+#include "displaysystem.hpp"
 
 int main(){
 
@@ -46,5 +47,12 @@ int main(){
 
     //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
     engine.execIteration();
+    /*DisplaySystem *displaySystem =*/const std::map< DisplayComponent *,PositionComponent * > & mapDisplay = engine .getSystemManager().
+            searchSystemByType < DisplaySystem > ( DISPLAY_SYSTEM ) -> getMapComponentDisplaySystem();
+    for( std::map< DisplayComponent *,PositionComponent * >::const_iterator it = mapDisplay.begin() ;
+         it != mapDisplay.end() ; ++it ){
+        ( *it ) . first -> displayComponent();
+        ( *it ) . second -> displayComponent();
+    }
     return 0;
 }

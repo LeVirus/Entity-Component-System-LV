@@ -3,9 +3,11 @@
 
 
 #include <vector>
+#include <map>
 #include "systemmanager.hpp"
 #include "entity.hpp"
 #include "componentmanager.hpp"
+
 
 /**
  * @brief La classe Engine est la classe de base de la bibliothèque.

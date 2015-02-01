@@ -28,7 +28,7 @@ public:
      * -Les paramètres renvoie bien a une case du tableau(pas de dépassement de mémoire).
      * La fonction renvoie le composant avec un static_cast.
      * @param uiTypeComponent le type de composant a rechercher.
-     * @return la référence du composant recherché.
+     * @return Un pointeur vers le composant demandé, NULL en cas de paramètre invalide.
      */
     template < typename componentTemplate >
 
