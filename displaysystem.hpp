@@ -10,11 +10,11 @@
  * @brief La classe DisplaySystem permet d'afficher les entités prévues à cet effet.
  */
 class DisplaySystem : public System{
-    std::map< DisplayComponent *, PositionComponent * > mMapComponentDisplaySystem;
+    std::multimap< unsigned int, PositionComponent * > mMultiMapComponentDisplaySystem;
 public:
     DisplaySystem();
     void execSystem() override;
-    const std::map< DisplayComponent *, PositionComponent * > & getMapComponentDisplaySystem()const;
+    const std::multimap< unsigned int, PositionComponent * > & getMapComponentDisplaySystem()const;
 };
 
 #endif // DISPLAYSYSTEM_HPP

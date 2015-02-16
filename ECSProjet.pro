@@ -30,8 +30,8 @@ HEADERS += \
     component.hpp \
     node.hpp \
     displaycomponent.hpp \
-    constantes.hpp \
     positioncomponent.hpp \
     displaysystem.hpp \
-    componentmanager.hpp
+    componentmanager.hpp \
+    ECSconstantes.hpp
 

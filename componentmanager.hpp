@@ -1,7 +1,7 @@
 #ifndef COMPONENTMANAGER_H
 #define COMPONENTMANAGER_H
 
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 #include "component.hpp"
 #include <vector>
 #include <memory>

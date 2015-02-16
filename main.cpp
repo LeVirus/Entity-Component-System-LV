@@ -1,6 +1,6 @@
 #include <iostream>
 #include "engine.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 #include "componentmanager.hpp"
 #include "positioncomponent.hpp"
 #include "displaycomponent.hpp"
@@ -22,7 +22,7 @@ int main(){
     //engine.bRmComponentToEntity( 1, POSITION_COMPONENT );
     engine.bRmEntity( 0 );
     //engine.displayVectEntity();
-    engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM ); // std::cout << "sdf" << std::endl;
+    engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM ); // std::cout << "sdf\n";
     compMan . updateComponentFromEntity();
     //engine.execIteration();
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 1, POSITION_COMPONENT );
@@ -37,21 +37,22 @@ int main(){
     }
     DisplayComponent * dispComp = compMan . searchComponentByType< DisplayComponent >( 1, DISPLAY_COMPONENT );
     if( dispComp ){
-        dispComp -> muiNumSprite = 3;
+        dispComp -> muiNumSprite = 1;
     }
     DisplayComponent * dispComp2 = compMan . searchComponentByType< DisplayComponent >( 2, DISPLAY_COMPONENT );
     if( dispComp2 ){
-        dispComp2 -> muiNumSprite = 8;
+        dispComp2 -> muiNumSprite = 1;
     }
     compMan . displayComponent();
 
     //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
     engine.execIteration();
-    /*DisplaySystem *displaySystem =*/const std::map< DisplayComponent *,PositionComponent * > & mapDisplay = engine .getSystemManager().
+    /*DisplaySystem *displaySystem =*/const std::multimap< unsigned int, PositionComponent * > & multiMapDisplay = engine .getSystemManager().
             searchSystemByType < DisplaySystem > ( DISPLAY_SYSTEM ) -> getMapComponentDisplaySystem();
-    for( std::map< DisplayComponent *,PositionComponent * >::const_iterator it = mapDisplay.begin() ;
-         it != mapDisplay.end() ; ++it ){
-        ( *it ) . first -> displayComponent();
+    for( std::multimap< unsigned int, PositionComponent * >::const_iterator it = multiMapDisplay.begin() ;
+         it != multiMapDisplay.end() ; ++it ){
+        std::cout << ( *it ) . first << "  numSprite\n";
+        //( *it ) . first -> displayComponent();
         ( *it ) . second -> displayComponent();
     }
     return 0;

@@ -3,7 +3,7 @@
 
 //#include <SFML/Graphics.hpp>
 #include "component.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 
 /**
  * @brief La structure DisplayComponent représente la position d'une entité.

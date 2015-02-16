@@ -2,7 +2,7 @@
 #define POSITIONCOMPONENT_HPP
 
 #include "component.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 
 /**
  * @brief La structure PositionComponent représente la position d'une entité.

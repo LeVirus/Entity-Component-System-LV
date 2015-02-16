@@ -5,7 +5,7 @@
 #include <bitset>
 #include <memory>
 #include "component.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.

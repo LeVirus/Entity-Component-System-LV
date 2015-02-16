@@ -1,6 +1,6 @@
 #include "displaysystem.hpp"
 #include "positioncomponent.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 #include "engine.hpp"
 #include <iostream>
 
@@ -38,7 +38,8 @@ void DisplaySystem::execSystem(){
             std::cout << " pointeur non NULL pos" << "\n";
         }
         if( displayComp && positionComp ){
-            mMapComponentDisplaySystem.insert( std::map< DisplayComponent *,PositionComponent * >::value_type( displayComp, positionComp ) );
+            mMultiMapComponentDisplaySystem.insert(
+                        std::multimap< unsigned int,PositionComponent * >::value_type( displayComp ->muiGetTypeComponent(), positionComp ) );
         }
     }
 }
@@ -46,9 +47,9 @@ void DisplaySystem::execSystem(){
 /**
  * @brief DisplaySystem::getMapComponentDisplaySystem Fonction renvoyant une référence constante du conteneur
  * map contenant les pointeurs des composants nécessaire au système "DisplaySystem".
- * @return référence constante de mMapComponentDisplaySystem.
+ * @return référence constante de mMultiMapComponentDisplaySystem.
  */
-const std::map< DisplayComponent *, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
-    return mMapComponentDisplaySystem;
+const std::multimap< unsigned int, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
+    return mMultiMapComponentDisplaySystem;
 }
 

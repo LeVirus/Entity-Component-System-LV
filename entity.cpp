@@ -1,6 +1,6 @@
 #include <iostream>
 #include "entity.hpp"
-#include "constantes.hpp"
+#include "ECSconstantes.hpp"
 #include "displaycomponent.hpp"
 #include "positioncomponent.hpp"
 
