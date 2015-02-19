@@ -15,8 +15,8 @@ struct PositionComponent : public Component{
     }
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "mfPositionX" << mfPositionX << std::endl;
-        std::cout << "mfPositionY" << mfPositionY << std::endl;
+        std::cout << "mfPositionX" << mfPositionX << "\n";
+        std::cout << "mfPositionY" << mfPositionY << "\n";
     }
     float mfPositionX, mfPositionY;
 

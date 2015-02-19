@@ -1,7 +1,6 @@
 #ifndef DISPLAYCOMPONENT_HPP
 #define DISPLAYCOMPONENT_HPP
 
-//#include <SFML/Graphics.hpp>
 #include "component.hpp"
 #include "ECSconstantes.hpp"
 
@@ -15,11 +14,9 @@ struct DisplayComponent : public Component{
     }
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "muiNumSprite" << muiNumSprite << std::endl;
+        std::cout << "muiNumSprite" << muiNumSprite << "\n";
     }
     unsigned int muiNumSprite;
-
-    //sf::Sprite mSpriteComp;
 };
 
 #endif // DISPLAYCOMPONENT_HPP

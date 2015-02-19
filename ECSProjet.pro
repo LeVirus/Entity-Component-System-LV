@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     systemmanager.cpp \
     displaysystem.cpp \
     system.cpp \
-    componentmanager.cpp
+    componentmanager.cpp \
+    iasystem.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -28,10 +29,11 @@ HEADERS += \
     systemmanager.hpp \
     system.hpp \
     component.hpp \
-    node.hpp \
     displaycomponent.hpp \
     positioncomponent.hpp \
     displaysystem.hpp \
     componentmanager.hpp \
-    ECSconstantes.hpp
+    ECSconstantes.hpp \
+    iasystem.hpp \
+    physicscomponent.hpp
 
