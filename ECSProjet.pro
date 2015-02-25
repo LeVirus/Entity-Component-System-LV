@@ -35,5 +35,7 @@ HEADERS += \
     componentmanager.hpp \
     ECSconstantes.hpp \
     iasystem.hpp \
-    physicscomponent.hpp
+    physicscomponent.hpp \
+    moveablecomponent.hpp \
+    behaviorcomponent.hpp
 

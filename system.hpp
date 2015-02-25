@@ -15,7 +15,7 @@ class SystemManager;
  */
 class System{
 protected:
-    unsigned int muiPriority, muiIdSystem, muiTypeSystem;
+    unsigned int muiIdSystem, muiTypeSystem;
     std::vector< unsigned int > mVectNumEntity;
     std::bitset< 16 > mBitSetComponentSystem;
     SystemManager* mptrSystemManager;
@@ -29,11 +29,9 @@ public:
     bool bComponentAlreadyExist( unsigned int uiTypeComponent );
     ComponentManager & stairwayToComponentManager();
 
-    inline unsigned int uiGetPriority()const{ return muiPriority; }
     inline unsigned int uiGetIdSystem()const{ return muiIdSystem; }
     inline unsigned int uiGetTypeSystem()const{ return muiTypeSystem; }
 
-    inline void modValuePriority( unsigned int uiPriority ){ muiPriority = uiPriority; }
     inline void modValueIdSystem( unsigned int uiIdSystem ){ muiIdSystem = uiIdSystem; }
     inline void modValueTypeSystem( unsigned int uiTypeSystem ){ muiTypeSystem = uiTypeSystem; }
 };
