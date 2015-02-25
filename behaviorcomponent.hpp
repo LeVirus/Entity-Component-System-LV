@@ -8,11 +8,11 @@
  * @brief La structure BehaviorComponent représente le type de comportement de l'entité.
  */
 struct BehaviorComponent : public Component{
-    unsigned int uiTypeBehavior;
+    unsigned int muiTypeBehavior;//a modifier remplacer par un bitset
 
     BehaviorComponent(){
         muiTypeComponent = BEHAVIOR_COMPONENT;
-        uiTypeBehavior = 0;
+        muiTypeBehavior = UNSPECIFIED;
     }
     void displayComponent()const override{
         Component::displayComponent();
@@ -22,4 +22,3 @@ struct BehaviorComponent : public Component{
 };
 
 #endif // BEHAVIORCOMPONENT_HPP
-
