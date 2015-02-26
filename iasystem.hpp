@@ -4,6 +4,7 @@
 #include "system.hpp"
 
 struct PositionComponent;
+struct MoveableComponent;
 
 /**
  * @brief La classe IASystem éxecute le comportement que doivent avoir les entités,
@@ -16,6 +17,8 @@ private:
 public:
     IASystem();
     void execSystem() override;
+    void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );//a implémenter
+    void initMoveable( unsigned int uiNumBehavior, PositionComponent * posComp, MoveableComponent * moveComp );
     ~IASystem();
 };
 

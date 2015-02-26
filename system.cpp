@@ -29,6 +29,8 @@ void System::refreshEntity(){
 
     for( unsigned int i = 0 ; i < vectEntity . size() ; ++i ){
         granted = true;
+
+        if( ! vectEntity[ i ].bEntityIsActive() )continue;
         //récupération du bitset de l'entité
         const std::bitset< NUMBR_COMPONENT > & bitSetEntity = vectEntity[ i ] . getEntityBitSet();
         for( unsigned int j = 0 ; j < bitSetEntity.size() ; ++j ){

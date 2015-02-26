@@ -1,4 +1,6 @@
 #include "iasystem.hpp"
+#include "entity.hpp"
+#include "engine.hpp"
 #include "moveablecomponent.hpp"
 #include "behaviorcomponent.hpp"
 #include "physicscomponent.hpp"
@@ -21,6 +23,35 @@ IASystem::IASystem(){
 }
 
 /**
+ * @brief IASystem::initMoveable Initialisation des variables présentes dans le composant MoveableComponent.
+ * La fonction va appliquer un traitement sur chaque entité possèdant les composants MoveableComponent, PositionComponent,
+ * PhysicComponent et BehaviorComponent.
+ * En fonction de BehaviorComponent et PositionComponent les variables présentes dans MoveableComponent vont être initialisées
+ * !!!Le composant PositionComponent est supposé initialisé!!!
+ */
+void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posComp, MoveableComponent *moveComp ){
+    if( ! posComp || ! moveComp )return;
+    switch( uiNumBehavior ){
+    case UNSPECIFIED:
+        break;
+    case SINUSOIDAL:
+        if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 100 )
+            moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
+        if( moveComp -> mfCustomVarB == 0 || moveComp -> mfCustomVarB > 500 )
+            moveComp -> mfCustomVarB = 100;//si velocité non initialisée::valeur par défault
+        moveComp -> mfCustomVarA = posComp -> mfPositionY - moveComp -> mfCustomVarB;//maxY
+        moveComp -> mfCustomVarB = posComp -> mfPositionY + moveComp -> mfCustomVarB;//minY
+        break;
+    case RING:
+        break;
+    case ROUND_TRIP:
+        break;
+    case TOWARD_PLAYER:
+        break;
+    }
+}
+
+/**
  * @brief IASystem::execSystem Fonction(surchargée) d'exécution du système sur les entités concernées
  * par le système.
  * La fonction va modifier les données contenus dans les composants(associés aux entités).
@@ -30,7 +61,11 @@ IASystem::IASystem(){
  * Ces actions vont être déterminé par le composant MoveableComponent(si non NULL) et/ou (un autre à définir).
  */
 void IASystem::execSystem(){
+    //récupération du vector d'entités
+    const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
+
     System::execSystem();
+    //parcours des entités à traiter
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
         std::cout << mVectNumEntity[ i ] << "\n";
 
@@ -50,9 +85,35 @@ void IASystem::execSystem(){
 
         BehaviorComponent * behaviorComponent = stairwayToComponentManager() .
                 searchComponentByType < BehaviorComponent > ( mVectNumEntity[ i ], BEHAVIOR_COMPONENT );
-        if( positionComp ){
+        if( ! behaviorComponent ){
             std::cout << " Erreur IASystem pointeur NULL behaviorComponent " << "\n";
             continue;
+        }
+        MoveableComponent * moveableComponent = stairwayToComponentManager() .
+                searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
+        if( ! moveableComponent ){
+            std::cout << " IASystem pointeur NULL moveableComponent " << "\n";
+        }
+
+        //vérifier si moveableComponent est instancié
+        if( ! moveableComponent )continue;
+        //si l'entité "moveable" n'est pas initialisé(le composant MoveableComponent n'est pas initialisé)
+        if( ! vectEntity[ mVectNumEntity[ i ] ] . bMoveableEntityIsInitialized() ){
+            initMoveable( behaviorComponent -> muiTypeBehavior, positionComp, moveableComponent );
+        }
+
+        switch( behaviorComponent -> muiTypeBehavior ){
+        case UNSPECIFIED:
+            break;
+        case SINUSOIDAL:
+
+            break;
+        case RING:
+            break;
+        case ROUND_TRIP:
+            break;
+        case TOWARD_PLAYER:
+            break;
         }
 
     }
@@ -88,8 +149,9 @@ void IASystem::moveEntityAngle( PositionComponent * posComp, float fNbrPixels, f
  * @param fNbrPixelsY le nombre de pixels ordonnés.
  */
 void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY ){
-    posComp -> mfPositionX += fMoveX;
-    posComp -> mfPositionY += fMoveY;
+    if( ! posComp )return;
+    posComp -> mfPositionX += fNbrPixelsX;
+    posComp -> mfPositionY += fNbrPixelsY;
 }
 
 

@@ -9,18 +9,18 @@
  * muiCustumVar sert à stocker des valeurs qui seront utilisés ou non en fonction du besoin.
  */
 struct MoveableComponent : public Component{
-    unsigned int muiTypeComportement, muiVelocite, muiCustomVarA, muiCustomVarB;
+    unsigned int muiTypeComportement;
+    float mfVelocite, mfCustomVarA, mfCustomVarB;
 
     /**
      * @brief DisplayComponent Constructeur de MoveableComponent.
      * Initialisation des variables à des valeurs par défaut.
      */
-    DisplayComponent(){
+    MoveableComponent(){
         muiTypeComponent = MOVEABLE_COMPONENT;
-        muiTypeComportement = 0;
-        muiVelocite = 0;
-        muiCustomVarA = 0;
-        muiCustomVarB = 0;
+        mfVelocite = 0;
+        mfCustomVarA = 0;
+        mfCustomVarB = 0;
     }
 
     /**
@@ -28,8 +28,8 @@ struct MoveableComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "muiTypeComportement::" << muiTypeComportement << "\n muiVelocite" << muiVelocite << "\n"
-                  << "muiCustomVarA::" << muiCustomVarA << "\n muiCustomVarB" << muiCustomVarB << "\n";
+        std::cout << "muiTypeComportement::" << muiTypeComportement << "\n mfVelocite" << mfVelocite << "\n"
+                  << "mfCustomVarA::" << mfCustomVarA << "\n mfCustomVarB" << mfCustomVarB << "\n";
     }
 };
 

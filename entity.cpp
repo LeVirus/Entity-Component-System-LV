@@ -27,6 +27,7 @@ void Entity::initEntity(){
     mbActive = true;
     mbUpToDate = false;
     mbEntityInUse = true;
+    mbMoveableInitialized = false;
 }
 
 /**
@@ -127,12 +128,20 @@ const std::bitset< NUMBR_COMPONENT > & Entity::getEntityBitSet()const{
 }
 
 /**
- * @brief Entity::bEntityIsActive Fonction de vérifiant si l'entité est activé
- * (si elle doit être traité par les systèmes)
+ * @brief Entity::bEntityIsActive Fonction vérifiant si l'entité est activé
+ * (si elle doit être traité par les systèmes).
  * @return true si l'entité est activée, false sinon.
  */
 bool Entity::bEntityIsActive()const{
     return mbActive;
+}
+
+/**
+ * @brief bMoveableEntityIsInitialized Fonction vérifiant si l'entité est initialisée
+ * @return true si l'entité est initialisé, false sinon.
+ */
+bool Entity::bMoveableEntityIsInitialized()const{
+    return mbMoveableInitialized;
 }
 
 /**

@@ -19,9 +19,9 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
-    bool mbActive, mbUpToDate, mbEntityInUse;
+    //mbMoveableInitialized ne sert qu'aux entité possédant le composant MoveableComponent
+    bool mbActive, mbUpToDate, mbEntityInUse, mbMoveableInitialized;
 public:
-    //std::vector< std::unique_ptr< Component > > mVectComponent;
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
 
     Entity();
@@ -30,6 +30,7 @@ public:
     bool ComponentExist( unsigned int uiTypeComponent )const;
     bool bEntityIsUpToDate()const;
     bool bInUse()const;
+    bool bMoveableEntityIsInitialized()const;
     void initEntity();
 
     void modifyEntityInUse( bool bInUse );

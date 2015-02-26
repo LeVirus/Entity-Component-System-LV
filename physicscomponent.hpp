@@ -12,12 +12,12 @@
 struct PhysicComponent : public Component{
     bool mbTerrestrial, mbGhost;
 
-    DisplayComponent(){
+    PhysicComponent(){
         muiTypeComponent = PHYSIC_COMPONENT;
     }
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "terrestrial::" << terrestrial << "\n ghost" << ghost << "\n";
+        std::cout << "terrestrial::" << mbTerrestrial << "\n ghost" << mbGhost << "\n";
     }
 };
 

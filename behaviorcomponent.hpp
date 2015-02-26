@@ -18,7 +18,6 @@ struct BehaviorComponent : public Component{
         Component::displayComponent();
         std::cout << "muiTypeComponent" << muiTypeComponent << "\n";
     }
-    unsigned int muiNumSprite;
 };
 
 #endif // BEHAVIORCOMPONENT_HPP
