@@ -62,7 +62,7 @@ void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posC
  */
 void IASystem::execSystem(){
     //récupération du vector d'entités
-    const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
+    //const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
     System::execSystem();
     //parcours des entités à traiter
@@ -98,7 +98,7 @@ void IASystem::execSystem(){
         //vérifier si moveableComponent est instancié
         if( ! moveableComponent )continue;
         //si l'entité "moveable" n'est pas initialisé(le composant MoveableComponent n'est pas initialisé)
-        if( ! vectEntity[ mVectNumEntity[ i ] ] . bMoveableEntityIsInitialized() ){
+        if( ! moveableComponent -> mbMoveUpToDate ){
             initMoveable( behaviorComponent -> muiTypeBehavior, positionComp, moveableComponent );
         }
 

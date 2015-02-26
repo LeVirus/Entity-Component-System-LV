@@ -137,14 +137,6 @@ bool Entity::bEntityIsActive()const{
 }
 
 /**
- * @brief bMoveableEntityIsInitialized Fonction vérifiant si l'entité est initialisée
- * @return true si l'entité est initialisé, false sinon.
- */
-bool Entity::bMoveableEntityIsInitialized()const{
-    return mbMoveableInitialized;
-}
-
-/**
  * @brief Entity::bAddComponent Fonction d'ajout d'un composant dans l'entité.
  * @param uiTypeComponent le type de composant à créer.
  * @return true si le composant a été créé avec succés, false sinon.

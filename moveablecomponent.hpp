@@ -9,6 +9,7 @@
  * muiCustumVar sert à stocker des valeurs qui seront utilisés ou non en fonction du besoin.
  */
 struct MoveableComponent : public Component{
+    bool mbMoveUpToDate;
     unsigned int muiTypeComportement;
     float mfVelocite, mfCustomVarA, mfCustomVarB;
 
@@ -18,6 +19,7 @@ struct MoveableComponent : public Component{
      */
     MoveableComponent(){
         muiTypeComponent = MOVEABLE_COMPONENT;
+        mbMoveUpToDate = false;
         mfVelocite = 0;
         mfCustomVarA = 0;
         mfCustomVarB = 0;

@@ -20,7 +20,7 @@ private:
     unsigned int mUiIDEntity;
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
     //mbMoveableInitialized ne sert qu'aux entité possédant le composant MoveableComponent
-    bool mbActive, mbUpToDate, mbEntityInUse, mbMoveableInitialized;
+    bool mbActive, mbUpToDate, mbEntityInUse;
 public:
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
 
@@ -30,7 +30,6 @@ public:
     bool ComponentExist( unsigned int uiTypeComponent )const;
     bool bEntityIsUpToDate()const;
     bool bInUse()const;
-    bool bMoveableEntityIsInitialized()const;
     void initEntity();
 
     void modifyEntityInUse( bool bInUse );
