@@ -6,6 +6,7 @@
 #include "physicscomponent.hpp"
 #include "positioncomponent.hpp"
 #include <cmath>
+//#include <limits>
 
 /**
  * @brief IASystem::IASystem Constructeur de la classe IASystem.
@@ -35,10 +36,15 @@ void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posC
     case UNSPECIFIED:
         break;
     case SINUSOIDAL:
-        if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 100 )
+        //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
+        if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
+                moveComp -> mfVelocite > 100 )
             moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
-        if( moveComp -> mfCustomVarB == 0 || moveComp -> mfCustomVarB > 500 )
-            moveComp -> mfCustomVarB = 100;//si velocité non initialisée::valeur par défault
+
+        if( moveComp -> mfCustomVarB == 0/*std::numeric_limits< float >::epsilon()*/ ||
+                moveComp -> mfCustomVarB > 500 )
+            moveComp -> mfCustomVarB = 100;//si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur par défault
+
         moveComp -> mfCustomVarA = posComp -> mfPositionY - moveComp -> mfCustomVarB;//maxY
         moveComp -> mfCustomVarB = posComp -> mfPositionY + moveComp -> mfCustomVarB;//minY
         break;
@@ -99,6 +105,7 @@ void IASystem::execSystem(){
         if( ! moveableComponent )continue;
         //si l'entité "moveable" n'est pas initialisé(le composant MoveableComponent n'est pas initialisé)
         if( ! moveableComponent -> mbMoveUpToDate ){
+            //appel de la fonction adéquate
             initMoveable( behaviorComponent -> muiTypeBehavior, positionComp, moveableComponent );
         }
 
@@ -118,6 +125,20 @@ void IASystem::execSystem(){
 
     }
 }
+
+/**
+ * @brief IASystem::actionSinusoid Fonction définissant le parcour d'une entité dont le comportement est sinusoidal.
+ * Dans un premier temps une vérification A FINIR
+ * En fonction de la position verticale actuelle, et de mbCustomVarC (direction haut ou bas) le déplacement vertical
+ * sera plus ou moins important.
+ * Le déplacement horizontal sera constant, son sens sera définis par mbCustomVarD.
+ * @param posComp Le composant position de l'entité en cour de traitement
+ * @param moveComp Le composant mouvement de l'entité en cour de traitement
+ */
+void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+
+}
+
 
 /**
  * @brief IASystem::moveEntityAngle Fonction de déplacement d'une entité à partir d'une longueur et d'un angle.

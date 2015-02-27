@@ -27,7 +27,6 @@ void Entity::initEntity(){
     mbActive = true;
     mbUpToDate = false;
     mbEntityInUse = true;
-    mbMoveableInitialized = false;
 }
 
 /**

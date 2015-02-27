@@ -10,18 +10,21 @@ ComponentManager::ComponentManager(){
 
 /**
  * @brief ComponentManager::bUpdateComponentFromEntity Fonction de mise à jour des composants
- * a partir des caractéristiques des entités. La fonction va vérifier si le booléen (statique) est a true,
- * si ce n'est pas le cas la mise a jour ne sera pas effectué.
- * @return true si la mise à jour est effectuée, false sinon.
+ * a partir des caractéristiques des entités. La fonction va vérifier sur chaque entité si elle est à jour,
+ * si ce n'est pas le cas la fonction enchaine sur l'itération suivante.
  */
 void ComponentManager::updateComponentFromEntity(){
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
+
+    //en cas de besoin resize du tableau de composants
     if( mVectComponent.size() < vectEntitycst.size() * 4 ){
         mVectComponent.resize( vectEntitycst.size() * 4 );
     }
+
     for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
         //si l'entité est à jour
         if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;
+
         const std::bitset< NUMBR_COMPONENT > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
         for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
             //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL

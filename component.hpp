@@ -15,6 +15,7 @@ struct Component{
     }
 
     inline unsigned int muiGetTypeComponent()const{ return muiTypeComponent; }
+    inline unsigned int muiGetIdComponent()const{ return muiIDComponent; }
     protected:
         unsigned int muiTypeComponent, muiIDComponent;
         inline Component(){}// = delete;
