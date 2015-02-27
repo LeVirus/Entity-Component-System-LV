@@ -16,8 +16,14 @@ struct Component{
 
     inline unsigned int muiGetTypeComponent()const{ return muiTypeComponent; }
     inline unsigned int muiGetIdComponent()const{ return muiIDComponent; }
+    inline unsigned int muiGetIdEntityAssociated()const{ return muiIDEntityAssociated; }
+
+    void setIDEntityAssociated( unsigned int uiEntityID ){
+        muiIDEntityAssociated = uiEntityID;
+    }
+
     protected:
-        unsigned int muiTypeComponent, muiIDComponent;
+        unsigned int muiTypeComponent, muiIDComponent, muiIDEntityAssociated;
         inline Component(){}// = delete;
 };
 

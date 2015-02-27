@@ -30,6 +30,7 @@ void ComponentManager::updateComponentFromEntity(){
             //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
             if( bitsetComponent[ j ] && ! mVectComponent[ i * NUMBR_COMPONENT + j ] ){
                 instanciateComponent( i * NUMBR_COMPONENT + j );
+                mVectComponent[ i * NUMBR_COMPONENT + j ] -> setIDEntityAssociated( vectEntitycst[ i ] . muiGetIDEntity() );
             }
             //si la case du bitset est à false et que la case correspondante dans le vector de component est instanciée
             else if( ! bitsetComponent[ j ] && mVectComponent[ i * NUMBR_COMPONENT + j ] ){

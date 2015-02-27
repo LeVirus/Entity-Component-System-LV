@@ -36,6 +36,7 @@ void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posC
     case UNSPECIFIED:
         break;
     case SINUSOIDAL:
+        moveComp -> mVectFCustumVar . resize( 3 );
         //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
         if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
                 moveComp -> mfVelocite > 100 )
@@ -128,14 +129,14 @@ void IASystem::execSystem(){
 
 /**
  * @brief IASystem::actionSinusoid Fonction définissant le parcour d'une entité dont le comportement est sinusoidal.
- * Dans un premier temps une vérification A FINIR
- * En fonction de la position verticale actuelle, et de mbCustomVarC (direction haut ou bas) le déplacement vertical
- * sera plus ou moins important.
+ * Dans un premier temps une vérification de l'appartenance des 2 composants à la même entité est effectuée.
+ * //un calcul a partir de la fonction sinus sera fait.
  * Le déplacement horizontal sera constant, son sens sera définis par mbCustomVarD.
  * @param posComp Le composant position de l'entité en cour de traitement
  * @param moveComp Le composant mouvement de l'entité en cour de traitement
  */
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+    if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
 }
 

@@ -39,6 +39,8 @@ public:
     bool bRmComponent( unsigned int uiTypeComponent );
     void RmAllComponent();
     bool bEntityIsActive()const;
+
+    inline unsigned int muiGetIDEntity()const{ return mUiIDEntity; }
 };
 
 #endif // ENTITY_HPP

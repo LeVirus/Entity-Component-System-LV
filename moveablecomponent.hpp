@@ -3,6 +3,7 @@
 
 #include "component.hpp"
 #include "ECSconstantes.hpp"
+#include <vector>
 
 /**
  * @brief La structure MoveableComponent possède les caractéristiques liée aux déplacements d'une entité.
@@ -17,7 +18,8 @@
  */
 struct MoveableComponent : public Component{
     bool mbMoveUpToDate;
-    float mfVelocite, mfCustomVarA, mfCustomVarB;
+    std::vector< float > mVectFCustumVar;
+    float mfVelocite;
     bool mbCustomVarC, mbCustomVarD;
 
     /**
@@ -28,8 +30,9 @@ struct MoveableComponent : public Component{
         muiTypeComponent = MOVEABLE_COMPONENT;
         mbMoveUpToDate = false;
         mfVelocite = 0;
-        mfCustomVarA = 0;
-        mfCustomVarB = 0;
+        mVectFCustumVar . resize( 2 );
+        mVectFCustumVar[ 0 ] = 0;
+        mVectFCustumVar[ 1 ] = 0;
         mbCustomVarC = true;
         mbCustomVarD = true;
     }
@@ -39,8 +42,7 @@ struct MoveableComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "\n mfVelocite" << mfVelocite << "\n"
-                  << "mfCustomVarA::" << mfCustomVarA << "\n mfCustomVarB" << mfCustomVarB << "\n";
+        std::cout << "\n mfVelocite" << mfVelocite << "\n";
     }
 };
 
