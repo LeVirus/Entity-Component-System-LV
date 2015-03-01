@@ -11,16 +11,17 @@
  *
  * Si BehaviorComponent -> muiTypeBehavior == SINUSOIDAL
  * Avant l'initialisation dans IASystem::
- * mfCustomVarA //
- * mfCustomVarB représente le parcourt vertical que doit parcourir la sinusoide à partir de l'origine.
- * mbCustomVarC true == HAUT, false == BAS
- * mbCustomVarD true == GAUCHE, false == DROITE
+ * mVectFCustumVar[ 0 ] :: Mémorisation de l'angle (degré) en fonction duquel la position ordonnée sera déterminée(fonction sinus)
+ * mVectFCustumVar[ 1 ] :: représente le parcourt vertical maximal que doit parcourir la sinusoide de moitié
+ * (à partir de l'origine'entité mVectFCustumVar[ 1 ]).
+ * mVectFCustumVar[ 2 ] ::  L'ordonnée d'origine de l'entité.
+ * mbCustomVarC Direction true == GAUCHE, false == DROITE
  */
 struct MoveableComponent : public Component{
     bool mbMoveUpToDate;
     std::vector< float > mVectFCustumVar;
     float mfVelocite;
-    bool mbCustomVarC, mbCustomVarD;
+    bool mbCustomVarA;
 
     /**
      * @brief DisplayComponent Constructeur de MoveableComponent.
@@ -33,8 +34,7 @@ struct MoveableComponent : public Component{
         mVectFCustumVar . resize( 2 );
         mVectFCustumVar[ 0 ] = 0;
         mVectFCustumVar[ 1 ] = 0;
-        mbCustomVarC = true;
-        mbCustomVarD = true;
+        mbCustomVarA = true;
     }
 
     /**

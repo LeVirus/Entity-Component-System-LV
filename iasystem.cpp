@@ -42,12 +42,12 @@ void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posC
                 moveComp -> mfVelocite > 100 )
             moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
 
-        if( moveComp -> mfCustomVarB == 0/*std::numeric_limits< float >::epsilon()*/ ||
-                moveComp -> mfCustomVarB > 500 )
-            moveComp -> mfCustomVarB = 100;//si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur par défault
-
-        moveComp -> mfCustomVarA = posComp -> mfPositionY - moveComp -> mfCustomVarB;//maxY
-        moveComp -> mfCustomVarB = posComp -> mfPositionY + moveComp -> mfCustomVarB;//minY
+        if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
+            moveComp -> mVectFCustumVar[ 1 ] = 100;
+        //définition de l'origine Y a partir de la position actuelle de l'entité
+        moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
+        /*si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur
+        par défault*/
         break;
     case RING:
         break;
@@ -134,10 +134,23 @@ void IASystem::execSystem(){
  * Le déplacement horizontal sera constant, son sens sera définis par mbCustomVarD.
  * @param posComp Le composant position de l'entité en cour de traitement
  * @param moveComp Le composant mouvement de l'entité en cour de traitement
+ * //SEULEMENT HORIZONTAL
  */
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+    /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
+    composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
+    //traitement mouvement vertical
+    if( moveComp -> mbCustomVarA )posComp -> mfPositionX -= moveComp -> mfVelocite;
+    else posComp -> mfPositionX += moveComp -> mfVelocite;
+
+    //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel ) * amplitude
+    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 2 ] +
+            sin( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
+    //valeur angle suivante
+    moveComp ->mVectFCustumVar[ 0 ] += 10;
+    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 ) moveComp ->mVectFCustumVar[ 0 ] = 0;
 }
 
 
