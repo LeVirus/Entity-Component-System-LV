@@ -114,7 +114,7 @@ void IASystem::execSystem(){
         case UNSPECIFIED:
             break;
         case SINUSOIDAL:
-
+            actionSinusoid( positionComp, moveableComponent );
             break;
         case RING:
             break;
