@@ -18,7 +18,10 @@ public:
     IASystem();
     void execSystem() override;
     void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
+    void actionRing( PositionComponent * posComp, MoveableComponent * moveComp );
     void initMoveable( unsigned int uiNumBehavior, PositionComponent * posComp, MoveableComponent * moveComp );
+    void initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
+    void initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp );
     ~IASystem();
 };
 

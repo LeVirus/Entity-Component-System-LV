@@ -28,34 +28,71 @@ IASystem::IASystem(){
  * La fonction va appliquer un traitement sur chaque entité possèdant les composants MoveableComponent, PositionComponent,
  * PhysicComponent et BehaviorComponent.
  * En fonction de BehaviorComponent et PositionComponent les variables présentes dans MoveableComponent vont être initialisées
+ * La fonction va appeler la fonctions spécialisée en fonction de uiNumBehavior.
  * !!!Le composant PositionComponent est supposé initialisé!!!
+ * @param uiNumBehavior le numéro définissant le comportement de l'entité.
+ * @param posComp Le composant position .
+ * @param moveComp Le composant mouvement.
  */
 void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posComp, MoveableComponent *moveComp ){
-    if( ! posComp || ! moveComp )return;
     switch( uiNumBehavior ){
     case UNSPECIFIED:
         break;
     case SINUSOIDAL:
-        moveComp -> mVectFCustumVar . resize( 3 );
-        //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
-        if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
-                moveComp -> mfVelocite > 100 )
-            moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
-
-        if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
-            moveComp -> mVectFCustumVar[ 1 ] = 100;
-        //définition de l'origine Y a partir de la position actuelle de l'entité
-        moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
-        /*si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur
-        par défault*/
+        initMoveableSinusoid( posComp, moveComp );
         break;
     case RING:
+        initMoveableRing( posComp, moveComp );
         break;
     case ROUND_TRIP:
         break;
     case TOWARD_PLAYER:
         break;
     }
+}
+
+/**
+ * @brief IASystem::initMoveableSinusoid La fonction calcule la nouvelle position de l'entité selon une sinusoide.
+ *
+ * @param posComp Le composant position.
+ * @param moveComp Le composant mouvement.
+ */
+void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+    if( ! posComp || ! moveComp )return;
+
+    moveComp -> mVectFCustumVar . resize( 3 );
+    //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
+    if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
+            moveComp -> mfVelocite > 100 )
+        moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
+
+    if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
+        moveComp -> mVectFCustumVar[ 1 ] = 100;
+    //définition de l'origine Y a partir de la position actuelle de l'entité
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
+    /*si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur
+    par défault*/
+}
+
+/**
+ * @brief IASystem::initMoveableRing Calcul de la position de l'entité suivant un cercle
+ * @param posComp Le composant position.
+ * @param moveComp Le composant mouvement.
+ */
+void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp ){
+    if( ! posComp || ! moveComp )return;
+
+    //si vélocité non initialisée ou hors limite
+    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 100 )
+        moveComp -> mfVelocite = 10;
+
+    moveComp -> mVectFCustumVar . resize( 4 );
+    //si valeur rayon cercle non initialisée
+    if( moveComp -> mVectFCustumVar[ 0 ] == 0 )moveComp -> mVectFCustumVar[ 0 ] = 50;
+
+    //initialisation du centre du cercle avec les valeurs contenues dans posComp
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
 }
 
 /**
@@ -117,6 +154,7 @@ void IASystem::execSystem(){
             actionSinusoid( positionComp, moveableComponent );
             break;
         case RING:
+            actionRing( positionComp, moveableComponent );
             break;
         case ROUND_TRIP:
             break;
@@ -141,6 +179,10 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
+    //modification valeur angle
+    moveComp ->mVectFCustumVar[ 0 ] += 10;
+    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 ) moveComp ->mVectFCustumVar[ 0 ] = 0;
+
     //traitement mouvement vertical
     if( moveComp -> mbCustomVarA )posComp -> mfPositionX -= moveComp -> mfVelocite;
     else posComp -> mfPositionX += moveComp -> mfVelocite;
@@ -148,11 +190,27 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
     //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel ) * amplitude
     posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 2 ] +
             sin( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
-    //valeur angle suivante
-    moveComp ->mVectFCustumVar[ 0 ] += 10;
-    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 ) moveComp ->mVectFCustumVar[ 0 ] = 0;
 }
 
+/**
+ * @brief IASystem::actionRing Fonction de calcul de la rotation d'une entité autour d'un point.
+ * @param posComp Le composant position de l'entité en cour de traitement.
+ * @param moveComp Le composant mouvement de l'entité en cour de traitement.
+ */
+void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * moveComp ){
+
+    /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
+    composants est bien la même*/
+    if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
+
+    //modification de la valeur de l'angle en fonction de la vélocité
+    moveComp -> mVectFCustumVar[ 1 ] += moveComp -> mfVelocite;
+    if( moveComp -> mVectFCustumVar[ 1 ] >= 360 )moveComp -> mVectFCustumVar[ 1 ] = 0;
+
+    //calcul de la nouvelle position en fonction de l'angle du cercle
+    posComp -> mfPositionX = posComp -> mfPositionX + ( cos( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
+    posComp -> mfPositionY = posComp -> mfPositionY + ( sin( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
+}
 
 /**
  * @brief IASystem::moveEntityAngle Fonction de déplacement d'une entité à partir d'une longueur et d'un angle.
