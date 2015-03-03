@@ -60,16 +60,20 @@ void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posC
 void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
     if( ! posComp || ! moveComp )return;
 
-    moveComp -> mVectFCustumVar . resize( 3 );
+    moveComp -> mVectFCustumVar . resize( 4 );
     //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
     if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
-            moveComp -> mfVelocite > 100 )
+            moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
+
+    moveComp -> mVectFCustumVar[ 0 ] = 0;
 
     if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
         moveComp -> mVectFCustumVar[ 1 ] = 100;
     //définition de l'origine Y a partir de la position actuelle de l'entité
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
+    //initialisation de la variable à l'angle 0
+    moveComp -> mVectFCustumVar[ 3 ] = moveComp -> mVectFCustumVar[ 1 ];
     /*si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur
     par défault*/
 }
@@ -169,23 +173,34 @@ void IASystem::execSystem(){
  * @brief IASystem::actionSinusoid Fonction définissant le parcour d'une entité dont le comportement est sinusoidal.
  * Dans un premier temps une vérification de l'appartenance des 2 composants à la même entité est effectuée.
  * //un calcul a partir de la fonction sinus sera fait.
- * Le déplacement horizontal sera constant, son sens sera définis par mbCustomVarD.
+ * Le déplacement horizontal et vertical sera effectué selon la sinusoide, son sens sera définis par mbCustomVarD.
  * @param posComp Le composant position de l'entité en cour de traitement
  * @param moveComp Le composant mouvement de l'entité en cour de traitement
  * //SEULEMENT HORIZONTAL
  */
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+
+    float fMemAbscisseSinus;
+
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
-    //modification valeur angle
-    moveComp ->mVectFCustumVar[ 0 ] += 10;
-    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 ) moveComp ->mVectFCustumVar[ 0 ] = 0;
+    //récupération abscisse sinusoide position précédente
+    fMemAbscisseSinus = cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
 
-    //traitement mouvement vertical
-    if( moveComp -> mbCustomVarA )posComp -> mfPositionX -= moveComp -> mfVelocite;
-    else posComp -> mfPositionX += moveComp -> mfVelocite;
+    //modification valeur angle en fonction de vélocité
+    moveComp ->mVectFCustumVar[ 0 ] += moveComp -> mfVelocite;
+    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 )
+        moveComp -> mVectFCustumVar[ 0 ] = 0 + fabs( static_cast< int >( moveComp -> mVectFCustumVar[ 0 ] ) % 360 );
+
+    /*traitement mouvement vertical en fonction du sens
+      Calcul du déplacement a effectuée sur les abscisses*/
+    //traiter le cas 180 0
+    fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+    if( moveComp -> mbCustomVarA )
+        posComp -> mfPositionX -= fMemAbscisseSinus;
+    else posComp -> mfPositionX += fMemAbscisseSinus;
 
     //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel ) * amplitude
     posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 2 ] +

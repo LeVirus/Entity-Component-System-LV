@@ -14,6 +14,7 @@
  * mVectFCustumVar[ 1 ] :: représente le parcourt vertical maximal que doit parcourir la sinusoide de moitié
  * (à partir de l'origine'entité mVectFCustumVar[ 1 ]).
  * mVectFCustumVar[ 2 ] ::  L'ordonnée d'origine de l'entité.
+ * mVectFCustumVar[ 3 ] ::  Mémorisation de l'abscisse de l'itération précédente sur la sinusoide.
  * mbCustomVarA Direction true == GAUCHE, false == DROITE
  * ===============================================================
  *
