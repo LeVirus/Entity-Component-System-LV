@@ -62,20 +62,21 @@ void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableCompon
 
     moveComp -> mVectFCustumVar . resize( 4 );
     //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
-    if( moveComp -> mfVelocite == 0/*std::numeric_limits< float >::epsilon()*/ ||
-            moveComp -> mfVelocite > 50 )
-        moveComp -> mfVelocite = 10;//!!!!float == 0!!!!si velocité non initialisée::valeur par défault
+    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
+        moveComp -> mfVelocite = 10;//si velocité non initialisée::valeur par défault
 
+    //initialisation de l'angle
     moveComp -> mVectFCustumVar[ 0 ] = 0;
 
+    //vérification de la valeur de l'intensité de la sinusoide(possibilité de l'initialiser antérieurement).
+    //si valeur hors limite valeur par défaut
     if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
         moveComp -> mVectFCustumVar[ 1 ] = 100;
+
     //définition de l'origine Y a partir de la position actuelle de l'entité
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
-    //initialisation de la variable à l'angle 0
+
     moveComp -> mVectFCustumVar[ 3 ] = moveComp -> mVectFCustumVar[ 1 ];
-    /*si mfCustomVarB(taille mvmt vertical/2 de la sinusoide) non initialisée::valeur
-    par défault*/
 }
 
 /**
@@ -180,7 +181,7 @@ void IASystem::execSystem(){
  */
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
 
-    float fMemAbscisseSinus;
+    float fMemAbscisseSinus, fMemResult;
 
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
@@ -190,14 +191,25 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
     fMemAbscisseSinus = cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
 
     //modification valeur angle en fonction de vélocité
-    moveComp ->mVectFCustumVar[ 0 ] += moveComp -> mfVelocite;
-    if( moveComp ->mVectFCustumVar[ 0 ] >= 360 )
+    moveComp -> mVectFCustumVar[ 0 ] += moveComp -> mfVelocite;
+    if( moveComp -> mVectFCustumVar[ 0 ] >= 360 )
         moveComp -> mVectFCustumVar[ 0 ] = 0 + fabs( static_cast< int >( moveComp -> mVectFCustumVar[ 0 ] ) % 360 );
 
     /*traitement mouvement vertical en fonction du sens
       Calcul du déplacement a effectuée sur les abscisses*/
-    //traiter le cas 180 0
-    fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+
+    //cas du passage d'un angle supérieur à 180°
+    if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) < 180 && moveComp -> mVectFCustumVar[ 0 ] > 180 ){
+        fMemResult = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+    }
+    //cas du passage d'un angle 360 >> 0
+    else if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 0 ] < 180  ){
+
+    }
+    else {
+        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+    }
+
     if( moveComp -> mbCustomVarA )
         posComp -> mfPositionX -= fMemAbscisseSinus;
     else posComp -> mfPositionX += fMemAbscisseSinus;
