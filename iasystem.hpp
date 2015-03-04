@@ -5,6 +5,7 @@
 
 struct PositionComponent;
 struct MoveableComponent;
+struct BehaviorComponent;
 
 /**
  * @brief La classe IASystem éxecute le comportement que doivent avoir les entités,
@@ -19,7 +20,7 @@ public:
     void execSystem() override;
     void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
     void actionRing( PositionComponent * posComp, MoveableComponent * moveComp );
-    void initMoveable( unsigned int uiNumBehavior, PositionComponent * posComp, MoveableComponent * moveComp );
+    void initMoveable( BehaviorComponent *behavComp, PositionComponent * posComp, MoveableComponent * moveComp );
     void initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
     void initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp );
     ~IASystem();

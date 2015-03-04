@@ -34,8 +34,8 @@ IASystem::IASystem(){
  * @param posComp Le composant position .
  * @param moveComp Le composant mouvement.
  */
-void IASystem::initMoveable( unsigned int uiNumBehavior, PositionComponent *posComp, MoveableComponent *moveComp ){
-    switch( uiNumBehavior ){
+void IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *posComp, MoveableComponent *moveComp ){
+    switch( behavComp -> muiTypeBehavior ){
     case UNSPECIFIED:
         break;
     case SINUSOIDAL:
@@ -149,7 +149,7 @@ void IASystem::execSystem(){
         //si l'entité "moveable" n'est pas initialisé(le composant MoveableComponent n'est pas initialisé)
         if( ! moveableComponent -> mbMoveUpToDate ){
             //appel de la fonction adéquate
-            initMoveable( behaviorComponent -> muiTypeBehavior, positionComp, moveableComponent );
+            initMoveable( behaviorComponent, positionComp, moveableComponent );
         }
 
         switch( behaviorComponent -> muiTypeBehavior ){
@@ -200,11 +200,21 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
 
     //cas du passage d'un angle supérieur à 180°
     if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) < 180 && moveComp -> mVectFCustumVar[ 0 ] > 180 ){
-        fMemResult = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+        //calcul du parcour sur l'abscisse dans la partie : 0 -> PI
+        fMemResult = fabs( fMemAbscisseSinus - cos( 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI et addition des 2
+        //cos( 180 )==-1    ==>     cos( 180 ) * amplitude = -amplitude
+        fMemAbscisseSinus = fMemResult + fabs( ( -1 * moveComp -> mVectFCustumVar[ 1 ] ) - ( cos( moveComp ->mVectFCustumVar[ 0 ] ) *
+                moveComp -> mVectFCustumVar[ 1 ] ) );
     }
     //cas du passage d'un angle 360 >> 0
     else if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 0 ] < 180  ){
-
+        //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI
+        fMemResult = fabs( fMemAbscisseSinus - cos( 0 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        //calcul du parcour sur l'abscisse dans la partie : 0 -> PI et addition des 2
+        //cos( 0 )==1    ==>     cos( 0 ) * amplitude = amplitude
+        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 0 ] ) *
+                moveComp -> mVectFCustumVar[ 1 ] );
     }
     else {
         fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
