@@ -34,7 +34,11 @@ IASystem::IASystem(){
  * @param posComp Le composant position .
  * @param moveComp Le composant mouvement.
  */
-void IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *posComp, MoveableComponent *moveComp ){
+bool IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *posComp, MoveableComponent *moveComp ){
+
+    if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated()
+          || posComp -> muiGetIdEntityAssociated() != behavComp -> muiGetIdEntityAssociated() )return false;
+
     switch( behavComp -> muiTypeBehavior ){
     case UNSPECIFIED:
         break;
@@ -49,18 +53,21 @@ void IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *po
     case TOWARD_PLAYER:
         break;
     }
+    return true;
 }
 
 /**
- * @brief IASystem::initMoveableSinusoid La fonction calcule la nouvelle position de l'entité selon une sinusoide.
- *
+ * @brief IASystem::initMoveableSinusoid La fonction initialise les variables contenues dans le composant selon les critères du
+ * comportement sinusoide.
+ * L'angle de départ est initialisé à 1, la valeur de l'amplitude de la sinusoide est vérifié, si cette dernière est hors limite elle
+ * est mise à une valeur par défaut.
  * @param posComp Le composant position.
  * @param moveComp Le composant mouvement.
  */
 void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
     if( ! posComp || ! moveComp )return;
 
-    moveComp -> mVectFCustumVar . resize( 4 );
+    moveComp -> mVectFCustumVar . resize( 3 );
     //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
     if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;//si velocité non initialisée::valeur par défault
@@ -75,20 +82,20 @@ void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableCompon
 
     //définition de l'origine Y a partir de la position actuelle de l'entité
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
-
-    moveComp -> mVectFCustumVar[ 3 ] = moveComp -> mVectFCustumVar[ 1 ];
 }
 
 /**
- * @brief IASystem::initMoveableRing Calcul de la position de l'entité suivant un cercle
+ * @brief IASystem::initMoveableRing La fonction initialise les variables contenues dans le composant selon les critères du
+ * comportement ring.
  * @param posComp Le composant position.
  * @param moveComp Le composant mouvement.
  */
 void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp ){
     if( ! posComp || ! moveComp )return;
 
+    moveComp -> mVectFCustumVar . resize( 4 );
     //si vélocité non initialisée ou hors limite
-    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 100 )
+    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;
 
     moveComp -> mVectFCustumVar . resize( 4 );
@@ -98,6 +105,47 @@ void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent 
     //initialisation du centre du cercle avec les valeurs contenues dans posComp
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
     moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+}
+
+/**
+ * @brief IASystem::initMoveableRoundTrip La fonction initialise les variables contenues dans le composant selon les critères du
+ * comportement roundtrip.
+ * @param posComp Le composant position.
+ * @param moveComp Le composant mouvement.
+ */
+void IASystem::initMoveableRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp ){
+    if( ! posComp || ! moveComp )return;
+
+    moveComp -> mVectFCustumVar . resize( 6 );
+
+    //si vélocité non initialisée ou hors limite
+    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
+        moveComp -> mfVelocite = 10;
+
+    //si valeur de l'angle est hors limite valeur = 0
+    if( moveComp -> mVectFCustumVar[ 0 ] >= 360 )
+        moveComp -> mVectFCustumVar[ 0 ] = 0;
+
+    //si valeur de la longueur du parcour est hors limite valeur par défaut
+    if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 100 )
+        moveComp -> mVectFCustumVar[ 1 ] = 10;
+
+    //initialisation de l'origine du parcour
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+
+    //calcul de la position de destination
+    //modification de la position a l'aide de la fonction de déplacement
+    moveEntityAngle( posComp, moveComp -> mVectFCustumVar[ 1 ], moveComp -> mVectFCustumVar[ 0 ] );
+    //récupération des valeurs obtenues
+    moveComp -> mVectFCustumVar[ 4 ] = posComp -> mfPositionX;
+    moveComp -> mVectFCustumVar[ 5 ] = posComp -> mfPositionY;
+    //remise à la position d'origine
+    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ];
+    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ];
+
+    //initialisation du sens
+    moveComp -> mbCustomVarA = true;
 }
 
 /**
@@ -247,6 +295,23 @@ void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * move
     //calcul de la nouvelle position en fonction de l'angle du cercle
     posComp -> mfPositionX = posComp -> mfPositionX + ( cos( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
     posComp -> mfPositionY = posComp -> mfPositionY + ( sin( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
+}
+
+/**
+ * @brief IASystem::actionRoundTrip Traitement d'un parcour aller retour d'une entité, suivant une position d'origine,
+ * une longueur et un angle.
+ * @param posComp Le composant position de l'entité en cour de traitement.
+ * @param moveComp Le composant mouvement de l'entité en cour de traitement.
+ */
+void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp ){
+
+    /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
+    composants est bien la même*/
+    if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
+
+    moveEntityAngle( posComp, moveComp -> mfVelocite, moveComp -> mVectFCustumVar[ 0 ] );
+    //if( mbCustomVarA && posComp -> mfPositionX < moveComp -> mVectFCustumVar[ 4 ]  )
+
 }
 
 /**

@@ -14,8 +14,8 @@
  * mVectFCustumVar[ 1 ] :: représente le parcourt vertical maximal que doit parcourir la sinusoide de moitié
  * (à partir de l'origine'entité mVectFCustumVar[ 1 ]).
  * mVectFCustumVar[ 2 ] ::  L'ordonnée d'origine de l'entité.
- * mVectFCustumVar[ 3 ] ::  Mémorisation de l'abscisse de l'itération précédente sur la sinusoide.
  * mbCustomVarA Direction true == GAUCHE, false == DROITE
+ * //A MODIFIER POUR POUVOIR DIRIGER LA SINUSOIDE DANS TOUTES LES DIRECTIONS
  * ===============================================================
  *
  * Si BehaviorComponent -> muiTypeBehavior == RING
@@ -24,7 +24,19 @@
  * mVectFCustumVar[ 2 ] :: Position abscisse du centre de rotation.
  * mVectFCustumVar[ 3 ] :: Position ordonnée du centre de rotation.
  * mbCustomVarA true == sens trigonométrique, false == sens antitrigonométrique
- * Le centre de rotation sera définis par les valeurs présentes dans le composant position(supposé initialisé).
+ * Le centre de rotation sera définis par les valeurs présentes dans le composant position(supposé initialisées).
+ * ===============================================================
+ *
+ * Si BehaviorComponent -> muiTypeBehavior == ROUND_TRIP
+ * mVectFCustumVar[ 0 ] :: Angle sur lequel le composant va effectuer ses aller-retours.
+ * mVectFCustumVar[ 1 ] :: Longueur sur laquelle le composant va se déplacer.
+ * mVectFCustumVar[ 2 ] :: Position abscisse de l'origine du parcour.
+ * mVectFCustumVar[ 3 ] :: Position ordonnée de l'origine du parcour.
+ * mVectFCustumVar[ 4 ] :: Position abscisse de la destination du parcour.
+ * mVectFCustumVar[ 5 ] :: Position ordonnée de la destination du parcour.
+ * mbCustomVarA true == sens point origine ==> point destination, false == sens point destination ==> point origine
+ * L'origine du parcour sera définis par les valeurs présentes dans le composant position(supposé initialisées).
+ * La destination sera calculé dans initMoveableRoundTrip.
  * ===============================================================
  */
 struct MoveableComponent : public Component{

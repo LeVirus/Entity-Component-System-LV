@@ -15,14 +15,18 @@ class IASystem : public System{
 private:
     void moveEntityAngle( PositionComponent * posComp, float fNbrPixels, float fAngle );
     void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY );
+
+    void initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
+    void initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp );
+    void initMoveableRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp );
+
+    void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
+    void actionRing( PositionComponent * posComp, MoveableComponent * moveComp );
+    void actionRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp );
 public:
     IASystem();
     void execSystem() override;
-    void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
-    void actionRing( PositionComponent * posComp, MoveableComponent * moveComp );
-    void initMoveable( BehaviorComponent *behavComp, PositionComponent * posComp, MoveableComponent * moveComp );
-    void initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
-    void initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp );
+    bool initMoveable( BehaviorComponent *behavComp, PositionComponent * posComp, MoveableComponent * moveComp );
     ~IASystem();
 };
 
