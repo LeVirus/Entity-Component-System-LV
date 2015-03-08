@@ -38,8 +38,8 @@ void DisplaySystem::execSystem(){
             std::cout << " pointeur non NULL pos" << "\n";
         }
         if( displayComp && positionComp ){
-            mMultiMapComponentDisplaySystem.insert(
-                        std::multimap< unsigned int,PositionComponent * >::value_type( displayComp ->muiGetTypeComponent(), positionComp ) );
+            mMultiMapComponentDisplaySystem.insert( std::multimap< DisplayComponent *,PositionComponent * >::value_type(
+                                                        displayComp , positionComp ) );
         }
     }
 }
@@ -49,7 +49,7 @@ void DisplaySystem::execSystem(){
  * map contenant les pointeurs des composants nécessaire au système "DisplaySystem".
  * @return référence constante de mMultiMapComponentDisplaySystem.
  */
-const std::multimap< unsigned int, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
+const std::multimap< DisplayComponent *, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
     return mMultiMapComponentDisplaySystem;
 }
 

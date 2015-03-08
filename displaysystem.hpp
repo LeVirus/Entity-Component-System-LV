@@ -10,11 +10,11 @@
  * @brief La classe DisplaySystem permet d'afficher les entités qui ont les composants nécessaires.
  */
 class DisplaySystem : public System{
-    std::multimap< unsigned int, PositionComponent * > mMultiMapComponentDisplaySystem;
+    std::multimap< DisplayComponent *, PositionComponent * > mMultiMapComponentDisplaySystem;
 public:
     DisplaySystem();
     void execSystem() override;
-    const std::multimap< unsigned int, PositionComponent * > & getMapComponentDisplaySystem()const;
+    const std::multimap< DisplayComponent *, PositionComponent * > & getMapComponentDisplaySystem()const;
 };
 
 #endif // DISPLAYSYSTEM_HPP

@@ -47,12 +47,12 @@ int main(){
 
     //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
     engine.execIteration();
-    const std::multimap< unsigned int, PositionComponent * > & multiMapDisplay = engine .getSystemManager().
+    const std::multimap< DisplayComponent *, PositionComponent * > & multiMapDisplay = engine .getSystemManager().
             searchSystemByType < DisplaySystem > ( DISPLAY_SYSTEM ) -> getMapComponentDisplaySystem();
-    for( std::multimap< unsigned int, PositionComponent * >::const_iterator it = multiMapDisplay.begin() ;
+    for( std::multimap< DisplayComponent *, PositionComponent * >::const_iterator it = multiMapDisplay.begin() ;
          it != multiMapDisplay.end() ; ++it ){
-        std::cout << ( *it ) . first << "  numSprite\n";
-        //( *it ) . first -> displayComponent();
+       //std::cout << ( *it ) . first ->  << "  numSprite\n";
+        ( *it ) . first -> displayComponent();
         ( *it ) . second -> displayComponent();
     }
     return 0;
