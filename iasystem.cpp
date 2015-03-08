@@ -331,10 +331,9 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
     if( bVerifExceedingMovement( posComp -> mfPositionX, posComp -> mfPositionY, fCurrentDestinationX,
                                  fCurrentDestinationX, fCurrentAngle ) ){
         //positionner entité a la valeur de la destination et inverser le booléen
+        positionEntity( posComp, fCurrentDestinationX, fCurrentDestinationY );
+        moveComp -> mbCustomVarA = ! moveComp -> mbCustomVarA;
     }
-
-
-
 }
 
 /**
@@ -348,8 +347,21 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
  * @return true si dépassement il y a, false sinon.
  */
 bool IASystem::bVerifExceedingMovement( float fCurrentX, float fCurrentY, float fDestinationX, float fDestinationY, float fAngle ){
+
+    //traitement Y uniquement pour angle = 90 ou 270
+    if( fAngle == 90 ){
+       if( fCurrentY <= fDestinationY )
+           return true;
+       return false;
+    }
+    else if( fAngle == 270 ){
+        if( fCurrentY >= fDestinationY )
+            return true;
+        return false;
+    }
+
     //Traitement abscisse
-    if( ! ( fAngle == 90 || fAngle == 270 ) ){
+    else{
         //Si valeur angle de 0 à 89 ou de 271 à 359
         if( fAngle < 90 || fAngle > 270 ){
             if( fCurrentX <= fDestinationX )
@@ -363,17 +375,7 @@ bool IASystem::bVerifExceedingMovement( float fCurrentX, float fCurrentY, float 
             return true;
         }
     }
-    //traitement Y uniquement pour angle = 90 ou 270
-    if( fAngle == 90 ){
-       if( fCurrentY <= fDestinationY )
-           return true;
-       return false;
-    }
-    else if( fAngle == 270 ){
-        if( fCurrentY >= fDestinationY )
-            return true;
-        return false;
-    }
+
 
 }
 
@@ -402,15 +404,27 @@ void IASystem::moveEntityAngle( PositionComponent * posComp, float fNbrPixels, f
 }
 
 /**
- * @brief moveEntity Fonction de déplacement d'une entité à partir du nombre de pixels abscisses et ordonnés.
+ * @brief IASystem::moveEntity Fonction de déplacement d'une entité à partir du nombre de pixels abscisses et ordonnés.
  * @param posComp le composant position à modifier.
  * @param fNbrPixelsX le nombre de pixels abscisses.
  * @param fNbrPixelsY le nombre de pixels ordonnés.
  */
-void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY ){
+void IASystem::moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY ){
     if( ! posComp )return;
     posComp -> mfPositionX += fNbrPixelsX;
     posComp -> mfPositionY += fNbrPixelsY;
+}
+
+/**
+ * @brief IASystem::positionEntity Modification de la position de l'entité avec les valeurs envoyées en arguments.
+ * @param posComp le composant position à modifier.
+ * @param fPosX la nouvelle valeur abscisse.
+ * @param fPosY la nouvelle valeur ordonnée.
+ */
+void IASystem::positionEntity( PositionComponent * posComp, float fPosX, float fPosY ){
+    if( ! posComp )return;
+    posComp -> mfPositionX = fPosX;
+    posComp -> mfPositionY = fPosY;
 }
 
 

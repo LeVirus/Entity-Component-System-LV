@@ -13,8 +13,6 @@ struct BehaviorComponent;
  */
 class IASystem : public System{
 private:
-    void moveEntityAngle( PositionComponent * posComp, float fNbrPixels, float fAngle );
-    void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY );
 
     void initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
     void initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp );
@@ -29,6 +27,9 @@ public:
     IASystem();
     void execSystem() override;
     bool initMoveable( BehaviorComponent *behavComp, PositionComponent * posComp, MoveableComponent * moveComp );
+    void moveEntityAngle( PositionComponent * posComp, float fNbrPixels, float fAngle );
+    void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY );
+    void positionEntity( PositionComponent * posComp, float fPosX, float fPosY );
     ~IASystem();
 };
 
