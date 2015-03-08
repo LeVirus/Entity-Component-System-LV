@@ -28,14 +28,14 @@
  * ===============================================================
  *
  * Si BehaviorComponent -> muiTypeBehavior == ROUND_TRIP
- * mVectFCustumVar[ 0 ] :: Angle sur lequel le composant va effectuer ses aller-retours.
+ * mVectFCustumVar[ 0 ] :: Angle sur lequel le composant va effectuer ses aller-retours (origine --> destination).
  * mVectFCustumVar[ 1 ] :: Longueur sur laquelle le composant va se déplacer.
  * mVectFCustumVar[ 2 ] :: Position abscisse de l'origine du parcour.
  * mVectFCustumVar[ 3 ] :: Position ordonnée de l'origine du parcour.
  * mVectFCustumVar[ 4 ] :: Position abscisse de la destination du parcour.
  * mVectFCustumVar[ 5 ] :: Position ordonnée de la destination du parcour.
  * mbCustomVarA true == sens point origine ==> point destination, false == sens point destination ==> point origine
- * L'origine du parcour sera définis par les valeurs présentes dans le composant position(supposé initialisées).
+ * L'origine du parcour sera définis par les valeurs présentes dans le composant position(supposé initialisé).
  * La destination sera calculé dans initMoveableRoundTrip.
  * ===============================================================
  */

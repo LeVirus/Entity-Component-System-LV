@@ -210,6 +210,7 @@ void IASystem::execSystem(){
             actionRing( positionComp, moveableComponent );
             break;
         case ROUND_TRIP:
+            actionRoundTrip( positionComp, moveableComponent );
             break;
         case TOWARD_PLAYER:
             break;
@@ -305,14 +306,77 @@ void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * move
  */
 void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp ){
 
+    float fCurrentAngle, fCurrentDestinationX, fCurrentDestinationY;
+
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
-    moveEntityAngle( posComp, moveComp -> mfVelocite, moveComp -> mVectFCustumVar[ 0 ] );
-    //if( mbCustomVarA && posComp -> mfPositionX < moveComp -> mVectFCustumVar[ 4 ]  )
+    //sens origine vers destination
+    if( moveComp -> mbCustomVarA ){
+        fCurrentAngle = moveComp -> mVectFCustumVar[ 0 ];
+        fCurrentDestinationX = moveComp -> mVectFCustumVar[ 4 ];
+        fCurrentDestinationY = moveComp -> mVectFCustumVar[ 5 ];
+    }
+    else{
+        fCurrentAngle = static_cast< int >( moveComp -> mVectFCustumVar[ 0 ] + 180 ) % 360;
+        fCurrentDestinationX = moveComp -> mVectFCustumVar[ 2 ];
+        fCurrentDestinationY = moveComp -> mVectFCustumVar[ 3 ];
+    }
+
+    //appel de la fonction de mouvement en fonction de la vélocité et l'angle de l'entité
+    moveEntityAngle( posComp, moveComp -> mfVelocite, fCurrentAngle );
+
+    //vérification si la destination est atteinte ou dépassée
+    if( bVerifExceedingMovement( posComp -> mfPositionX, posComp -> mfPositionY, fCurrentDestinationX,
+                                 fCurrentDestinationX, fCurrentAngle ) ){
+        //positionner entité a la valeur de la destination et inverser le booléen
+    }
+
+
 
 }
+
+/**
+ * @brief IASystem::bVerifExceedingMovement Fonction vérifiant si il y a dépassement de la destination lors d'un déplacement d'une
+ * entité ayant comme comportement ROUND_TRIP(aller-retour).
+ * @param fCurrentX L'abscisse de la position actuelle.
+ * @param fCurrentY L'ordonnée de la position actuelle.
+ * @param fDestinationX L'abscisse de la destination.
+ * @param fDestinationY L'ordonnée de la destination.
+ * @param fAngle L'angle déterminant la direction.
+ * @return true si dépassement il y a, false sinon.
+ */
+bool IASystem::bVerifExceedingMovement( float fCurrentX, float fCurrentY, float fDestinationX, float fDestinationY, float fAngle ){
+    //Traitement abscisse
+    if( ! ( fAngle == 90 || fAngle == 270 ) ){
+        //Si valeur angle de 0 à 89 ou de 271 à 359
+        if( fAngle < 90 || fAngle > 270 ){
+            if( fCurrentX <= fDestinationX )
+                return false;
+            return true;
+        }
+        //Si valeur angle de 91 à 269
+        else{
+            if( fCurrentX >= fDestinationX )
+                return false;
+            return true;
+        }
+    }
+    //traitement Y uniquement pour angle = 90 ou 270
+    if( fAngle == 90 ){
+       if( fCurrentY <= fDestinationY )
+           return true;
+       return false;
+    }
+    else if( fAngle == 270 ){
+        if( fCurrentY >= fDestinationY )
+            return true;
+        return false;
+    }
+
+}
+
 
 /**
  * @brief IASystem::moveEntityAngle Fonction de déplacement d'une entité à partir d'une longueur et d'un angle.
