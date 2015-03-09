@@ -66,8 +66,12 @@ int main(){
     compMan . displayComponent();
 
     //engine.bRmComponentToEntity( 2, POSITION_COMPONENT );
-    engine.execIteration();
-    engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->displaySystem();
+    for( unsigned int i = 0; i < 200; i++ ){
+        engine.execIteration();
+        std::cout << posComp -> mfPositionX << "  " << posComp -> mfPositionY << "\n";
+        std::cout << moveComp -> mVectFCustumVar[ 2 ] << "  " << moveComp -> mVectFCustumVar[ 3 ] << "\n";
+    }
+    //engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->displaySystem();
     /*const std::multimap< DisplayComponent *, PositionComponent * > & multiMapDisplay = engine .getSystemManager().
             searchSystemByType < DisplaySystem > ( DISPLAY_SYSTEM ) -> getMapComponentDisplaySystem();
     for( std::multimap< DisplayComponent *, PositionComponent * >::const_iterator it = multiMapDisplay.begin() ;

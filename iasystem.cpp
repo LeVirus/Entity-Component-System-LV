@@ -53,6 +53,7 @@ bool IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *po
     case TOWARD_PLAYER:
         break;
     }
+    moveComp -> mbMoveUpToDate = true;
     return true;
 }
 
@@ -176,20 +177,20 @@ void IASystem::execSystem(){
         PositionComponent * positionComp = stairwayToComponentManager() .
                 searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
         if( ! positionComp ){
-            std::cout << " Erreur IASystem pointeur NULL positionComp " << "\n";
+            std::cout << " Erreur IASystem pointeur NULL positionComp \n";
             continue;
         }
 
         BehaviorComponent * behaviorComponent = stairwayToComponentManager() .
                 searchComponentByType < BehaviorComponent > ( mVectNumEntity[ i ], BEHAVIOR_COMPONENT );
         if( ! behaviorComponent ){
-            std::cout << " Erreur IASystem pointeur NULL behaviorComponent " << "\n";
+            std::cout << " Erreur IASystem pointeur NULL behaviorComponent \n";
             continue;
         }
         MoveableComponent * moveableComponent = stairwayToComponentManager() .
                 searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
         if( ! moveableComponent ){
-            std::cout << " IASystem pointeur NULL moveableComponent " << "\n";
+            std::cout << " IASystem pointeur NULL moveableComponent \n";
         }
 
         //vérifier si moveableComponent est instancié
@@ -229,6 +230,7 @@ void IASystem::execSystem(){
  * //SEULEMENT HORIZONTAL
  */
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
+    std::cout << " SINUSOIDE \n";
 
     float fMemAbscisseSinus, fMemResult;
 
@@ -284,6 +286,7 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
  * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
 void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * moveComp ){
+    float fAngleRadian;
 std::cout << " RING \n";
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
@@ -293,9 +296,10 @@ std::cout << " RING \n";
     moveComp -> mVectFCustumVar[ 1 ] += moveComp -> mfVelocite;
     if( moveComp -> mVectFCustumVar[ 1 ] >= 360 )moveComp -> mVectFCustumVar[ 1 ] = 0;
 
+    fAngleRadian = moveComp -> mVectFCustumVar[ 1 ] * PI / 180;
     //calcul de la nouvelle position en fonction de l'angle du cercle
-    posComp -> mfPositionX = posComp -> mfPositionX + ( cos( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
-    posComp -> mfPositionY = posComp -> mfPositionY + ( sin( moveComp -> mVectFCustumVar[ 1 ] ) * moveComp -> mVectFCustumVar[ 0 ] );
+    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ] + ( cos( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
+    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ] + ( sin( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
 }
 
 /**
@@ -305,6 +309,7 @@ std::cout << " RING \n";
  * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
 void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp ){
+    std::cout << " ROUNDTRIP \n";
 
     float fCurrentAngle, fCurrentDestinationX, fCurrentDestinationY;
 
