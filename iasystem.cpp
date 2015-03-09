@@ -319,6 +319,7 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
 
     //sens origine vers destination
     if( moveComp -> mbCustomVarA ){
+        //récupération de la destination et de l'angle avec lesquels traiter l'entité
         fCurrentAngle = moveComp -> mVectFCustumVar[ 0 ];
         fCurrentDestinationX = moveComp -> mVectFCustumVar[ 4 ];
         fCurrentDestinationY = moveComp -> mVectFCustumVar[ 5 ];
@@ -393,19 +394,14 @@ bool IASystem::bVerifExceedingMovement( float fCurrentX, float fCurrentY, float 
  * @param fAngle l'angle dans lequel se fait le déplacement.
  */
 void IASystem::moveEntityAngle( PositionComponent * posComp, float fNbrPixels, float fAngle ){
-    float fMultipleX, fMultipleY, fMoveX, fMoveY, fAngleRadian;
+    float fAngleRadian;
 
     if( ! posComp )return;
 
     fAngleRadian = fAngle * PI / 180.0;
-    fMultipleX = cos( fAngleRadian );
-    fMultipleY = sin( fAngleRadian ) ;
 
-    fMoveX = fNbrPixels * fMultipleX;
-    fMoveY = fNbrPixels * fMultipleY;
-
-    posComp -> mfPositionX += fMoveX;
-    posComp -> mfPositionY += fMoveY;
+    posComp -> mfPositionX += cos( fAngleRadian ) * fNbrPixels;
+    posComp -> mfPositionY += sin( fAngleRadian ) * fNbrPixels;
 }
 
 /**
