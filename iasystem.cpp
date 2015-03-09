@@ -12,14 +12,14 @@
  * @brief IASystem::IASystem Constructeur de la classe IASystem.
  */
 IASystem::IASystem(){
-    if( ! bAddComponentToSystem( PHYSIC_COMPONENT ) ){
-        std::cout << "Erreur displaySystem ajout PHYSIC_COMPONENT." << "\n";
-    }
+    /*if( ! bAddComponentToSystem( PHYSIC_COMPONENT ) ){
+        std::cout << "Erreur displaySystem ajout PHYSIC_COMPONENT.\n";
+    }*/
     if( ! bAddComponentToSystem( BEHAVIOR_COMPONENT ) ){
-        std::cout << "Erreur displaySystem ajout BEHAVIOR_COMPONENT." << "\n";
+        std::cout << "Erreur displaySystem ajout BEHAVIOR_COMPONENT.\n";
     }
     if( ! bAddComponentToSystem( POSITION_COMPONENT ) ){
-        std::cout << "Erreur displaySystem ajout POSITION_COMPONENT." << "\n";
+        std::cout << "Erreur displaySystem ajout POSITION_COMPONENT.\n";
     }
 }
 
@@ -166,12 +166,12 @@ void IASystem::execSystem(){
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
         std::cout << mVectNumEntity[ i ] << "\n";
 
-        PhysicComponent * physicComp = stairwayToComponentManager() .
+        /*PhysicComponent * physicComp = stairwayToComponentManager() .
                 searchComponentByType < PhysicComponent > ( mVectNumEntity[ i ], PHYSIC_COMPONENT );
         if( ! physicComp ){
             std::cout << " Erreur IASystem pointeur NULL physicComp " << "\n";
             continue;
-        }
+        }*/
 
         PositionComponent * positionComp = stairwayToComponentManager() .
                 searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
@@ -284,7 +284,7 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
  * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
 void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * moveComp ){
-
+std::cout << " RING \n";
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;

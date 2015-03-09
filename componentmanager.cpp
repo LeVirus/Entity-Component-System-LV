@@ -3,6 +3,8 @@
 #include "entity.hpp"
 #include "displaycomponent.hpp"
 #include "positioncomponent.hpp"
+#include "behaviorcomponent.hpp"
+#include "moveablecomponent.hpp"
 #include <iostream>
 
 ComponentManager::ComponentManager(){
@@ -17,8 +19,8 @@ void ComponentManager::updateComponentFromEntity(){
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
 
     //en cas de besoin resize du tableau de composants
-    if( mVectComponent.size() < vectEntitycst.size() * 4 ){
-        mVectComponent.resize( vectEntitycst.size() * 4 );
+    if( mVectComponent.size() < vectEntitycst.size() * NUMBR_COMPONENT ){
+        mVectComponent.resize( vectEntitycst.size() * NUMBR_COMPONENT );
     }
 
     for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
@@ -49,17 +51,25 @@ void ComponentManager::updateComponentFromEntity(){
  */
 void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
     switch( uiNumCase % NUMBR_COMPONENT ){
-        case DISPLAY_COMPONENT :{
-            mVectComponent[ uiNumCase ] = std::make_unique< DisplayComponent >();
-            break;
-        }
-        case POSITION_COMPONENT :{
-            mVectComponent[ uiNumCase ] = std::make_unique< PositionComponent >();
-            break;
-        }
-        default :{
-            break;
-        }
+    case DISPLAY_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< DisplayComponent >();
+        break;
+    }
+    case POSITION_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< PositionComponent >();
+        break;
+    }
+    case BEHAVIOR_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< BehaviorComponent >();
+        break;
+    }
+    case MOVEABLE_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< MoveableComponent >();
+        break;
+    }
+    default :{
+        break;
+    }
     }
 }
 

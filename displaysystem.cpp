@@ -29,14 +29,14 @@ void DisplaySystem::execSystem(){
         std::cout << mVectNumEntity[ i ] << "\n";
         DisplayComponent * displayComp = stairwayToComponentManager() .
                 searchComponentByType < DisplayComponent > ( mVectNumEntity[ i ], DISPLAY_COMPONENT );
-        if( displayComp ){
+        /*if( displayComp ){
             std::cout << " pointeur non NULL dis" << "\n";
-        }
+        }*/
         PositionComponent * positionComp = stairwayToComponentManager() .
                 searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
-        if( positionComp ){
+        /*if( positionComp ){
             std::cout << " pointeur non NULL pos" << "\n";
-        }
+        }*/
         if( displayComp && positionComp ){
             mMultiMapComponentDisplaySystem.insert( std::multimap< DisplayComponent *,PositionComponent * >::value_type(
                                                         displayComp , positionComp ) );

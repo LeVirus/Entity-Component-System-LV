@@ -46,7 +46,7 @@ void System::refreshEntity(){
             }
             mVectNumEntity[ count ] = i;
             count++;
-            std::cout << "num Entité System::" << i << "\n";
+            //std::cout << "num Entité System::" << i << "\n";
         }
     }
     if( mVectNumEntity.size() != count )mVectNumEntity.resize( count );

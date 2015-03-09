@@ -1,6 +1,7 @@
 #include "systemmanager.hpp"
 #include "ECSconstantes.hpp"
 #include "displaysystem.hpp"
+#include "iasystem.hpp"
 #include <memory>
 #include <iostream>
 
@@ -36,7 +37,12 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
 
             mVectSystem[ DISPLAY_SYSTEM ] = std::make_unique< DisplaySystem >();
             mBitSetSystem[ DISPLAY_SYSTEM ] = true;
-                break;
+            break;
+        case IA_SYSTEM:
+
+            mVectSystem[ IA_SYSTEM ] = std::make_unique< IASystem >();
+            mBitSetSystem[ IA_SYSTEM ] = true;
+            break;
         default:
 
             bReturn = false;
