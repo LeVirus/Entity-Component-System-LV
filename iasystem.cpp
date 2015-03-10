@@ -238,52 +238,59 @@ void IASystem::execSystem(){
 void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
     std::cout << " SINUSOIDE \n";
 
-    float fMemAbscisseSinus, fMemResult;
+    float fMemAbscisseSinus, fMemOrdonneeSinus, fMemResult;
 
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
     //récupération abscisse sinusoide position précédente
-    fMemAbscisseSinus = cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
+    fMemAbscisseSinus = cos( moveComp -> mVectFCustumVar[ 4 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
 
     //modification valeur angle en fonction de vélocité
-    moveComp -> mVectFCustumVar[ 0 ] += moveComp -> mfVelocite;
-    if( moveComp -> mVectFCustumVar[ 0 ] >= 360 )
-        moveComp -> mVectFCustumVar[ 0 ] = 0 + fabs( static_cast< int >( moveComp -> mVectFCustumVar[ 0 ] ) % 360 );
+    moveComp -> mVectFCustumVar[ 4 ] += moveComp -> mfVelocite;
+    if( moveComp -> mVectFCustumVar[ 4 ] >= 360 )
+        moveComp -> mVectFCustumVar[ 4 ] = 0 + fabs( static_cast< int >( moveComp -> mVectFCustumVar[ 4 ] ) % 360 );
 
     /*traitement mouvement vertical en fonction du sens
       Calcul du déplacement a effectuée sur les abscisses*/
 
     //cas du passage d'un angle supérieur à 180°
-    if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) < 180 && moveComp -> mVectFCustumVar[ 0 ] > 180 ){
+    if( ( moveComp -> mVectFCustumVar[ 4 ] - moveComp -> mfVelocite ) < 180 && moveComp -> mVectFCustumVar[ 4 ] > 180 ){
         //calcul du parcour sur l'abscisse dans la partie : 0 -> PI
         fMemResult = fabs( fMemAbscisseSinus - cos( 180 * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
         //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI et addition des 2
         //cos( 180 )==-1    ==>     cos( 180 ) * amplitude = -amplitude
         fMemAbscisseSinus = fMemResult + fabs( ( -1 * moveComp -> mVectFCustumVar[ 1 ] ) -
-                ( cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] ) );
+                ( cos( moveComp -> mVectFCustumVar[ 4 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] ) );
     }
     //cas du passage d'un angle 360 >> 0
-    else if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 0 ] < 180  ){
+    else if( ( moveComp -> mVectFCustumVar[ 4 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 4 ] < 180  ){
         //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI
-        fMemResult = fabs( fMemAbscisseSinus - cos( 0 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        fMemResult = fabs( fMemAbscisseSinus - cos( 4 ) * moveComp -> mVectFCustumVar[ 1 ] );
         //calcul du parcour sur l'abscisse dans la partie : 0 -> PI et addition des 2
         //cos( 0 )==1    ==>     cos( 0 ) * amplitude = amplitude
-        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) *
+        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) *
                 moveComp -> mVectFCustumVar[ 1 ] );
     }
     else {
-        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) *
+                moveComp -> mVectFCustumVar[ 1 ] );
     }
 
-    if( moveComp -> mbCustomVarA )
-        posComp -> mfPositionX -= fMemAbscisseSinus;
-    else posComp -> mfPositionX += fMemAbscisseSinus;
+    //positionnement de la sinusoide en fonction de l'avancée abscisse de la sinusoide suivant l'angle d'orientation de celle ci
+    moveCoordAngle( moveComp -> mVectFCustumVar[ 2 ], moveComp -> mVectFCustumVar[ 3 ],
+                    fMemAbscisseSinus, moveComp -> mVectFCustumVar[ 0 ] );
+
+    //modification de la position de l'entité à la ligne d'origine de la sinusoide
+    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ];
+    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ];
+
+    //mémorisation de la position verticale de la nouvelle position sur la sinusoide
+    fMemOrdonneeSinus = sin( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
 
     //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel * PI / 180 ) * amplitude
-    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 2 ] +
-            sin( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
+    moveEntity( posComp, fMemOrdonneeSinus, moveComp -> mVectFCustumVar[ 0 ] + 90 );//!!!verif pb avec valeur absolue!!!!!!
 }
 
 /**
@@ -408,6 +415,23 @@ void IASystem::moveEntityAngle( PositionComponent * posComp, float fNbrPixels, f
 
     posComp -> mfPositionX += cos( fAngleRadian ) * fNbrPixels;
     posComp -> mfPositionY += sin( fAngleRadian ) * fNbrPixels;
+}
+
+/**
+ * @brief IASystem::moveCoordAngle Fonction de déplacement de coordonnées à partir d'une longueur et d'un angle.
+ * Application des formules (cosinus sinus).
+ * @param fCoordX les coordonnées abscisses à modifier.
+ * @param fCoordY les coordonnées ordonnées à modifier.
+ * @param fNbrPixels Le nombre de pixels.
+ * @param fAngle l'angle dans lequel se fait le déplacement.
+ */
+void IASystem::moveCoordAngle( float & fCoordX, float & fCoordY, float fNbrPixels, float fAngle ){
+    float fAngleRadian;
+
+    fAngleRadian = fAngle * PI / 180.0;
+
+    fCoordX += cos( fAngleRadian ) * fNbrPixels;
+    fCoordY += sin( fAngleRadian ) * fNbrPixels;
 }
 
 /**
