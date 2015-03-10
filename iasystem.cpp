@@ -69,21 +69,26 @@ bool IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *po
 void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableComponent * moveComp ){
     if( ! posComp || ! moveComp )return;
 
-    moveComp -> mVectFCustumVar . resize( 3 );
-    //fabs(a.x - x) < std::numeric_limits<float>::epsilon()
-    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
+    moveComp -> mVectFCustumVar . resize( 5 );
+    if( moveComp -> mfVelocite <= 0 || moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;//si velocité non initialisée::valeur par défault
 
-    //initialisation de l'angle
-    moveComp -> mVectFCustumVar[ 0 ] = 0;
+    //si valeur de la direction de la sinusoide est hors limites
+    if( moveComp -> mVectFCustumVar[ 0 ] > 359 || moveComp -> mVectFCustumVar[ 0 ] < 0 )
+        moveComp -> mVectFCustumVar[ 0 ] = 0;
 
-    //vérification de la valeur de l'intensité de la sinusoide(possibilité de l'initialiser antérieurement).
+    //vérification de la valeur de l'amplitude de la sinusoide(possibilité de l'initialiser antérieurement).
     //si valeur hors limite valeur par défaut
-    if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
+    if( moveComp -> mVectFCustumVar[ 1 ] <= 0 || moveComp -> mVectFCustumVar[ 1 ] > 500 )
         moveComp -> mVectFCustumVar[ 1 ] = 100;
 
-    //définition de l'origine Y a partir de la position actuelle de l'entité
-    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionY;
+    //définition de l'abscisse et de l'ordonnée de la droite d'origine de la fonction
+    //sinusoide à partir de la position actuelle de l'entité
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+
+    //initialisation de l'angle de la fonction sinusoide
+    moveComp -> mVectFCustumVar[ 4 ] = 0;
 }
 
 /**
@@ -97,12 +102,12 @@ void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent 
 
     moveComp -> mVectFCustumVar . resize( 4 );
     //si vélocité non initialisée ou hors limite
-    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
+    if( moveComp -> mfVelocite <= 0 || moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;
 
     moveComp -> mVectFCustumVar . resize( 4 );
     //si valeur rayon cercle non initialisée
-    if( moveComp -> mVectFCustumVar[ 0 ] == 0 )moveComp -> mVectFCustumVar[ 0 ] = 50;
+    if( moveComp -> mVectFCustumVar[ 0 ] <= 0 )moveComp -> mVectFCustumVar[ 0 ] = 50;
 
     //initialisation du centre du cercle avec les valeurs contenues dans posComp
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
@@ -121,15 +126,15 @@ void IASystem::initMoveableRoundTrip( PositionComponent * posComp, MoveableCompo
     moveComp -> mVectFCustumVar . resize( 6 );
 
     //si vélocité non initialisée ou hors limite
-    if( moveComp -> mfVelocite == 0 || moveComp -> mfVelocite > 50 )
+    if( moveComp -> mfVelocite <= 0 || moveComp -> mfVelocite > 50 )
         moveComp -> mfVelocite = 10;
 
     //si valeur de l'angle est hors limite valeur = 0
-    if( moveComp -> mVectFCustumVar[ 0 ] >= 360 )
+    if( moveComp -> mVectFCustumVar[ 0 ] >= 360 || moveComp -> mVectFCustumVar[ 0 ] < 0 )
         moveComp -> mVectFCustumVar[ 0 ] = 0;
 
     //si valeur de la longueur du parcour est hors limite valeur par défaut
-    if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 100 )
+    if( moveComp -> mVectFCustumVar[ 1 ] <= 0 || moveComp -> mVectFCustumVar[ 1 ] > 100 )
         moveComp -> mVectFCustumVar[ 1 ] = 100;
 
     //initialisation de l'origine du parcour

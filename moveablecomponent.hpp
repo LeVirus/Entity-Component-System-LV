@@ -10,11 +10,13 @@
  * muiCustumVar est un tableau servant à stocker des valeurs qui seront utilisées ou non en fonction du besoin.
  *
  * Si BehaviorComponent -> muiTypeBehavior = SINUSOIDAL
- * mVectFCustumVar[ 0 ] :: Mémorisation de l'angle(en degré) en fonction duquel la position ordonnée sera déterminée(fonction sinusoidale)
+ * mVectFCustumVar[ 0 ] :: Direction de la sinusoide(en degré).
  * mVectFCustumVar[ 1 ] :: Représente l'amplitude de la sinusoide.
- * mVectFCustumVar[ 2 ] :: L'ordonnée d'origine de l'entité(valeur de l'ordonnée de la sinusoide pour sin(0)).
+ * mVectFCustumVar[ 2 ] :: L'abscisse de la droite d'origine de la sinusoide(valeur de l'abscisse de la sinusoide pour sin(0)).
+ * mVectFCustumVar[ 3 ] :: L'ordonnée de la droite d'origine de la sinusoide(valeur de l'ordonnée de la sinusoide pour sin(0)).
+ * mVectFCustumVar[ 4 ] :: Mémorisation de l'angle(en degré) en fonction duquel l'abscisse et l'ordonnée seront
+ * déterminées(fonction sinusoidale).
  * mbCustomVarA Direction true == GAUCHE, false == DROITE
- * //A MODIFIER POUR POUVOIR DIRIGER LA SINUSOIDE DANS TOUTES LES DIRECTIONS
  * ===============================================================
  *
  * Si BehaviorComponent -> muiTypeBehavior = RING
