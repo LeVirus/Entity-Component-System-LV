@@ -1,13 +1,13 @@
 #ifndef CONSTANTES_HPP
 #define CONSTANTES_HPP
 
-//Enumération types composants
+//Enumération des types de composants
 enum{ DISPLAY_COMPONENT, POSITION_COMPONENT, PHYSIC_COMPONENT, MOVEABLE_COMPONENT, BEHAVIOR_COMPONENT };
 
-//Enumération types systemes
+//Enumération des types de systemes
 enum{ DISPLAY_SYSTEM, IA_SYSTEM };
 
-//Enumération types comportement
+//Enumération des types de comportements
 enum{ UNSPECIFIED, SINUSOIDAL, RING, ROUND_TRIP, TOWARD_PLAYER };
 
 const unsigned int COMPONENT_NOT_FOUND = 1000, SYSTEM_NOT_FOUND = 1001, NUMBR_COMPONENT = 5, NUMBR_SYSTEM = 2;

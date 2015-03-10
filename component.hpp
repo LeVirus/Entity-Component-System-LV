@@ -6,7 +6,7 @@
 /**
  * @brief La structure Component est la classe mère de tous les composants.
  * Un composant représente un élément d'une entité.
- * Elle est abstraite, et comporte un identifiant de type.
+ * Elle est abstraite, et comporte un numéro qui détermine le type de composant.
  */
 struct Component{
     virtual void displayComponent()const{
@@ -24,7 +24,7 @@ struct Component{
 
     protected:
         unsigned int muiTypeComponent, muiIDComponent, muiIDEntityAssociated;
-        inline Component(){}// = delete;
+        inline Component(){}
 };
 
 #endif // COMPONENT_HPP

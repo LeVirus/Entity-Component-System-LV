@@ -8,6 +8,12 @@
 
 class Engine;
 
+/**
+ * @brief La classe ComponentManager gère tous les composants.
+ * Les composants de toutes les entités sont stockés dans un tableau.
+ * Leurs emplacements sont déterminés par le numéro de leur entité associée ainsi que par leurs type(associé à une énumération).
+ * numéro emplacement = numéro entité * nombre total de type de composant + numéro type de composant.
+ */
 class ComponentManager{
 private:
     Engine * mptrEngine;
@@ -18,8 +24,6 @@ public:
     void linkEngineToComponentManager( Engine *ptrEngine );
     void instanciateComponent( unsigned int uiNumCase );
     void displayComponent()const;
-    //bool bAddComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
-    //bool bRmComponent( unsigned int uiNumEntity, unsigned int uiNumTypeComponent );
 
     /**
      * @brief ComponentManager::searchComponentByType
@@ -28,7 +32,8 @@ public:
      * -Les paramètres renvoie bien a une case du tableau(pas de dépassement de mémoire).
      * La fonction renvoie le composant avec un static_cast.
      * @param uiTypeComponent le type de composant a rechercher.
-     * @return Un pointeur vers le composant demandé, NULL en cas de paramètre invalide.
+     * @return Un pointeur vers le composant demandé, NULL en cas de paramètre invalide ou
+     * si le composant demandé n'est pas instancié.
      */
     template < typename componentTemplate >
 
@@ -38,7 +43,6 @@ public:
               !  mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )return NULL;
         static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
         //récupérer un pointeur vers l'objet contenu dans le unique_ptr
-        //std::cout << uiNumEntity * NUMBR_COMPONENT + uiTypeComponent << " recup componentTemplate " << mVectComponent.size() << "\n";
         return static_cast< componentTemplate* >( mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ].get() );
     }
 };

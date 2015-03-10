@@ -49,6 +49,7 @@ bool IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *po
         initMoveableRing( posComp, moveComp );
         break;
     case ROUND_TRIP:
+        initMoveableRoundTrip( posComp, moveComp );
         break;
     case TOWARD_PLAYER:
         break;
@@ -129,7 +130,7 @@ void IASystem::initMoveableRoundTrip( PositionComponent * posComp, MoveableCompo
 
     //si valeur de la longueur du parcour est hors limite valeur par défaut
     if( moveComp -> mVectFCustumVar[ 1 ] == 0 || moveComp -> mVectFCustumVar[ 1 ] > 100 )
-        moveComp -> mVectFCustumVar[ 1 ] = 10;
+        moveComp -> mVectFCustumVar[ 1 ] = 100;
 
     //initialisation de l'origine du parcour
     moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
@@ -239,7 +240,7 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
     //récupération abscisse sinusoide position précédente
-    fMemAbscisseSinus = cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
+    fMemAbscisseSinus = cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
 
     //modification valeur angle en fonction de vélocité
     moveComp -> mVectFCustumVar[ 0 ] += moveComp -> mfVelocite;
@@ -252,11 +253,11 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
     //cas du passage d'un angle supérieur à 180°
     if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) < 180 && moveComp -> mVectFCustumVar[ 0 ] > 180 ){
         //calcul du parcour sur l'abscisse dans la partie : 0 -> PI
-        fMemResult = fabs( fMemAbscisseSinus - cos( 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        fMemResult = fabs( fMemAbscisseSinus - cos( 180 * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
         //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI et addition des 2
         //cos( 180 )==-1    ==>     cos( 180 ) * amplitude = -amplitude
-        fMemAbscisseSinus = fMemResult + fabs( ( -1 * moveComp -> mVectFCustumVar[ 1 ] ) - ( cos( moveComp ->mVectFCustumVar[ 0 ] ) *
-                moveComp -> mVectFCustumVar[ 1 ] ) );
+        fMemAbscisseSinus = fMemResult + fabs( ( -1 * moveComp -> mVectFCustumVar[ 1 ] ) -
+                ( cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] ) );
     }
     //cas du passage d'un angle 360 >> 0
     else if( ( moveComp -> mVectFCustumVar[ 0 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 0 ] < 180  ){
@@ -264,20 +265,20 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
         fMemResult = fabs( fMemAbscisseSinus - cos( 0 ) * moveComp -> mVectFCustumVar[ 1 ] );
         //calcul du parcour sur l'abscisse dans la partie : 0 -> PI et addition des 2
         //cos( 0 )==1    ==>     cos( 0 ) * amplitude = amplitude
-        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 0 ] ) *
+        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) *
                 moveComp -> mVectFCustumVar[ 1 ] );
     }
     else {
-        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ] );
+        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ] );
     }
 
     if( moveComp -> mbCustomVarA )
         posComp -> mfPositionX -= fMemAbscisseSinus;
     else posComp -> mfPositionX += fMemAbscisseSinus;
 
-    //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel ) * amplitude
+    //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel * PI / 180 ) * amplitude
     posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 2 ] +
-            sin( moveComp ->mVectFCustumVar[ 0 ] ) * moveComp -> mVectFCustumVar[ 1 ];
+            sin( moveComp ->mVectFCustumVar[ 0 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
 }
 
 /**

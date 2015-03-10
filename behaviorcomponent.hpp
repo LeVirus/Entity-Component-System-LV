@@ -6,6 +6,7 @@
 
 /**
  * @brief La structure BehaviorComponent représente le type de comportement de l'entité.
+ * Le comportement est déterminé par un entier.
  */
 struct BehaviorComponent : public Component{
     unsigned int muiTypeBehavior;//a modifier remplacer par un bitset

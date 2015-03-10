@@ -5,8 +5,8 @@
 #include "ECSconstantes.hpp"
 
 /**
- * @brief La structure DisplayComponent représente la position d'une entité.
- * Elle contient l'abscisse et l'ordonnée.
+ * @brief La structure DisplayComponent comporte les données concernant l'apparence graphique qu'a une entité.
+ * Elle contient un entier qui correspond à un sprite.
  */
 struct DisplayComponent : public Component{
     DisplayComponent(){

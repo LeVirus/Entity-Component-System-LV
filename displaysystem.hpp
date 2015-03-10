@@ -7,7 +7,9 @@
 #include <map>
 
 /**
- * @brief La classe DisplaySystem permet d'afficher les entités qui ont les composants nécessaires.
+ * @brief La classe DisplaySystem permet l'affichage des entités qui ont les
+ * composants nécessaires(POSITION_COMPONENT, DISPLAY_COMPONENT).
+ * La classe stocke les 2 paires de composants nécessaires dans un multimap qui peut être envoyé en référence constante.
  */
 class DisplaySystem : public System{
     std::multimap< DisplayComponent *, PositionComponent * > mMultiMapComponentDisplaySystem;
