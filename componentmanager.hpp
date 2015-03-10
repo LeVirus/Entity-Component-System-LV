@@ -30,7 +30,9 @@ public:
      * Fonction renvoyant la référence du contenant recherché.
      * Une vérification est effectué avant l'envoie:
      * -Les paramètres renvoie bien a une case du tableau(pas de dépassement de mémoire).
+     * -Le paramètre renvoie bien à une case contenant un composant instancié.
      * La fonction renvoie le composant avec un static_cast.
+     * @param uiNumEntity le numéro de l'entité à qui appartient le composant recherché.
      * @param uiTypeComponent le type de composant a rechercher.
      * @return Un pointeur vers le composant demandé, NULL en cas de paramètre invalide ou
      * si le composant demandé n'est pas instancié.

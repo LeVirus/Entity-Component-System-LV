@@ -46,7 +46,9 @@ struct MoveableComponent : public Component{
 
     /**
      * @brief DisplayComponent Constructeur de MoveableComponent.
-     * Initialisation des variables à des valeurs par défaut.
+     * Initialisation de la variable muiTypeBehavior.
+     * Les conteneurs de variables ;dont l'utilité sera déterminée en fonction du type des classes filles; sont initialisés
+     * à des valeurs par défaut.
      */
     MoveableComponent(){
         muiTypeComponent = MOVEABLE_COMPONENT;
@@ -59,7 +61,8 @@ struct MoveableComponent : public Component{
     }
 
     /**
-     * @brief displayComponent Affichage des valeurs des variables contenues dans MoveableComponent.
+     * @brief displayComponent Fonction dérivée d'affichage des variables de la structure MoveableComponent.
+     * La fonction de base d'affichage de la classe mère est appelée en premier lieu.
      */
     void displayComponent()const override{
         Component::displayComponent();

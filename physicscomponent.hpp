@@ -12,9 +12,18 @@
 struct PhysicComponent : public Component{
     bool mbTerrestrial, mbGhost;
 
+    /**
+     * @brief PhysicComponent Constructeur de PhysicComponent.
+     * Initialisation de la variable muiTypeBehavior.
+     */
     PhysicComponent(){
         muiTypeComponent = PHYSIC_COMPONENT;
     }
+
+    /**
+     * @brief displayComponent Fonction dérivée d'affichage des variables de la structure PhysicComponent.
+     * La fonction de base d'affichage de la classe mère est appelée en premier lieu.
+     */
     void displayComponent()const override{
         Component::displayComponent();
         std::cout << "terrestrial::" << mbTerrestrial << "\n ghost" << mbGhost << "\n";

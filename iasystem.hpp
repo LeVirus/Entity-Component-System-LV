@@ -8,7 +8,7 @@ struct MoveableComponent;
 struct BehaviorComponent;
 
 /**
- * @brief La classe IASystem éxecute le comportement que doivent avoir les entités
+ * @brief La classe IASystem initialise et éxecute le comportement que doivent avoir les entités
  * en fonction de leurs caractéristiques présentes dans les différents composants.
  */
 class IASystem : public System{

@@ -10,8 +10,10 @@
 class SystemManager;
 
 /**
- * @brief La classe System est la classe mère(abstraite) de tous système.
- * Cette classe permet de récupération des composants nécessaires de chaque entités.
+ * @brief La classe System est la classe mère(abstraite) de tous systèmes.
+ * Cette classe permet la récupération des numéros des entités à traiter par le système,
+ * cela en fonction des données présentes dans le bitset mBitSetComponentSystem.
+ * Les composants nécessaires sont déterminés dans les classes filles de System.
  */
 class System{
 protected:
