@@ -12,7 +12,7 @@
 /**
  * @brief La classe Engine est la classe de base de la bibliothèque.
  * Elle contient un vector d'Entity le gestionnaire de système et le gestionnaire de composant.
- * Cette classe permet d'ajouter/supprimer les Entity, et de lancer ou stoper la gestion des systèmes.
+ * Cette classe permet de gérer les Entités.
  */
 
 class Engine

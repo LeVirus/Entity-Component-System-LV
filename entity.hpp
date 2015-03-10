@@ -9,8 +9,7 @@
 
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.
- * Elle contient un vector de Component.
- * Le bitset indique quels sont les composants que contient l'entité,
+ * Elle contient un bitset qui indique quels sont les composants que contient l'entité,
  * ils sont positionnés dans le bitset en fonction de leurs types( muiTypeComponent ).
  */
 class Entity
@@ -18,6 +17,10 @@ class Entity
 private:
     unsigned int mUiIDEntity;
     std::bitset< NUMBR_COMPONENT > mBitSetComponent;
+    /*mbActive détermine si l'entité est actuellement activée dans la scène du jeu.
+     * mbEntityInUse détermine pour une entité activée si celle ci est "endormie" ou non.
+     * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
+    */
     bool mbActive, mbUpToDate, mbEntityInUse;
 public:
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
