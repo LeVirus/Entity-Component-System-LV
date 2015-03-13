@@ -19,7 +19,7 @@ public:
     GravitySystem();
     bool bSetGravityValue( unsigned int uiValueGravity );
     void execSystem() override;
-    std::multimap< const MoveableComponent *, PositionComponent * > & getMapComponentGravitySystem();
+    std::multimap<MoveableComponent *, PositionComponent *> &getMapComponentGravitySystem();
     ~GravitySystem();
 };
 

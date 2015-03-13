@@ -51,15 +51,18 @@ void GravitySystem::execSystem(){
                 searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
         if( ! moveableComponent ){
             std::cout << " Erreur GravitySystem pointeur NULL moveableComponent \n";
+            continue;
         }
 
-        if( moveableComponent -> mbTerrestrial && ! moveableComponent -> mbOnTheGround ){
-            positionComp -> mfPositionY -= muiValueGravity;
-            //a modifier prendre en compte l'inertie
+        if( moveableComponent -> mbTerrestrial ){
+            if( ! moveableComponent -> mbOnTheGround ){
+                positionComp -> mfPositionY -= muiValueGravity;
+                //a modifier prendre en compte l'inertie
+            }
+            //mémorisation des composant pour le traitement des collisions avec le sol
+            mMultiMapComponentGravitySystem.insert( std::multimap< MoveableComponent *,PositionComponent * >::value_type(
+                                                        moveableComponent , positionComp ) );
         }
-        //mémorisation des composant pour le traitement des collisions avec le sol
-        mMultiMapComponentGravitySystem.insert( std::multimap< const MoveableComponent *,PositionComponent * >::value_type(
-                                                    moveableComponent , positionComp ) );
     }
 }
 
@@ -67,7 +70,7 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::multimap< const MoveableComponent *, PositionComponent * > & GravitySystem::getMapComponentGravitySystem(){
+std::multimap< MoveableComponent *, PositionComponent * > & GravitySystem::getMapComponentGravitySystem(){
     return mMultiMapComponentGravitySystem;
 }
 
