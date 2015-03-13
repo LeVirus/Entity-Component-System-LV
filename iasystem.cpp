@@ -152,7 +152,7 @@ void IASystem::initMoveableRoundTrip( PositionComponent * posComp, MoveableCompo
     posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ];
 
     //initialisation du sens
-    moveComp -> mbCustomVarA = true;
+    moveComp -> mbCustumVarA = true;
 }
 
 /**
@@ -331,7 +331,7 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
     //sens origine vers destination
-    if( moveComp -> mbCustomVarA ){
+    if( moveComp -> mbCustumVarA ){
         //récupération de la destination et de l'angle avec lesquels traiter l'entité
         fCurrentAngle = moveComp -> mVectFCustumVar[ 0 ];
         fCurrentDestinationX = moveComp -> mVectFCustumVar[ 4 ];
@@ -351,7 +351,7 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
                                  fCurrentDestinationX, fCurrentAngle ) ){
         //positionner entité a la valeur de la destination et inverser le booléen
         positionEntity( posComp, fCurrentDestinationX, fCurrentDestinationY );
-        moveComp -> mbCustomVarA = ! moveComp -> mbCustomVarA;
+        moveComp -> mbCustumVarA = ! moveComp -> mbCustumVarA;
     }
 }
 

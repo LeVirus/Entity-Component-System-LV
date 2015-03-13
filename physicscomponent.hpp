@@ -10,7 +10,7 @@
  * mbTerrestrial détermine si l'entité est de type terrestre ou volante.
  */
 struct PhysicComponent : public Component{
-    bool mbTerrestrial, mbGhost;
+    bool mbGhost;
 
     /**
      * @brief PhysicComponent Constructeur de PhysicComponent.

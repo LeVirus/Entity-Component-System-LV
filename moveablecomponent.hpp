@@ -41,10 +41,9 @@
  * ===============================================================
  */
 struct MoveableComponent : public Component{
-    bool mbMoveUpToDate;
+    bool mbMoveUpToDate, mbTerrestrial, mbCustumVarA;
     std::vector< float > mVectFCustumVar;
     float mfVelocite;
-    bool mbCustomVarA;
 
     /**
      * @brief DisplayComponent Constructeur de MoveableComponent.
@@ -59,7 +58,7 @@ struct MoveableComponent : public Component{
         mVectFCustumVar . resize( 2 );
         mVectFCustumVar[ 0 ] = 0;
         mVectFCustumVar[ 1 ] = 0;
-        mbCustomVarA = true;
+        mbCustumVarA = true;
     }
 
     /**
