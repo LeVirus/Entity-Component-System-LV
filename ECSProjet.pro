@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     displaysystem.cpp \
     system.cpp \
     componentmanager.cpp \
-    iasystem.cpp
+    iasystem.cpp \
+    gravitysystem.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -37,5 +38,6 @@ HEADERS += \
     iasystem.hpp \
     physicscomponent.hpp \
     moveablecomponent.hpp \
-    behaviorcomponent.hpp
+    behaviorcomponent.hpp \
+    gravitysystem.hpp
 

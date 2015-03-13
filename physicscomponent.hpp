@@ -26,7 +26,7 @@ struct PhysicComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "terrestrial::" << mbTerrestrial << "\n ghost" << mbGhost << "\n";
+        std::cout << "\n ghost" << mbGhost << "\n";
     }
 };
 

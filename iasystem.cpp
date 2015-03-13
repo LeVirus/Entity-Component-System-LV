@@ -171,7 +171,7 @@ void IASystem::execSystem(){
     System::execSystem();
     //parcours des entités à traiter
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
-        std::cout << mVectNumEntity[ i ] << "\n";
+        //std::cout << mVectNumEntity[ i ] << "\n";
 
         /*PhysicComponent * physicComp = stairwayToComponentManager() .
                 searchComponentByType < PhysicComponent > ( mVectNumEntity[ i ], PHYSIC_COMPONENT );
