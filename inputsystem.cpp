@@ -36,6 +36,15 @@ void InputSystem::execSystem(){
             continue;
         }
 
+        bool bAllFalse = true;
+        //si aucune entré utilisateur
+        for( unsigned int j = 0; j < inputComponent -> mBitsetInput.size();j++ ){
+            if( mBitsetInput[ j ] ){
+                bAllFalse = false;
+                break;
+            }
+        }
+        if( bAllFalse )continue;
 
         MoveableComponent * moveableComponent = stairwayToComponentManager() .
                 searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
