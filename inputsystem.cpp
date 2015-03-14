@@ -24,6 +24,7 @@ InputSystem::InputSystem(){
  * La fonction va vérifier les actions demandées par le joueur.
  * Ces actions vont être effectuées ou non en fonction du type de l'entité, de l'état de cette entité
  * ou de la possibilité de simultanéités des actions demandées(dans le cas précis).
+ * A la fin de la fonction le bitset contenant les actions demandées est réinitalisé.
  */
 void InputSystem::execSystem(){
     System::execSystem();
@@ -37,9 +38,9 @@ void InputSystem::execSystem(){
         }
 
         bool bAllFalse = true;
-        //si aucune entré utilisateur
+        //si aucune entré utilisateur entité suivante
         for( unsigned int j = 0; j < inputComponent -> mBitsetInput.size();j++ ){
-            if( mBitsetInput[ j ] ){
+            if( inputComponent -> mBitsetInput[ j ] ){
                 bAllFalse = false;
                 break;
             }
@@ -59,6 +60,27 @@ void InputSystem::execSystem(){
             std::cout << " Erreur IASystem pointeur NULL positionComp \n";
             continue;
         }
+
+        //traitement évènement joueur
+
+
+
+        if( moveableComponent -> mbTerrestrial && moveableComponent -> mbOnTheGround ){
+            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
+            //JUMP a implémenter
+        }
+        else{
+            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
+
+            if( inputComponent -> mBitsetInput[ MOVE_UP ] )positionComp -> mfPositionY -=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_DOWN ] )positionComp -> mfPositionY +=  moveableComponent -> mfVelocite;
+        }
+
+        //réinitialisation du bitset du composant
+        inputComponent -> mBitsetInput . reset();
+
     }
 }
 

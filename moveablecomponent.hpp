@@ -7,7 +7,7 @@
 
 /**
  * @brief La structure MoveableComponent possède les caractéristiques liées aux déplacements d'une entité.
- * muiCustumVar est un tableau servant à stocker des valeurs qui seront utilisées ou non en fonction du besoin.
+ * muiCustumVar est un tableau servant à stocker des valeurs qui seront utilisées en fonction du besoin.
  *
  * Si BehaviorComponent -> muiTypeBehavior = SINUSOIDAL
  * mVectFCustumVar[ 0 ] :: Direction de la sinusoide(en degré).
@@ -16,7 +16,6 @@
  * mVectFCustumVar[ 3 ] :: L'ordonnée de la droite d'origine de la sinusoide(valeur de l'ordonnée de la sinusoide pour sin(0)).
  * mVectFCustumVar[ 4 ] :: Mémorisation de l'angle(en degré) en fonction duquel l'abscisse et l'ordonnée seront
  * déterminées(fonction sinusoidale).
- * mbCustomVarA Direction true == GAUCHE, false == DROITE
  * ===============================================================
  *
  * Si BehaviorComponent -> muiTypeBehavior = RING

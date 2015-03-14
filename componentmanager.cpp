@@ -5,6 +5,8 @@
 #include "positioncomponent.hpp"
 #include "behaviorcomponent.hpp"
 #include "moveablecomponent.hpp"
+#include "inputcomponent.hpp"
+#include "physicscomponent.hpp"
 #include <iostream>
 
 ComponentManager::ComponentManager(){
@@ -65,6 +67,14 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
     }
     case MOVEABLE_COMPONENT :{
         mVectComponent[ uiNumCase ] = std::make_unique< MoveableComponent >();
+        break;
+    }
+    case PHYSIC_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< PhysicComponent >();
+        break;
+    }
+    case INPUT_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< InputComponent >();
         break;
     }
     default :{

@@ -56,7 +56,7 @@ void GravitySystem::execSystem(){
 
         if( moveableComponent -> mbTerrestrial ){
             if( ! moveableComponent -> mbOnTheGround ){
-                positionComp -> mfPositionY -= muiValueGravity;
+                positionComp -> mfPositionY += muiValueGravity;
                 //a modifier prendre en compte l'inertie
             }
             //mémorisation des composant pour le traitement des collisions avec le sol

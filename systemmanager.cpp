@@ -1,6 +1,8 @@
 #include "systemmanager.hpp"
 #include "ECSconstantes.hpp"
 #include "displaysystem.hpp"
+#include "gravitysystem.hpp"
+#include "inputsystem.hpp"
 #include "iasystem.hpp"
 #include <memory>
 #include <iostream>
@@ -42,6 +44,16 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
 
             mVectSystem[ IA_SYSTEM ] = std::make_unique< IASystem >();
             mBitSetSystem[ IA_SYSTEM ] = true;
+            break;
+        case GRAVITY_SYSTEM:
+
+            mVectSystem[ GRAVITY_SYSTEM ] = std::make_unique< GravitySystem >();
+            mBitSetSystem[ GRAVITY_SYSTEM ] = true;
+            break;
+        case INPUT_SYSTEM:
+
+            mVectSystem[ INPUT_SYSTEM ] = std::make_unique< InputSystem >();
+            mBitSetSystem[ INPUT_SYSTEM ] = true;
             break;
         default:
 
