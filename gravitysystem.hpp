@@ -13,7 +13,7 @@ struct MoveableComponent;
 class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
-    std::multimap< const MoveableComponent *, PositionComponent * > mMultiMapComponentGravitySystem;
+    std::multimap< MoveableComponent *, PositionComponent * > mMultiMapComponentGravitySystem;
 
 public:
     GravitySystem();

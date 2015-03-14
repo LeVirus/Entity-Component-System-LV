@@ -111,11 +111,10 @@ bool Entity::bEntityIsUpToDate()const{
  */
 bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
     //vérification de la présence du component dans le bitset
-    bool bReturn = false;
-    if( uiTypeComponent < mBitSetComponent.size() && mBitSetComponent[ uiTypeComponent ] == true ){
-        bReturn = true;
+    if( uiTypeComponent < mBitSetComponent.size() ){
+        return mBitSetComponent[ uiTypeComponent ];
     }
-    return bReturn;
+    return false;
 }
 
 /**
