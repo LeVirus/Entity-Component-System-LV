@@ -22,6 +22,7 @@ int main(){
     engine.bAddComponentToEntity( 0, MOVEABLE_COMPONENT );
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM );
     engine.getSystemManager().bAddSystem( IA_SYSTEM );
+    engine.getSystemManager().bAddSystem( GRAVITY_SYSTEM );
     compMan . updateComponentFromEntity();
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posComp ){
@@ -40,6 +41,7 @@ int main(){
     MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 
     engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->  initMoveable( behavComp, posComp, moveComp );
+    engine.execIteration();
     compMan . displayComponent();
     return 0;
 }

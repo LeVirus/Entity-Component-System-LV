@@ -84,6 +84,21 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
 }
 
 /**
+ * @brief ComponentManager::bVerifComponentInstanciate La fonction vérifie si la case demandée est bien dans le tableau
+ * dans un premier temps, et si le pointeur en question n'est pas NULL.
+ * @param uiNumEntity le numéro de l'entité à qui appartient le composant.
+ * @param uiTypeComponent Le type de composant demandé.
+ * @return false si le pointeur est NULL, true sinon.
+ */
+bool ComponentManager::bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
+    if( uiNumEntity * NUMBR_COMPONENT + uiTypeComponent >= mVectComponent.size() )
+        return false;
+    if( mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )
+        return true;
+    return false;
+}
+
+/**
  * @brief ComponentManager::displayComponent Affichage des composant contenu dans le vector.
  */
 void ComponentManager::displayComponent()const{

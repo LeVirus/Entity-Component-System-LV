@@ -2,6 +2,7 @@
 #include "ECSconstantes.hpp"
 #include "positioncomponent.hpp"
 #include "moveablecomponent.hpp"
+#include <cassert>
 
 /**
  * @brief GravitySystem::GravitySystem Constructeur de GravitySystem.
@@ -29,6 +30,43 @@ bool GravitySystem::bSetGravityValue( unsigned int uiValueGravity ){
 }
 
 /**
+ * @brief GravitySystem::recupComponentToEntity Recupération des pointeur des composants "PositionComponent" et "MoveableComponent"
+ * de chaque entité à traiter par GravitySystem.
+ * Les pointeurs sont stockées dans un vector de pair.
+ * Une vérification de l'instanciation de chaque pointeur est effectuée.
+ */
+void GravitySystem::recupComponentToEntity(){
+    System::execSystem();
+
+
+    mVectComponentGravitySystem.clear();
+
+    for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
+
+        //vérification de l'instanciation des 2 composants
+        if( ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], POSITION_COMPONENT ) ||
+                ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], MOVEABLE_COMPONENT )  )
+            continue;
+
+        PositionComponent * positionComp = stairwayToComponentManager() .
+                searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
+        assert( positionComp  && "positionComp non instancié" );
+        //verif du pointeur
+
+        MoveableComponent * moveableComponent = stairwayToComponentManager() .
+                searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
+        assert( moveableComponent && "moveableComponent non instancié" );
+
+        //si l'entité est de type terrestre
+        if( moveableComponent -> mbTerrestrial ){
+            //mémorisation des composant pour le traitement des collisions avec le sol
+            mVectComponentGravitySystem.push_back( { moveableComponent , positionComp } );
+        }
+    }
+}
+
+
+/**
  * @brief GravitySystem::execSystem Fonction(surchargée) d'exécution du système sur les entités concernées
  * par le système.
  * La fonction va vérifier si les entités sont de type terrestre et si elle se trouve en l'air.
@@ -38,29 +76,12 @@ bool GravitySystem::bSetGravityValue( unsigned int uiValueGravity ){
  * données pour traiter les intéractions avec le sol).
  */
 void GravitySystem::execSystem(){
-    System::execSystem();
-    for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
-        PositionComponent * positionComp = stairwayToComponentManager() .
-                searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
-        if( ! positionComp ){
-            std::cout << " Erreur GravitySystem pointeur NULL positionComp \n";
-            continue;
-        }
+    recupComponentToEntity();
 
-        MoveableComponent * moveableComponent = stairwayToComponentManager() .
-                searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
-        if( ! moveableComponent ){
-            std::cout << " Erreur GravitySystem pointeur NULL moveableComponent \n";
-            continue;
-        }
-
-        if( moveableComponent -> mbTerrestrial ){
-            if( ! moveableComponent -> mbOnTheGround ){
-                positionComp -> mfPositionY += muiValueGravity;
-                //a modifier prendre en compte l'inertie
-            }
-            //mémorisation des composant pour le traitement des collisions avec le sol
-            mVectComponentGravitySystem.push_back( { moveableComponent , positionComp } );
+    for( unsigned int i = 0 ; i < mVectComponentGravitySystem.size() ; ++i ){
+        if( ! mVectComponentGravitySystem[ i ] . first -> mbOnTheGround ){
+            mVectComponentGravitySystem[ i ] . second -> mfPositionY += muiValueGravity;
+            //a modifier prendre en compte l'inertie
         }
     }
 }

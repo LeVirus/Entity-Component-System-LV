@@ -24,6 +24,7 @@ public:
     void linkEngineToComponentManager( Engine *ptrEngine );
     void instanciateComponent( unsigned int uiNumCase );
     void displayComponent()const;
+    bool bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent );
 
     /**
      * @brief ComponentManager::searchComponentByType
