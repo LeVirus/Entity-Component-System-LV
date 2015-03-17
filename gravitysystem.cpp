@@ -60,8 +60,7 @@ void GravitySystem::execSystem(){
                 //a modifier prendre en compte l'inertie
             }
             //mémorisation des composant pour le traitement des collisions avec le sol
-            mMultiMapComponentGravitySystem.insert( std::multimap< MoveableComponent *,PositionComponent * >::value_type(
-                                                        moveableComponent , positionComp ) );
+            mVectComponentGravitySystem.push_back( { moveableComponent , positionComp } );
         }
     }
 }
@@ -70,8 +69,8 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::multimap< MoveableComponent *, PositionComponent * > & GravitySystem::getMapComponentGravitySystem(){
-    return mMultiMapComponentGravitySystem;
+std::vector< std::pair< MoveableComponent *, PositionComponent * > > & GravitySystem::getVectComponentGravitySystem(){
+    return mVectComponentGravitySystem;
 }
 
 /**

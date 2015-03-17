@@ -23,7 +23,7 @@ private:
     ComponentManager mComponentManager;
 public:
     Engine();
-    const std::vector<Entity> & getVectEntity()const;
+    const std::vector< Entity > & getVectEntity()const;
     void synchronizeVectorEntity();
     unsigned int AddEntity();
     bool bRmEntity( unsigned int uiIdEntity );

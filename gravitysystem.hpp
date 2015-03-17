@@ -13,13 +13,13 @@ struct MoveableComponent;
 class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
-    std::multimap< MoveableComponent *, PositionComponent * > mMultiMapComponentGravitySystem;
+    std::vector< std::pair < MoveableComponent *, PositionComponent * > > mVectComponentGravitySystem;
 
 public:
     GravitySystem();
     bool bSetGravityValue( unsigned int uiValueGravity );
     void execSystem() override;
-    std::multimap<MoveableComponent *, PositionComponent *> &getMapComponentGravitySystem();
+    std::vector< std::pair< MoveableComponent *, PositionComponent * > > &getVectComponentGravitySystem();
     ~GravitySystem();
 };
 
