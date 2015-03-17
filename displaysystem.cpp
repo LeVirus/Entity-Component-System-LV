@@ -38,8 +38,7 @@ void DisplaySystem::execSystem(){
             std::cout << " pointeur non NULL pos" << "\n";
         }*/
         if( displayComp && positionComp ){
-            mMultiMapComponentDisplaySystem.insert( std::multimap< DisplayComponent *,PositionComponent * >::value_type(
-                                                        displayComp , positionComp ) );
+            mVectComponentDisplaySystem.push_back( { displayComp , positionComp } );
         }
     }
 }
@@ -47,9 +46,9 @@ void DisplaySystem::execSystem(){
 /**
  * @brief DisplaySystem::getMapComponentDisplaySystem Fonction renvoyant une référence constante du conteneur
  * map contenant les pointeurs des composants nécessaire au système "DisplaySystem".
- * @return référence constante de mMultiMapComponentDisplaySystem.
+ * @return référence constante de mVectComponentDisplaySystem.
  */
-const std::multimap< DisplayComponent *, PositionComponent * > & DisplaySystem::getMapComponentDisplaySystem()const{
-    return mMultiMapComponentDisplaySystem;
+const std::vector< std::pair< DisplayComponent *, PositionComponent * > > & DisplaySystem::getVectComponentDisplaySystem()const{
+    return mVectComponentDisplaySystem;
 }
 

@@ -4,7 +4,7 @@
 #include "displaycomponent.hpp"
 #include "positioncomponent.hpp"
 #include "system.hpp"
-#include <map>
+#include <vector>
 
 /**
  * @brief La classe DisplaySystem permet l'affichage des entités qui ont les
@@ -12,11 +12,11 @@
  * La classe stocke les 2 paires de composants nécessaires dans un multimap qui peut être envoyé en référence constante.
  */
 class DisplaySystem : public System{
-    std::multimap< DisplayComponent *, PositionComponent * > mMultiMapComponentDisplaySystem;
+    std::vector< std::pair< DisplayComponent *, PositionComponent * > > mVectComponentDisplaySystem;
 public:
     DisplaySystem();
     void execSystem() override;
-    const std::multimap< DisplayComponent *, PositionComponent * > & getMapComponentDisplaySystem()const;
+    const std::vector< std::pair< DisplayComponent *, PositionComponent * > > & getVectComponentDisplaySystem()const;
 };
 
 #endif // DISPLAYSYSTEM_HPP
