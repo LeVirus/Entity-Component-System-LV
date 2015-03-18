@@ -16,7 +16,7 @@ class DisplaySystem : public System{
 public:
     DisplaySystem();
     void execSystem() override;
-    const std::vector< std::pair< DisplayComponent *, PositionComponent * > > & getVectComponentDisplaySystem()const;
+    const std::vector< std::pair< DisplayComponent *, PositionComponent * > > * getVectComponentDisplaySystem()const;
 };
 
 #endif // DISPLAYSYSTEM_HPP

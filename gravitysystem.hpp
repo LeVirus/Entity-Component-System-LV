@@ -20,7 +20,7 @@ public:
     bool bSetGravityValue( unsigned int uiValueGravity );
     void recupComponentToEntity();
     void execSystem() override;
-    std::vector< std::pair< MoveableComponent *, PositionComponent * > > &getVectComponentGravitySystem();
+    std::vector< std::pair< MoveableComponent *, PositionComponent * > > *getVectComponentGravitySystem();
     ~GravitySystem();
 };
 

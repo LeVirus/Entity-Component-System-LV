@@ -90,8 +90,8 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::vector< std::pair< MoveableComponent *, PositionComponent * > > & GravitySystem::getVectComponentGravitySystem(){
-    return mVectComponentGravitySystem;
+std::vector<std::pair<MoveableComponent *, PositionComponent *> > * GravitySystem::getVectComponentGravitySystem(){
+    return &mVectComponentGravitySystem;
 }
 
 /**

@@ -48,7 +48,7 @@ void DisplaySystem::execSystem(){
  * map contenant les pointeurs des composants nécessaire au système "DisplaySystem".
  * @return référence constante de mVectComponentDisplaySystem.
  */
-const std::vector< std::pair< DisplayComponent *, PositionComponent * > > & DisplaySystem::getVectComponentDisplaySystem()const{
-    return mVectComponentDisplaySystem;
+const std::vector<std::pair<DisplayComponent *, PositionComponent *> > * DisplaySystem::getVectComponentDisplaySystem()const{
+    return &mVectComponentDisplaySystem;
 }
 
