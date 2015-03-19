@@ -3,6 +3,7 @@
 #include "positioncomponent.hpp"
 #include "moveablecomponent.hpp"
 #include "groundcomponent.hpp"
+#include "displaycomponent.hpp"
 #include <cassert>
 
 /**
@@ -18,6 +19,10 @@ GravitySystem::GravitySystem(){
     }
     if( ! bAddComponentToSystem( GROUND_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout GROUND_COMPONENT.\n";
+    }
+    //TMP
+    if( ! bAddComponentToSystem( DISPLAY_COMPONENT ) ){
+        std::cout << "Erreur GravitySystem ajout DISPLAY_COMPONENT.\n";
     }
 }
 
@@ -66,11 +71,14 @@ void GravitySystem::recupComponentToEntity(){
                 searchComponentByType < GroundComponent > ( mVectNumEntity[ i ], GROUND_COMPONENT );
         assert( moveableComponent && "moveableComponent non instancié" );
 
-        //si l'entité est de type terrestre
-        if( moveableComponent -> mbTerrestrial ){
+        DisplayComponent * displayComponent = stairwayToComponentManager() .
+                searchComponentByType < DisplayComponent > ( mVectNumEntity[ i ], DISPLAY_COMPONENT );
+        assert( moveableComponent && "displayComponent non instancié" );
+
             //mémorisation des composant pour le traitement des collisions avec le sol
-            mVectTupleComponentGravitySystem.push_back( { moveableComponent , positionComp, groundComponent } );
-        }
+            mVectTupleComponentGravitySystem.push_back( std::make_tuple( moveableComponent , positionComp,
+                                                                         groundComponent, displayComponent ) );
+
     }
 }
 
@@ -88,8 +96,8 @@ void GravitySystem::execSystem(){
     recupComponentToEntity();
 
     for( unsigned int i = 0 ; i < mVectTupleComponentGravitySystem.size() ; ++i ){
-        if( ! mVectTupleComponentGravitySystem[ i ] . first -> mbOnTheGround ){
-            mVectTupleComponentGravitySystem[ i ] . second -> mfPositionY += muiValueGravity;
+        if( ! std::get< 2 >( mVectTupleComponentGravitySystem[ i ] ) -> mbOnTheGround ){
+            std::get< 1 >( mVectTupleComponentGravitySystem[ i ] ) -> mfPositionY += muiValueGravity;
             //a modifier prendre en compte l'inertie
         }
     }
@@ -99,7 +107,7 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > *
+std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent * > > *
 GravitySystem::getVectTupleComponentGravitySystem(){
     return &mVectTupleComponentGravitySystem;
 }

@@ -7,6 +7,7 @@
 struct PositionComponent;
 struct MoveableComponent;
 struct GroundComponent;
+struct DisplayComponent;
 
 /**
  * @brief La classe GravitySystem gère la gravité sur les entités possédant les composants nécessaires.
@@ -14,14 +15,16 @@ struct GroundComponent;
 class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
-    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > mVectTupleComponentGravitySystem;
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent * > > mVectTupleComponentGravitySystem;
 
 public:
     GravitySystem();
     bool bSetGravityValue( unsigned int uiValueGravity );
     void recupComponentToEntity();
     void execSystem() override;
-    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > * getVectTupleComponentGravitySystem();
+    //DisplayComponent est temporaire en attendant l'implémentation des masques de collision
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent * > >
+           * getVectTupleComponentGravitySystem();
     ~GravitySystem();
 };
 

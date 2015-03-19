@@ -3,6 +3,7 @@
 #include "displaysystem.hpp"
 #include "gravitysystem.hpp"
 #include "inputsystem.hpp"
+#include "groundcomponent.hpp"
 #include "iasystem.hpp"
 #include <memory>
 #include <iostream>

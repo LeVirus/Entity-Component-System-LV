@@ -41,7 +41,7 @@
  * ===============================================================
  */
 struct MoveableComponent : public Component{
-    bool mbMoveUpToDate, mbTerrestrial, mbOnTheGround ,mbCustumVarA;
+    bool mbMoveUpToDate, mbCustumVarA;
     std::vector< float > mVectFCustumVar;
     float mfVelocite;
 
@@ -53,9 +53,7 @@ struct MoveableComponent : public Component{
      */
     MoveableComponent(){
         muiTypeComponent = MOVEABLE_COMPONENT;
-        mbTerrestrial = true;
         mbMoveUpToDate = false;
-        mbOnTheGround = false;
         mfVelocite = 0;
         mVectFCustumVar . resize( 2 );
         mVectFCustumVar[ 0 ] = 0;

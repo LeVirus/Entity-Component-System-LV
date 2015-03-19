@@ -7,6 +7,7 @@
 #include "moveablecomponent.hpp"
 #include "inputcomponent.hpp"
 #include "physicscomponent.hpp"
+#include "groundcomponent.hpp"
 #include <iostream>
 
 ComponentManager::ComponentManager(){
@@ -75,6 +76,10 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
     }
     case INPUT_COMPONENT :{
         mVectComponent[ uiNumCase ] = std::make_unique< InputComponent >();
+        break;
+    }
+    case GROUND_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< GroundComponent >();
         break;
     }
     default :{

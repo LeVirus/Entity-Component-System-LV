@@ -65,18 +65,18 @@ void InputSystem::execSystem(){
 
 
 
-        if( moveableComponent -> mbTerrestrial && moveableComponent -> mbOnTheGround ){
+        //if( moveableComponent -> mbTerrestrial && moveableComponent -> mbOnTheGround ){
             if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
             else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
             //JUMP a implémenter
-        }
-        else{
+        //}
+        //else{
             if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
             else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
 
             if( inputComponent -> mBitsetInput[ MOVE_UP ] )positionComp -> mfPositionY -=  moveableComponent -> mfVelocite;
             else if( inputComponent -> mBitsetInput[ MOVE_DOWN ] )positionComp -> mfPositionY +=  moveableComponent -> mfVelocite;
-        }
+        //}
 
         //réinitialisation du bitset du composant
         inputComponent -> mBitsetInput . reset();
