@@ -1,11 +1,12 @@
 #ifndef GRAVITYSYSTEM_H
 #define GRAVITYSYSTEM_H
 
-#include <map>
+#include <tuple>
 #include "system.hpp"
 
 struct PositionComponent;
 struct MoveableComponent;
+struct GroundComponent;
 
 /**
  * @brief La classe GravitySystem gère la gravité sur les entités possédant les composants nécessaires.
@@ -13,14 +14,14 @@ struct MoveableComponent;
 class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
-    std::vector< std::pair < MoveableComponent *, PositionComponent * > > mVectComponentGravitySystem;
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > mVectTupleComponentGravitySystem;
 
 public:
     GravitySystem();
     bool bSetGravityValue( unsigned int uiValueGravity );
     void recupComponentToEntity();
     void execSystem() override;
-    std::vector< std::pair< MoveableComponent *, PositionComponent * > > *getVectComponentGravitySystem();
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > * getVectTupleComponentGravitySystem();
     ~GravitySystem();
 };
 

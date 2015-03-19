@@ -2,6 +2,7 @@
 #include "ECSconstantes.hpp"
 #include "positioncomponent.hpp"
 #include "moveablecomponent.hpp"
+#include "groundcomponent.hpp"
 #include <cassert>
 
 /**
@@ -14,6 +15,9 @@ GravitySystem::GravitySystem(){
     }
     if( ! bAddComponentToSystem( MOVEABLE_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout MOVEABLE_COMPONENT.\n";
+    }
+    if( ! bAddComponentToSystem( GROUND_COMPONENT ) ){
+        std::cout << "Erreur GravitySystem ajout GROUND_COMPONENT.\n";
     }
 }
 
@@ -39,13 +43,14 @@ void GravitySystem::recupComponentToEntity(){
     System::execSystem();
 
 
-    mVectComponentGravitySystem.clear();
+    mVectTupleComponentGravitySystem.clear();
 
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
 
         //vérification de l'instanciation des 2 composants
         if( ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], POSITION_COMPONENT ) ||
-                ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], MOVEABLE_COMPONENT )  )
+                ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], MOVEABLE_COMPONENT ) ||
+                ! stairwayToComponentManager() . bVerifComponentInstanciate( mVectNumEntity[ i ], GROUND_COMPONENT ) )
             continue;
 
         PositionComponent * positionComp = stairwayToComponentManager() .
@@ -57,10 +62,14 @@ void GravitySystem::recupComponentToEntity(){
                 searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
         assert( moveableComponent && "moveableComponent non instancié" );
 
+        GroundComponent * groundComponent = stairwayToComponentManager() .
+                searchComponentByType < GroundComponent > ( mVectNumEntity[ i ], GROUND_COMPONENT );
+        assert( moveableComponent && "moveableComponent non instancié" );
+
         //si l'entité est de type terrestre
         if( moveableComponent -> mbTerrestrial ){
             //mémorisation des composant pour le traitement des collisions avec le sol
-            mVectComponentGravitySystem.push_back( { moveableComponent , positionComp } );
+            mVectTupleComponentGravitySystem.push_back( { moveableComponent , positionComp, groundComponent } );
         }
     }
 }
@@ -78,9 +87,9 @@ void GravitySystem::recupComponentToEntity(){
 void GravitySystem::execSystem(){
     recupComponentToEntity();
 
-    for( unsigned int i = 0 ; i < mVectComponentGravitySystem.size() ; ++i ){
-        if( ! mVectComponentGravitySystem[ i ] . first -> mbOnTheGround ){
-            mVectComponentGravitySystem[ i ] . second -> mfPositionY += muiValueGravity;
+    for( unsigned int i = 0 ; i < mVectTupleComponentGravitySystem.size() ; ++i ){
+        if( ! mVectTupleComponentGravitySystem[ i ] . first -> mbOnTheGround ){
+            mVectTupleComponentGravitySystem[ i ] . second -> mfPositionY += muiValueGravity;
             //a modifier prendre en compte l'inertie
         }
     }
@@ -90,8 +99,9 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::vector<std::pair<MoveableComponent *, PositionComponent *> > * GravitySystem::getVectComponentGravitySystem(){
-    return &mVectComponentGravitySystem;
+std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent * > > *
+GravitySystem::getVectTupleComponentGravitySystem(){
+    return &mVectTupleComponentGravitySystem;
 }
 
 /**

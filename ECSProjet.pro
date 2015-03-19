@@ -42,5 +42,6 @@ HEADERS += \
     behaviorcomponent.hpp \
     gravitysystem.hpp \
     inputsystem.hpp \
-    inputcomponent.hpp
+    inputcomponent.hpp \
+    groundcomponent.hpp
 
