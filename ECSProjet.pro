@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     componentmanager.cpp \
     iasystem.cpp \
     gravitysystem.cpp \
-    inputsystem.cpp
+    inputsystem.cpp \
+    vector2D.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -43,5 +44,6 @@ HEADERS += \
     gravitysystem.hpp \
     inputsystem.hpp \
     inputcomponent.hpp \
-    groundcomponent.hpp
+    groundcomponent.hpp \
+    vector2D.hpp
 

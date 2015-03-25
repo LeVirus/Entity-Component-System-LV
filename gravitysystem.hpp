@@ -15,7 +15,8 @@ struct DisplayComponent;
 class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
-    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent * > > mVectTupleComponentGravitySystem;
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *,
+                             GroundComponent *, DisplayComponent *, unsigned int > > mVectTupleComponentGravitySystem;
 
 public:
     GravitySystem();
@@ -23,8 +24,7 @@ public:
     void recupComponentToEntity();
     void execSystem() override;
     //DisplayComponent est temporaire en attendant l'implémentation des masques de collision
-    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent * > >
-           * getVectTupleComponentGravitySystem();
+    std::vector<std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent *, unsigned int > > *getVectTupleComponentGravitySystem();
     ~GravitySystem();
 };
 
