@@ -2,6 +2,7 @@
 #define POSITIONCOMPONENT_HPP
 
 #include "component.hpp"
+#include "vector2D.hpp"
 #include "ECSconstantes.hpp"
 
 /**
@@ -24,10 +25,11 @@ struct PositionComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "mfPositionX" << mfPositionX << "\n";
-        std::cout << "mfPositionY" << mfPositionY << "\n";
+        std::cout << "vect2DPosComp . mfX::" << vect2DPosComp . mfX << "\n";
+        std::cout << "vect2DPosComp . mfY::" << vect2DPosComp . mfY << "\n";
     }
-    float mfPositionX, mfPositionY;
+    Vector2D vect2DPosComp;
+    //float mfPositionX, mfPositionY;
 
 };
 

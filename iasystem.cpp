@@ -84,8 +84,8 @@ void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableCompon
 
     //définition de l'abscisse et de l'ordonnée de la droite d'origine de la fonction
     //sinusoide à partir de la position actuelle de l'entité
-    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
-    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> vect2DPosComp . mfX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> vect2DPosComp . mfY;
 
     //initialisation de l'angle de la fonction sinusoide
     moveComp -> mVectFCustumVar[ 4 ] = 0;
@@ -110,8 +110,8 @@ void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent 
     if( moveComp -> mVectFCustumVar[ 0 ] <= 0 )moveComp -> mVectFCustumVar[ 0 ] = 50;
 
     //initialisation du centre du cercle avec les valeurs contenues dans posComp
-    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
-    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> vect2DPosComp . mfX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> vect2DPosComp . mfY;
 }
 
 /**
@@ -138,18 +138,18 @@ void IASystem::initMoveableRoundTrip( PositionComponent * posComp, MoveableCompo
         moveComp -> mVectFCustumVar[ 1 ] = 100;
 
     //initialisation de l'origine du parcour
-    moveComp -> mVectFCustumVar[ 2 ] = posComp -> mfPositionX;
-    moveComp -> mVectFCustumVar[ 3 ] = posComp -> mfPositionY;
+    moveComp -> mVectFCustumVar[ 2 ] = posComp -> vect2DPosComp . mfX;
+    moveComp -> mVectFCustumVar[ 3 ] = posComp -> vect2DPosComp . mfY;
 
     //calcul de la position de destination
     //modification de la position a l'aide de la fonction de déplacement
     moveEntityAngle( posComp, moveComp -> mVectFCustumVar[ 1 ], moveComp -> mVectFCustumVar[ 0 ] );
     //récupération des valeurs obtenues
-    moveComp -> mVectFCustumVar[ 4 ] = posComp -> mfPositionX;
-    moveComp -> mVectFCustumVar[ 5 ] = posComp -> mfPositionY;
+    moveComp -> mVectFCustumVar[ 4 ] = posComp -> vect2DPosComp . mfX;
+    moveComp -> mVectFCustumVar[ 5 ] = posComp -> vect2DPosComp . mfY;
     //remise à la position d'origine
-    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ];
-    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ];
+    posComp -> vect2DPosComp . mfX = moveComp -> mVectFCustumVar[ 2 ];
+    posComp -> vect2DPosComp . mfY = moveComp -> mVectFCustumVar[ 3 ];
 
     //initialisation du sens
     moveComp -> mbCustumVarA = true;
@@ -283,8 +283,8 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
                     fMemAbscisseSinus, moveComp -> mVectFCustumVar[ 0 ] );
 
     //modification de la position de l'entité à la ligne d'origine de la sinusoide
-    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ];
-    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ];
+    posComp -> vect2DPosComp . mfX = moveComp -> mVectFCustumVar[ 2 ];
+    posComp -> vect2DPosComp . mfY = moveComp -> mVectFCustumVar[ 3 ];
 
     //mémorisation de la position verticale de la nouvelle position sur la sinusoide
     fMemOrdonneeSinus = sin( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
@@ -311,8 +311,8 @@ std::cout << " RING \n";
 
     fAngleRadian = moveComp -> mVectFCustumVar[ 1 ] * PI / 180;
     //calcul de la nouvelle position en fonction de l'angle du cercle
-    posComp -> mfPositionX = moveComp -> mVectFCustumVar[ 2 ] + ( cos( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
-    posComp -> mfPositionY = moveComp -> mVectFCustumVar[ 3 ] + ( sin( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
+    posComp -> vect2DPosComp . mfX = moveComp -> mVectFCustumVar[ 2 ] + ( cos( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
+    posComp -> vect2DPosComp . mfY = moveComp -> mVectFCustumVar[ 3 ] + ( sin( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
 }
 
 /**
@@ -347,7 +347,7 @@ void IASystem::actionRoundTrip( PositionComponent * posComp, MoveableComponent *
     moveEntityAngle( posComp, moveComp -> mfVelocite, fCurrentAngle );
 
     //vérification si la destination est atteinte ou dépassée
-    if( bVerifExceedingMovement( posComp -> mfPositionX, posComp -> mfPositionY, fCurrentDestinationX,
+    if( bVerifExceedingMovement( posComp -> vect2DPosComp . mfX, posComp -> vect2DPosComp . mfY, fCurrentDestinationX,
                                  fCurrentDestinationX, fCurrentAngle ) ){
         //positionner entité a la valeur de la destination et inverser le booléen
         positionEntity( posComp, fCurrentDestinationX, fCurrentDestinationY );
@@ -413,8 +413,8 @@ void IASystem::moveEntityAngle( PositionComponent * posComp, float fNbrPixels, f
 
     fAngleRadian = fAngle * PI / 180.0;
 
-    posComp -> mfPositionX += cos( fAngleRadian ) * fNbrPixels;
-    posComp -> mfPositionY += sin( fAngleRadian ) * fNbrPixels;
+    posComp -> vect2DPosComp . mfX += cos( fAngleRadian ) * fNbrPixels;
+    posComp -> vect2DPosComp . mfY += sin( fAngleRadian ) * fNbrPixels;
 }
 
 /**
@@ -442,8 +442,8 @@ void IASystem::moveCoordAngle( float & fCoordX, float & fCoordY, float fNbrPixel
  */
 void IASystem::moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY ){
     if( ! posComp )return;
-    posComp -> mfPositionX += fNbrPixelsX;
-    posComp -> mfPositionY += fNbrPixelsY;
+    posComp -> vect2DPosComp . mfX += fNbrPixelsX;
+    posComp -> vect2DPosComp . mfY += fNbrPixelsY;
 }
 
 /**
@@ -454,8 +454,8 @@ void IASystem::moveEntity( PositionComponent * posComp, float fNbrPixelsX, float
  */
 void IASystem::positionEntity( PositionComponent * posComp, float fPosX, float fPosY ){
     if( ! posComp )return;
-    posComp -> mfPositionX = fPosX;
-    posComp -> mfPositionY = fPosY;
+    posComp -> vect2DPosComp . mfX = fPosX;
+    posComp -> vect2DPosComp . mfY = fPosY;
 }
 
 

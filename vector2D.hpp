@@ -8,7 +8,7 @@
 class Vector2D{
 public:
     float mfX, mfY;
-
+    Vector2D();
     Vector2D( float fX, float fY );
     void displayVector()const;
     float fMagnitude()const;

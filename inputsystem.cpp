@@ -66,16 +66,16 @@ void InputSystem::execSystem(){
 
 
         //if( moveableComponent -> mbTerrestrial && moveableComponent -> mbOnTheGround ){
-            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
-            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
+            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> vect2DPosComp . mfX +=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> vect2DPosComp . mfX -=  moveableComponent -> mfVelocite;
             //JUMP a implémenter
         //}
         //else{
-            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> mfPositionX +=  moveableComponent -> mfVelocite;
-            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> mfPositionX -=  moveableComponent -> mfVelocite;
+            if( inputComponent -> mBitsetInput[ MOVE_RIGHT ] )positionComp -> vect2DPosComp . mfX +=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_LEFT ] )positionComp -> vect2DPosComp . mfX -=  moveableComponent -> mfVelocite;
 
-            if( inputComponent -> mBitsetInput[ MOVE_UP ] )positionComp -> mfPositionY -=  moveableComponent -> mfVelocite;
-            else if( inputComponent -> mBitsetInput[ MOVE_DOWN ] )positionComp -> mfPositionY +=  moveableComponent -> mfVelocite;
+            if( inputComponent -> mBitsetInput[ MOVE_UP ] )positionComp -> vect2DPosComp . mfY -=  moveableComponent -> mfVelocite;
+            else if( inputComponent -> mBitsetInput[ MOVE_DOWN ] )positionComp -> vect2DPosComp . mfY +=  moveableComponent -> mfVelocite;
         //}
 
         //réinitialisation du bitset du composant

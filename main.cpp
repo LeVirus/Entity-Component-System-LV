@@ -26,8 +26,8 @@ int main(){
     compMan . updateComponentFromEntity();
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posComp ){
-        posComp -> mfPositionX = 100;
-        posComp -> mfPositionY = 158;
+        posComp -> vect2DPosComp . mfX = 100;
+        posComp -> vect2DPosComp . mfY = 158;
     }
     DisplayComponent * dispComp = compMan . searchComponentByType< DisplayComponent >( 0, DISPLAY_COMPONENT );
     if( dispComp ){

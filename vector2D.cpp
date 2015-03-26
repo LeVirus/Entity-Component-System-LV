@@ -3,6 +3,14 @@
 #include <cmath>
 
 /**
+ * @brief Vector2D::Vector2D Constructeur de Vector2D .
+ */
+Vector2D::Vector2D(){
+    mfX = 0;
+    mfY = 0;
+}
+
+/**
  * @brief Vector2D::Vector2D Constructeur de Vector2D avec 2 arguments.
  * @param fX Valeur à attribuer a mfX.
  * @param fY Valeur à attribuer a mfY.

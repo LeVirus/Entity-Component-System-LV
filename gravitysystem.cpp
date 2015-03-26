@@ -98,7 +98,7 @@ void GravitySystem::execSystem(){
 
     for( unsigned int i = 0 ; i < mVectTupleComponentGravitySystem.size() ; ++i ){
         if( ! std::get< 2 >( mVectTupleComponentGravitySystem[ i ] ) -> mbOnTheGround ){
-            std::get< 1 >( mVectTupleComponentGravitySystem[ i ] ) -> mfPositionY += muiValueGravity;
+            std::get< 1 >( mVectTupleComponentGravitySystem[ i ] ) -> vect2DPosComp . mfX += muiValueGravity;
             //a modifier prendre en compte l'inertie
         }
     }
