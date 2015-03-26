@@ -45,5 +45,6 @@ HEADERS += \
     inputsystem.hpp \
     inputcomponent.hpp \
     groundcomponent.hpp \
-    vector2D.hpp
+    vector2D.hpp \
+    ringbehaviorcomponent.hpp
 
