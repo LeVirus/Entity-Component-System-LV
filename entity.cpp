@@ -70,15 +70,15 @@ void Entity::displayEntity()const{
     for( unsigned int i = 0 ; i < mBitSetComponent.size() ; ++i ){
         switch( i ){
         case DISPLAY_COMPONENT :{
-            std::cout << "Display Component::";
+            std::cout << "Display Component::  ";
             break;
         }
         case POSITION_COMPONENT :{
-            std::cout << "Position Component::";
+            std::cout << "Position Component::   ";
             break;
         }
         default :{
-            std::cout << "MISSINGNO";
+            std::cout << "MISSINGNO::   ";
             break;
         }
         }
@@ -111,7 +111,7 @@ bool Entity::bEntityIsUpToDate()const{
  */
 bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
     //vérification de la présence du component dans le bitset
-    if( uiTypeComponent < mBitSetComponent.size() ){
+    if( uiTypeComponent < mBitSetComponent . size() ){
         return mBitSetComponent[ uiTypeComponent ];
     }
     return false;

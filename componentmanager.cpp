@@ -8,6 +8,9 @@
 #include "inputcomponent.hpp"
 #include "physicscomponent.hpp"
 #include "groundcomponent.hpp"
+#include "ringbehaviorcomponent.hpp"
+#include "roundtripbehaviorcomponent.hpp"
+#include "sinusoidbehaviorcomponent.hpp"
 #include <iostream>
 
 ComponentManager::ComponentManager(){
@@ -80,6 +83,18 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
     }
     case GROUND_COMPONENT :{
         mVectComponent[ uiNumCase ] = std::make_unique< GroundComponent >();
+        break;
+    }
+    case ROUND_TRIP_BEHAVIOR_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< RoundTripBehaviorComponent >();
+        break;
+    }
+    case SINUSOID_BEHAVIOR_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< SinusoidBehaviorComponent >();
+        break;
+    }
+    case RING_BEHAVIOR_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< RingBehaviorComponent >();
         break;
     }
     default :{

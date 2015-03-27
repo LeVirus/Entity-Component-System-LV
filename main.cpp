@@ -20,6 +20,7 @@ int main(){
     engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
     engine.bAddComponentToEntity( 0, BEHAVIOR_COMPONENT );
     engine.bAddComponentToEntity( 0, MOVEABLE_COMPONENT );
+    engine.bAddComponentToEntity( 0, RING_BEHAVIOR_COMPONENT );
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM );
     engine.getSystemManager().bAddSystem( IA_SYSTEM );
     engine.getSystemManager().bAddSystem( GRAVITY_SYSTEM );

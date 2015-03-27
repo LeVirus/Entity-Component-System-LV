@@ -1,4 +1,5 @@
 #include "vector2D.hpp"
+#include "ECSconstantes.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -25,6 +26,19 @@ Vector2D::Vector2D( float fX, float fY ){
  */
 void Vector2D::displayVector()const{
     std::cout << "mfX::" << mfX << "\nmfY::" << mfY << "\n";
+}
+
+/**
+ * @brief Vector2D::rotate Fonction de positionnement du vector par rapport a un centre et un angle.
+ * @param fAngle L'angle où positionner le vector par rapport au centre.
+ * @param vect2dCenter Les coordonnées du centre de rotation.
+ */
+void Vector2D::rotate( float fAngle, const Vector2D & vect2dCenter ){
+    float fRadius = distance( *this, vect2dCenter );
+
+    //calcul de la nouvelle position en fonction de l'angle du cercle
+    mfX = vect2dCenter . mfX + ( cos( radian( fAngle ) ) * fRadius );
+    mfY = vect2dCenter . mfY + ( sin( radian( fAngle ) ) * fRadius );
 }
 
 /**
@@ -102,6 +116,28 @@ bool operator != ( const Vector2D & vect2dA, const Vector2D &vect2dB ){
 float distance( const Vector2D & vect2dA, const Vector2D & vect2dB ){
 
     return ( vect2dA - vect2dB ) . fMagnitude() ;
+}
+
+/**
+ * @brief radian Conversion d'un angle en radian.
+ * @param fDegreeAngle La valeur de l'angle en degré.
+ * @return La valeur de l'angle en degré.
+ */
+float radian( float fDegreeAngle ){
+    return fDegreeAngle * PI / 180;
+}
+
+/**
+ * @brief addToAngle Ajout D'une valeur à un angle.
+ * Si la valeur dépasse 360 celle ci est corrigée.
+ * @param fCurrentAngle L'angle courrant.
+ * @param fDegree La valeur à ajouter à m'angle.
+ * @return La nouvelle valeur de l'angle.
+ */
+float addToAngle( float fCurrentAngle, float fDegree ){
+    fCurrentAngle += fDegree;
+    if( fCurrentAngle >= 360 )fCurrentAngle = fmod( fCurrentAngle, 360 );
+    return fCurrentAngle;
 }
 
 /**

@@ -5,6 +5,10 @@
 #include "behaviorcomponent.hpp"
 #include "physicscomponent.hpp"
 #include "positioncomponent.hpp"
+#include "ringbehaviorcomponent.hpp"
+#include "roundtripbehaviorcomponent.hpp"
+#include "sinusoidbehaviorcomponent.hpp"
+#include <cassert>
 #include <cmath>
 //#include <limits>
 
@@ -182,22 +186,16 @@ void IASystem::execSystem(){
 
         PositionComponent * positionComp = stairwayToComponentManager() .
                 searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
-        if( ! positionComp ){
-            std::cout << " Erreur IASystem pointeur NULL positionComp \n";
-            continue;
-        }
+            assert( positionComp && "Erreur IASystem pointeur NULL positionComp \n" );
 
         BehaviorComponent * behaviorComponent = stairwayToComponentManager() .
                 searchComponentByType < BehaviorComponent > ( mVectNumEntity[ i ], BEHAVIOR_COMPONENT );
-        if( ! behaviorComponent ){
-            std::cout << " Erreur IASystem pointeur NULL behaviorComponent \n";
-            continue;
-        }
+        assert( behaviorComponent && "Erreur IASystem pointeur NULL behaviorComponent \n" );
+
         MoveableComponent * moveableComponent = stairwayToComponentManager() .
                 searchComponentByType < MoveableComponent > ( mVectNumEntity[ i ], MOVEABLE_COMPONENT );
-        if( ! moveableComponent ){
-            std::cout << " IASystem pointeur NULL moveableComponent \n";
-        }
+        //assert( moveableComponent && "Erreur IASystem pointeur NULL moveableComponent \n" );
+
 
         //vérifier si moveableComponent est instancié
         if( ! moveableComponent )continue;
@@ -299,20 +297,21 @@ void IASystem::actionSinusoid( PositionComponent * posComp, MoveableComponent * 
  * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
 void IASystem::actionRing( PositionComponent * posComp, MoveableComponent * moveComp ){
-    float fAngleRadian;
-std::cout << " RING \n";
+    unsigned int uiNumEntity;
+    std::cout << " RING \n";
     /*vérification de l'instanciation des 2 composants et si l'entité(par le numéro d'identifiant) associée aux 2
     composants est bien la même*/
     if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated() )return;
 
-    //modification de la valeur de l'angle en fonction de la vélocité
-    moveComp -> mVectFCustumVar[ 1 ] += moveComp -> mfVelocite;
-    if( moveComp -> mVectFCustumVar[ 1 ] >= 360 )moveComp -> mVectFCustumVar[ 1 ] = 0;
+    uiNumEntity = posComp -> muiGetIdEntityAssociated();
 
-    fAngleRadian = moveComp -> mVectFCustumVar[ 1 ] * PI / 180;
-    //calcul de la nouvelle position en fonction de l'angle du cercle
-    posComp -> vect2DPosComp . mfX = moveComp -> mVectFCustumVar[ 2 ] + ( cos( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
-    posComp -> vect2DPosComp . mfY = moveComp -> mVectFCustumVar[ 3 ] + ( sin( fAngleRadian ) * moveComp -> mVectFCustumVar[ 0 ] );
+    RingBehaviorComponent * ringBehaviorComponent = stairwayToComponentManager() .
+            searchComponentByType < RingBehaviorComponent > ( uiNumEntity , RING_BEHAVIOR_COMPONENT );
+    assert( ringBehaviorComponent && "Erreur IASystem pointeur NULL ringBehaviorComponent \n" );
+
+    ringBehaviorComponent -> mfCurrentAngle = addToAngle( ringBehaviorComponent -> mfCurrentAngle, moveComp -> mfVelocite );
+
+    posComp -> vect2DPosComp . rotate( ringBehaviorComponent -> mfCurrentAngle, ringBehaviorComponent -> mvect2DRotationCenter );
 }
 
 /**

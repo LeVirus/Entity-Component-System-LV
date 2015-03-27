@@ -19,7 +19,7 @@ private:
     void initMoveableRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp );
 
     void actionSinusoid( PositionComponent * posComp, MoveableComponent * moveComp );
-    void actionRing( PositionComponent * posComp, MoveableComponent * moveComp );
+    void actionRing(PositionComponent * posComp, MoveableComponent * moveComp);
     void actionRoundTrip( PositionComponent * posComp, MoveableComponent * moveComp );
 
     bool bVerifExceedingMovement( float fOriginX, float fOriginY, float fDestinationX, float fDestinationY, float fAngle );
