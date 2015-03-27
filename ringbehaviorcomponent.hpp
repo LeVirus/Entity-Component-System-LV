@@ -7,12 +7,13 @@
 
 /**
  * @brief La structure RingBehaviorComponent comporte les variables nécessaires pour le comportement RING.
+ * Le composant doit correspondre à son numéro de comportement ( BehaviorComponent . muiTypeComponent ).
  *
- * mVectFCustumVar[ 0 ] :: Valeur du rayon du cercle.
- * mVectFCustumVar[ 1 ] :: Valeur de l'angle actuel(la valeur de la vélocité y est ajoutée a chaque itération).
- * mVectFCustumVar[ 2 ] :: Abscisse du centre de rotation.
- * mVectFCustumVar[ 3 ] :: Ordonnée du centre de rotation.
- * mbCustomVarA true = sens trigonométrique, false = sens antitrigonométrique.
+ * mfRadiusCircle :: Valeur du rayon du cercle.
+ * mfCurrentAngle :: Valeur de l'angle actuel(la valeur de la vélocité y est ajoutée a chaque itération).
+ * mvect2DRotationCenter :: Coordonnées du centre de rotation.
+ * mbTrigonometric :: true = sens trigonométrique, false = sens antitrigonométrique.
+ *
  * Le centre de rotation sera définis par les valeurs présentes dans le composant position(supposé initialisé).
  */
 struct RingBehaviorComponent : public Component{

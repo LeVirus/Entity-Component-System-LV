@@ -46,5 +46,7 @@ HEADERS += \
     inputcomponent.hpp \
     groundcomponent.hpp \
     vector2D.hpp \
-    ringbehaviorcomponent.hpp
+    ringbehaviorcomponent.hpp \
+    sinusoidbehaviorcomponent.hpp \
+    roundtripbehaviorcomponent.hpp
 
