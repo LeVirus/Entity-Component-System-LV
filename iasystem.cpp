@@ -38,27 +38,35 @@ IASystem::IASystem(){
  * @param posComp Le composant position .
  * @param moveComp Le composant mouvement.
  */
-bool IASystem::initMoveable( BehaviorComponent *behavComp, PositionComponent *posComp, MoveableComponent *moveComp ){
+bool IASystem::initMoveable( unsigned int uiNumEntity ){
 
-    if( ! posComp || ! moveComp || posComp -> muiGetIdEntityAssociated() != moveComp -> muiGetIdEntityAssociated()
-          || posComp -> muiGetIdEntityAssociated() != behavComp -> muiGetIdEntityAssociated() )return false;
+    BehaviorComponent * behavComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType< BehaviorComponent >( uiNumEntity, BEHAVIOR_COMPONENT );
+    assert( behavComp && "initMoveable behavComp non instancié.\n" );
+
+    MoveableComponent * moveComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType< MoveableComponent >( uiNumEntity, MOVEABLE_COMPONENT );
+    assert( moveComp && "initMoveable moveComp non instancié.\n" );
+
+    //si vélocité non initialisée ou hors limite
+    if( moveComp -> mfVelocite <= 0 || moveComp -> mfVelocite > 50 )
+        moveComp -> mfVelocite = 10;
 
     switch( behavComp -> muiTypeBehavior ){
     case UNSPECIFIED:
         break;
     case SINUSOIDAL:
-        initMoveableSinusoid( posComp, moveComp );
+        //initMoveableSinusoid( posComp, moveComp );
         break;
     case RING:
-        initMoveableRing( posComp, moveComp );
+        initMoveableRing( uiNumEntity );
         break;
     case ROUND_TRIP:
-        initMoveableRoundTrip( posComp, moveComp );
+        //initMoveableRoundTrip( posComp, moveComp );
         break;
     case TOWARD_PLAYER:
         break;
     }
-    moveComp -> mbMoveUpToDate = true;
     return true;
 }
 
@@ -96,26 +104,22 @@ void IASystem::initMoveableSinusoid( PositionComponent * posComp, MoveableCompon
 }
 
 /**
- * @brief IASystem::initMoveableRing La fonction initialise les variables contenues dans le composant selon les critères du
- * comportement ring.
- * @param posComp Le composant position.
- * @param moveComp Le composant mouvement.
+ * @brief IASystem::initMoveableRing La fonction initialise les variables contenues dans le composant RingBehaviorComponent
+ * selon les critères du comportement ring.
+ * La position de l'entité est prise pour le centre de rotation.
  */
-void IASystem::initMoveableRing( PositionComponent * posComp, MoveableComponent * moveComp ){
-    if( ! posComp || ! moveComp )return;
+void IASystem::initMoveableRing( unsigned int uiNumEntity ){
+    RingBehaviorComponent * ringBehaviorComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType< RingBehaviorComponent >( uiNumEntity, RING_BEHAVIOR_COMPONENT );
+    assert( ringBehaviorComp && "initMoveable ringBehaviorComp non instancié.\n" );
 
-    moveComp -> mVectFCustumVar . resize( 4 );
-    //si vélocité non initialisée ou hors limite
-    if( moveComp -> mfVelocite <= 0 || moveComp -> mfVelocite > 50 )
-        moveComp -> mfVelocite = 10;
-
-    moveComp -> mVectFCustumVar . resize( 4 );
-    //si valeur rayon cercle non initialisée
-    if( moveComp -> mVectFCustumVar[ 0 ] <= 0 )moveComp -> mVectFCustumVar[ 0 ] = 50;
+    PositionComponent * posComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType< PositionComponent >( uiNumEntity, POSITION_COMPONENT );
+    assert( ringBehaviorComp && "initMoveable ringBehaviorComp non instancié.\n" );
 
     //initialisation du centre du cercle avec les valeurs contenues dans posComp
-    moveComp -> mVectFCustumVar[ 2 ] = posComp -> vect2DPosComp . mfX;
-    moveComp -> mVectFCustumVar[ 3 ] = posComp -> vect2DPosComp . mfY;
+    ringBehaviorComp -> mvect2DRotationCenter . mfX = posComp -> vect2DPosComp . mfX;
+    ringBehaviorComp -> mvect2DRotationCenter . mfY = posComp -> vect2DPosComp . mfY;
 }
 
 /**
@@ -202,7 +206,7 @@ void IASystem::execSystem(){
         //si l'entité "moveable" n'est pas initialisé(le composant MoveableComponent n'est pas initialisé)
         if( ! moveableComponent -> mbMoveUpToDate ){
             //appel de la fonction adéquate
-            initMoveable( behaviorComponent, positionComp, moveableComponent );
+            initMoveable( i );
         }
 
         switch( behaviorComponent -> muiTypeBehavior ){
