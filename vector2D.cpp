@@ -141,6 +141,34 @@ float addToAngle( float fCurrentAngle, float fDegree ){
 }
 
 /**
+ * @brief moveVectorAngle Fonction de déplacement d'une entité à partir d'une longueur et d'un angle.
+ * Application des formules (cosinus sinus).
+ * @param vect2dA le vector à modifier.
+ * @param fNbrPixels Le nombre de pixels.
+ * @param fAngle l'angle dans lequel se fait le déplacement.
+ * @return La référence du vector à renvoyer en paramètre.
+ */
+Vector2D & moveVectorAngle( Vector2D & vect2dA, float fNbrPixels, float fAngle ){
+    float fAngleRadian;
+
+    fAngleRadian = radian( fAngle );
+    vect2dA . mfX += cos( fAngleRadian ) * fNbrPixels;
+    vect2dA . mfY += sin( fAngleRadian ) * fNbrPixels;
+    return vect2dA;
+}
+
+/**
+ * @brief moveTowardVector Fonction de déplacement d'un vector en direction d'un autre avec une distance donnée.
+ * @param vect2dA Le vector à déplacer.
+ * @param vect2dDestination Le vector vers lequel se diriger.
+ * @param fNbrPixels La distance à parcourir.
+ * @return La référence du vector modifié.
+ */
+Vector2D & moveTowardVector( Vector2D & vect2dA, const Vector2D & vect2dDestination, float fNbrPixels ){
+
+}
+
+/**
  * @brief Vector2D::~Vector2D Destructeur de Vector2D.
  */
 Vector2D::~Vector2D(){
