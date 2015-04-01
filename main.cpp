@@ -20,7 +20,7 @@ int main(){
     engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
     engine.bAddComponentToEntity( 0, BEHAVIOR_COMPONENT );
     engine.bAddComponentToEntity( 0, MOVEABLE_COMPONENT );
-    engine.bAddComponentToEntity( 0, RING_BEHAVIOR_COMPONENT );
+    engine.bAddComponentToEntity( 0, SINUSOID_BEHAVIOR_COMPONENT );
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM );
     engine.getSystemManager().bAddSystem( IA_SYSTEM );
     engine.getSystemManager().bAddSystem( GRAVITY_SYSTEM );
@@ -36,10 +36,10 @@ int main(){
     }
     BehaviorComponent * behavComp = compMan . searchComponentByType< BehaviorComponent >( 0, BEHAVIOR_COMPONENT );
     if( behavComp ){
-        behavComp -> muiTypeBehavior = RING;
+        behavComp -> muiTypeBehavior = SINUSOIDAL;
     }
 
-    MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
+    //MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 
     engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->  initMoveable( 0 );
     engine.execIteration();

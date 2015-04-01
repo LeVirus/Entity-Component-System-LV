@@ -102,7 +102,7 @@ void IASystem::initMoveableSinusoid( unsigned int uiNumEntity ){
     sinusBehaviorComp -> mvect2DCurrentPositionSinusoidAxis = posComp -> vect2DPosComp;
 
     //initialisation de l'angle de la fonction sinusoide
-    sinusBehaviorComp -> mfCurrentAngleSinusoid;
+    //sinusBehaviorComp -> mfCurrentAngleSinusoid;
 }
 
 /**
@@ -121,6 +121,7 @@ void IASystem::initMoveableRing( unsigned int uiNumEntity ){
 
     //initialisation du centre du cercle avec les valeurs contenues dans posComp
     ringBehaviorComp -> mvect2DRotationCenter = posComp -> vect2DPosComp;
+    posComp -> vect2DPosComp . mfX += ringBehaviorComp -> mfRadiusCircle;
 }
 
 /**
@@ -141,11 +142,11 @@ void IASystem::initMoveableRoundTrip( unsigned int uiNumEntity ){
     assert( roundTripBehavComp && "initMoveable roundTripBehavComp non instancié.\n" );
 
     //si valeur de l'angle est hors limite.
-    assert( ( roundTripBehavComp -> mfDestinationDirection >= 360 || roundTripBehavComp -> mfDestinationDirection < 0 ) &&
+    assert( ! ( roundTripBehavComp -> mfDestinationDirection >= 360 || roundTripBehavComp -> mfDestinationDirection < 0 ) &&
             "valeur mfDestinationDirection hors limite.\n" );
 
     //si valeur de la longueur du parcour est hors limite
-    assert( ( roundTripBehavComp -> mfTravelsLenght <= 0 || roundTripBehavComp -> mfTravelsLenght > 100 ) &&
+    assert( ! ( roundTripBehavComp -> mfTravelsLenght <= 0 || roundTripBehavComp -> mfTravelsLenght > 100 ) &&
             "valeur mfDestinationDirection hors limite.\n" );
 
     //initialisation de l'origine du parcour.
@@ -250,7 +251,11 @@ void IASystem::actionSinusoid( unsigned int uiNumEntity ){
 
     PositionComponent * posComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
             searchComponentByType< PositionComponent >( uiNumEntity, POSITION_COMPONENT );
-    assert( ringBehaviorComp && "initMoveable posComp non instancié.\n" );
+    assert( posComp && "initMoveable posComp non instancié.\n" );
+
+    MoveableComponent * moveComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
+            searchComponentByType< MoveableComponent >( uiNumEntity, MOVEABLE_COMPONENT );
+    assert( moveComp && "initMoveable moveComp non instancié.\n" );
 
     float fMemAbscisseSinus, fMemOrdonneeSinus, fMemResult;
 
@@ -275,35 +280,37 @@ void IASystem::actionSinusoid( unsigned int uiNumEntity ){
         //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI et addition des 2
         //cos( 180 )==-1    ==>     cos( 180 ) * amplitude = -amplitude
         fMemAbscisseSinus = fMemResult + fabs( ( -1 * sinusBehaviorComp -> mfAmplitudeSinusoid ) -
-                ( cos( sinusBehaviorComp -> mfCurrentAngleSinusoid * PI / 180 ) * sinusBehaviorComp -> mfAmplitudeSinusoid ) );
+                ( cos( radian( sinusBehaviorComp -> mfCurrentAngleSinusoid ) ) * sinusBehaviorComp -> mfAmplitudeSinusoid ) );
     }
     //cas du passage d'un angle 360 >> 0
-    else if( ( moveComp -> mVectFCustumVar[ 4 ] - moveComp -> mfVelocite ) > 180 && moveComp -> mVectFCustumVar[ 4 ] < 180  ){
+    else if( ( sinusBehaviorComp -> mfCurrentAngleSinusoid - moveComp -> mfVelocite ) > 180 &&
+             sinusBehaviorComp -> mfCurrentAngleSinusoid < 180  ){
         //calcul du parcour sur l'abscisse dans la partie : PI -> 2PI
-        fMemResult = fabs( fMemAbscisseSinus - cos( 4 ) * moveComp -> mVectFCustumVar[ 1 ] );
+        fMemResult = fabs( fMemAbscisseSinus - cos( 4 ) * sinusBehaviorComp -> mfAmplitudeSinusoid );
         //calcul du parcour sur l'abscisse dans la partie : 0 -> PI et addition des 2
         //cos( 0 )==1    ==>     cos( 0 ) * amplitude = amplitude
-        fMemAbscisseSinus = fMemResult + fabs( moveComp -> mVectFCustumVar[ 1 ] - cos( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) *
-                moveComp -> mVectFCustumVar[ 1 ] );
+        fMemAbscisseSinus = fMemResult + fabs( sinusBehaviorComp -> mfAmplitudeSinusoid -
+                                               cos( radian( sinusBehaviorComp -> mfCurrentAngleSinusoid ) ) *
+                                             sinusBehaviorComp -> mfAmplitudeSinusoid );
     }
     else {
-        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) *
-                moveComp -> mVectFCustumVar[ 1 ] );
+        fMemAbscisseSinus = fabs( fMemAbscisseSinus - cos( radian( sinusBehaviorComp -> mfCurrentAngleSinusoid ) ) *
+                sinusBehaviorComp -> mfAmplitudeSinusoid );
     }
 
     //positionnement de la sinusoide en fonction de l'avancée abscisse de la sinusoide suivant l'angle d'orientation de celle ci
-    moveCoordAngle( moveComp -> mVectFCustumVar[ 2 ], moveComp -> mVectFCustumVar[ 3 ],
-                    fMemAbscisseSinus, moveComp -> mVectFCustumVar[ 0 ] );
+    moveVectorAngle( sinusBehaviorComp -> mvect2DCurrentPositionSinusoidAxis,
+                    fMemAbscisseSinus, sinusBehaviorComp -> mfDirectionAxisSinusoid );
 
     //modification de la position de l'entité à la ligne d'origine de la sinusoide
-    uiNumEntity -> vect2DPosComp . mfX = moveComp -> mVectFCustumVar[ 2 ];
-    uiNumEntity -> vect2DPosComp . mfY = moveComp -> mVectFCustumVar[ 3 ];
+    posComp -> vect2DPosComp = sinusBehaviorComp -> mvect2DCurrentPositionSinusoidAxis;
 
     //mémorisation de la position verticale de la nouvelle position sur la sinusoide
-    fMemOrdonneeSinus = sin( moveComp ->mVectFCustumVar[ 4 ] * PI / 180 ) * moveComp -> mVectFCustumVar[ 1 ];
+    fMemOrdonneeSinus = sin( radian( sinusBehaviorComp -> mfCurrentAngleSinusoid ) ) * sinusBehaviorComp -> mfAmplitudeSinusoid;
 
     //traitement mouvement horizontal coordonnée Y = Ordonnée origine + sin( angle actuel * PI / 180 ) * amplitude
-    moveEntityAngle( uiNumEntity, fMemOrdonneeSinus, moveComp -> mVectFCustumVar[ 0 ] + 90 );//!!!verif pb avec valeur absolue!!!!!!
+    moveVectorAngle( posComp -> vect2DPosComp, fMemOrdonneeSinus, sinusBehaviorComp -> mfDirectionAxisSinusoid + 90 );
+    //!!!verif pb avec valeur absolue!!!!!!
 }
 
 /**
@@ -327,8 +334,9 @@ void IASystem::actionRing( unsigned int uiNumEntity ){
     assert( moveComp && "Erreur moveComp non instancié \n" );
 
     ringBehaviorComponent -> mfCurrentAngle = addToAngle( ringBehaviorComponent -> mfCurrentAngle, moveComp -> mfVelocite );
-
     posComp -> vect2DPosComp . rotate( ringBehaviorComponent -> mfCurrentAngle, ringBehaviorComponent -> mvect2DRotationCenter );
+    std::cout << " positionX::"<< posComp -> vect2DPosComp . mfX << "\n";
+    std::cout << " positionY::"<< posComp -> vect2DPosComp . mfY << "\n";
 }
 
 /**
@@ -366,10 +374,10 @@ void IASystem::actionRoundTrip( unsigned int uiNumEntity ){
             searchComponentByType < MoveableComponent > ( uiNumEntity , MOVEABLE_COMPONENT );
     assert( moveComp && "Erreur moveComp non instancié \n" );
 
+    fCurrentAngle = roundTripBehavComp -> mfDestinationDirection;
 
     //sens Origine ==> Destination
     if( roundTripBehavComp -> mbTowardDirection ){
-        fCurrentAngle = roundTripBehavComp -> mfDestinationDirection;
         ptrVect2dTmp = & roundTripBehavComp -> mvect2DPositionDestinationTravels;
     }
     //sens Destination ==> Origine
@@ -381,6 +389,7 @@ void IASystem::actionRoundTrip( unsigned int uiNumEntity ){
     //appel de la fonction de mouvement en fonction de la vélocité et l'angle de l'entité
     moveVectorAngle( posComp -> vect2DPosComp, moveComp -> mfVelocite, fCurrentAngle );
 
+    std::cout << " distance::" << distance( posComp -> vect2DPosComp, * ptrVect2dTmp ) << "\n";
     //vérification du dépassement
     if( distance( posComp -> vect2DPosComp, * ptrVect2dTmp ) >=
             roundTripBehavComp -> mfTravelsLenght ){

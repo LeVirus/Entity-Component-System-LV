@@ -53,7 +53,7 @@ struct MoveableComponent : public Component{
     MoveableComponent(){
         muiTypeComponent = MOVEABLE_COMPONENT;
         mbMoveUpToDate = false;
-        mfVelocite = 0;
+        mfVelocite = 10;
         mVectFCustumVar . resize( 2 );
         mVectFCustumVar[ 0 ] = 0;
         mVectFCustumVar[ 1 ] = 0;
