@@ -31,8 +31,11 @@ bool operator != ( const Vector2D & vect2dA, const Vector2D & vect2dB );
 
 float distance( const Vector2D & vect2dA, const Vector2D & vect2dB );
 float radian( float fDegreeAngle );
-float addToAngle(float fCurrentAngle , float fDegree);
+float addToAngle( float fCurrentAngle , float fDegree );
 Vector2D & moveVectorAngle( Vector2D & vect2dA, float fNbrPixels, float fAngle );
 Vector2D & moveTowardVector( Vector2D & vect2dA, const Vector2D & vect2dDestination, float fNbrPixels );
+float degree( float fRadianAngle );
+float getTangente( const Vector2D & vect2dA, const Vector2D & vect2dB );
+float getAngle( const Vector2D & vect2dA, const Vector2D & vect2dB );
 
 #endif // VECTOR_H

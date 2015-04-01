@@ -22,14 +22,10 @@ private:
     void actionRing( unsigned int uiNumEntity );
     void actionRoundTrip( unsigned int uiNumEntity );
 
-    bool bVerifExceedingMovement( float fOriginX, float fOriginY, float fDestinationX, float fDestinationY, float fAngle );
 public:
     IASystem();
     void execSystem() override;
     bool initMoveable( unsigned int uiNumEntity );
-    void moveCoordAngle( float & fCoordX, float & fCoordY, float fNbrPixels, float fAngle );
-    void moveEntity( PositionComponent * posComp, float fNbrPixelsX, float fNbrPixelsY );
-    void positionEntity( PositionComponent * posComp, float fPosX, float fPosY );
     ~IASystem();
 };
 

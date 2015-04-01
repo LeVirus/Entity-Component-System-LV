@@ -128,6 +128,15 @@ float radian( float fDegreeAngle ){
 }
 
 /**
+ * @brief degree Conversion d'un angle en degres.
+ * @param fRadianAngle La valeur de l'angle en radian.
+ * @return La valeur de l'angle en radian.
+ */
+float degree( float fRadianAngle ){
+    return fRadianAngle * 180 / PI;
+}
+
+/**
  * @brief addToAngle Ajout D'une valeur à un angle.
  * Si la valeur dépasse 360 celle ci est corrigée.
  * @param fCurrentAngle L'angle courrant.
@@ -165,7 +174,33 @@ Vector2D & moveVectorAngle( Vector2D & vect2dA, float fNbrPixels, float fAngle )
  * @return La référence du vector modifié.
  */
 Vector2D & moveTowardVector( Vector2D & vect2dA, const Vector2D & vect2dDestination, float fNbrPixels ){
+    return moveVectorAngle( vect2dA, fNbrPixels, getAngle( vect2dA, vect2dDestination ) );
+}
 
+/**
+ * @brief getAngle Retourne la valeur de l'angle formé à partir du triangle formé à l'aide de vect2dA,
+ * vect2dB et d'un troisième point positionner de manière a créer un triangle rectangle.
+ * @param vect2dA Représente la pointe de l'angle.
+ * @param vect2dB Le point en fonction duquel l'angle sera calculé.
+ * @return La valeur de l'angle.
+ */
+float getAngle( const Vector2D & vect2dA, const Vector2D & vect2dB ){
+    return degree( atan( getTangente( vect2dA, vect2dB ) ) );
+}
+
+/**
+ * @brief getTangente Retourne la tangente du triangle rectangle formé avec les 2 points envoyés en paramètre et d'un troisième
+ * point positionner de manière a créer un triangle rectangle.
+ * @param vect2dA Le premier point.
+ * @param vect2dB Le deuxième point.
+ * @return La valeur de la tangente.
+ */
+float getTangente( const Vector2D & vect2dA, const Vector2D & vect2dB ){
+    float fA, fB;
+    fA = fabs( vect2dA . mfX - vect2dB . mfX );
+    fB = fabs( vect2dA . mfY - vect2dB . mfY );
+    if( fB == 0 )return 0;
+    return fB / fA;
 }
 
 /**
