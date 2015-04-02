@@ -234,14 +234,7 @@ void IASystem::execSystem(){
  * //un calcul a partir de la fonction sinus sera fait.
  * Le déplacement horizontal et vertical sera effectué selon la sinusoide, son sens sera définis par mbCustomVarD.
  * @param posComp Le composant position de l'entité en cour de traitement
- * @param moveComp Le composant mouvement de l'entité en cour de traitement
- *
- * mVectFCustumVar[ 0 ] :: Direction de la sinusoide(en degré).
- * mVectFCustumVar[ 1 ] :: Représente l'amplitude de la sinusoide.
- * mVectFCustumVar[ 2 ] :: L'abscisse de la droite d'origine de la sinusoide(valeur de l'abscisse de la sinusoide pour sin(0)).
- * mVectFCustumVar[ 3 ] :: L'ordonnée de la droite d'origine de la sinusoide(valeur de l'ordonnée de la sinusoide pour sin(0)).
- * mVectFCustumVar[ 4 ] :: Mémorisation de l'angle(en degré) en fonction duquel l'abscisse et l'ordonnée seront
- *
+ * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
 void IASystem::actionSinusoid( unsigned int uiNumEntity ){
     std::cout << " SINUSOIDE \n";
@@ -343,17 +336,6 @@ void IASystem::actionRing( unsigned int uiNumEntity ){
 /**
  * @brief IASystem::actionRoundTrip Traitement d'un parcour aller retour d'une entité, suivant une position d'origine,
  * une longueur et un angle.
- *
- * mVectFCustumVar[ 0 ] :: Angle sur lequel le composant va effectuer ses aller-retours (origine --> destination).
- * mVectFCustumVar[ 1 ] :: Longueur sur laquelle le composant va se déplacer.
- * mVectFCustumVar[ 2 ] :: Abscisse de l'origine du parcour.
- * mVectFCustumVar[ 3 ] :: Ordonnée de l'origine du parcour.
- * mVectFCustumVar[ 4 ] :: Abscisse de la destination du parcour.
- * mVectFCustumVar[ 5 ] :: Ordonnée de la destination du parcour.
- * mbCustomVarA true = sens point origine ==> point destination, false = sens point destination ==> point origine.
- * L'origine du parcour sera définis par les valeurs présentes dans le composant position(supposé initialisé).
- * La destination sera calculé dans initMoveableRoundTrip de la classe IASystem.
- *
  * @param posComp Le composant position de l'entité en cour de traitement.
  * @param moveComp Le composant mouvement de l'entité en cour de traitement.
  */
