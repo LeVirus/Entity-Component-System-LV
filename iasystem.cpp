@@ -67,6 +67,7 @@ bool IASystem::initMoveable( unsigned int uiNumEntity ){
     case TOWARD_PLAYER:
         break;
     }
+    moveComp -> mbMoveUpToDate = true;
     return true;
 }
 
@@ -132,7 +133,7 @@ void IASystem::initMoveableRing( unsigned int uiNumEntity ){
  * @param moveComp Le composant mouvement.
  */
 void IASystem::initMoveableRoundTrip( unsigned int uiNumEntity ){
-
+    std::cout << "INIT ROUND TRIP\n";
     PositionComponent * posComp = mptrSystemManager -> getptrEngine() -> getComponentManager() .
             searchComponentByType< PositionComponent >( uiNumEntity, POSITION_COMPONENT );
     assert( posComp && "initMoveable posComp non instancié.\n" );
@@ -358,7 +359,7 @@ void IASystem::actionRing( unsigned int uiNumEntity ){
  */
 void IASystem::actionRoundTrip( unsigned int uiNumEntity ){    
     float fCurrentAngle;
-    Vector2D * ptrVect2dTmp;
+    Vector2D * ptrVect2DCurrentOrigin, * ptrVect2DCurrentDestination;
 
     std::cout << " ROUNDTRIP \n";
 
@@ -378,23 +379,27 @@ void IASystem::actionRoundTrip( unsigned int uiNumEntity ){
 
     //sens Origine ==> Destination
     if( roundTripBehavComp -> mbTowardDirection ){
-        ptrVect2dTmp = & roundTripBehavComp -> mvect2DPositionDestinationTravels;
+        ptrVect2DCurrentDestination = & roundTripBehavComp -> mvect2DPositionDestinationTravels;
+        ptrVect2DCurrentOrigin = & roundTripBehavComp -> mvect2DPositionOriginTravels;
     }
     //sens Destination ==> Origine
     else{
         fCurrentAngle = addToAngle( fCurrentAngle, 180 );
-        ptrVect2dTmp = & roundTripBehavComp -> mvect2DPositionOriginTravels;
+        ptrVect2DCurrentDestination = & roundTripBehavComp -> mvect2DPositionOriginTravels;
+        ptrVect2DCurrentOrigin = & roundTripBehavComp -> mvect2DPositionDestinationTravels;
+
     }
 
     //appel de la fonction de mouvement en fonction de la vélocité et l'angle de l'entité
     moveVectorAngle( posComp -> vect2DPosComp, moveComp -> mfVelocite, fCurrentAngle );
 
-    std::cout << " distance::" << distance( posComp -> vect2DPosComp, * ptrVect2dTmp ) << "\n";
     //vérification du dépassement
-    if( distance( posComp -> vect2DPosComp, * ptrVect2dTmp ) >=
+    if( distance( posComp -> vect2DPosComp, * ptrVect2DCurrentOrigin ) >=
             roundTripBehavComp -> mfTravelsLenght ){
+        //si la longueur du trajet est dépassé par rapport à l'origine courante
         roundTripBehavComp -> mbTowardDirection = ! roundTripBehavComp -> mbTowardDirection;
-        posComp -> vect2DPosComp = * ptrVect2dTmp;
+        //l'entité est positionnée sur la destination courante
+        posComp -> vect2DPosComp = * ptrVect2DCurrentDestination;
     }
 }
 
