@@ -114,9 +114,6 @@ bool operator != ( const Vector2D & vect2dA, const Vector2D &vect2dB ){
  * @return La valeur de la distance entre les 2 vecteurs.
  */
 float distance( const Vector2D & vect2dA, const Vector2D & vect2dB ){
-    std::cout << "AmfX::" << vect2dA . mfX << "\nAmfY::" << vect2dA . mfY << "\n";
-    std::cout << "BmfX::" << vect2dB . mfX << "\nBmfY::" << vect2dB . mfY << "\n";
-    std::cout << "distance::" << ( vect2dA - vect2dB ) . fMagnitude() << "\n";
     return ( vect2dA - vect2dB ) . fMagnitude() ;
 }
 

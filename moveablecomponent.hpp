@@ -3,11 +3,13 @@
 
 #include "component.hpp"
 #include "ECSconstantes.hpp"
+#include "vector2D.hpp"
 
 /**
  * @brief La structure MoveableComponent possède les caractéristiques liées aux déplacements d'une entité. 
  */
 struct MoveableComponent : public Component{
+    Vector2D mVect2dDirection;
     bool mbMoveUpToDate;
     float mfVelocite;
 
@@ -18,6 +20,8 @@ struct MoveableComponent : public Component{
      * à des valeurs par défaut.
      */
     MoveableComponent(){
+        mVect2dDirection . mfX;
+        mVect2dDirection . mfY;
         muiTypeComponent = MOVEABLE_COMPONENT;
         mbMoveUpToDate = false;
         mfVelocite = 10;
