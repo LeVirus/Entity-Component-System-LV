@@ -16,7 +16,7 @@ class GravitySystem : public System{
 private:
     unsigned int muiValueGravity;
     std::vector< std::tuple< MoveableComponent *, PositionComponent *,
-                             GroundComponent *, DisplayComponent *, unsigned int > > mVectTupleComponentGravitySystem;
+                             GroundComponent *, unsigned int > > mVectTupleComponentGravitySystem;
 
 public:
     GravitySystem();
@@ -24,7 +24,7 @@ public:
     void recupComponentToEntity();
     void execSystem() override;
     //DisplayComponent est temporaire en attendant l'implémentation des masques de collision
-    std::vector<std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent *, unsigned int > > *getVectTupleComponentGravitySystem();
+    std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, unsigned int > > *getVectTupleComponentGravitySystem();
     ~GravitySystem();
 };
 

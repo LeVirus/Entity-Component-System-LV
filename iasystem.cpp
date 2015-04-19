@@ -186,11 +186,11 @@ void IASystem::execSystem(){
         if( ! physicComp ){
             std::cout << " Erreur IASystem pointeur NULL physicComp " << "\n";
             continue;
-        }*/
+        }
 
         PositionComponent * positionComp = stairwayToComponentManager() .
                 searchComponentByType < PositionComponent > ( mVectNumEntity[ i ], POSITION_COMPONENT );
-        assert( positionComp && "Erreur IASystem pointeur NULL positionComp \n" );
+        assert( positionComp && "Erreur IASystem pointeur NULL positionComp \n" );*/
 
         BehaviorComponent * behaviorComponent = stairwayToComponentManager() .
                 searchComponentByType < BehaviorComponent > ( mVectNumEntity[ i ], BEHAVIOR_COMPONENT );
@@ -233,8 +233,7 @@ void IASystem::execSystem(){
  * Dans un premier temps une vérification de l'appartenance des 2 composants à la même entité est effectuée.
  * //un calcul a partir de la fonction sinus sera fait.
  * Le déplacement horizontal et vertical sera effectué selon la sinusoide, son sens sera définis par mbCustomVarD.
- * @param posComp Le composant position de l'entité en cour de traitement
- * @param moveComp Le composant mouvement de l'entité en cour de traitement.
+ * @param uiNumEntity Le numéro de l'entité  à traiter.
  */
 void IASystem::actionSinusoid( unsigned int uiNumEntity ){
     std::cout << " SINUSOIDE \n";

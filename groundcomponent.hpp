@@ -6,25 +6,16 @@
 #include "vector2D.hpp"
 
 /**
- * @brief La structure GroundComponent détermine les caractéristiques d'une entité concernant le sol.
+ * @brief La structure GroundComponent détermine les caractéristiques d'une entité pouvant se déplacer sur le sol.
  */
 struct GroundComponent : public Component{
-    unsigned int muiGroundAssociate;
-    Vector2D mvect2dCurrentPointColGround, mvect2dPreviousPointColGround;
     bool mbInit, mbOnTheGround;
-
     /**
-     * @brief PhysicComponent Constructeur de PhysicComponent.
-     * Initialisation de la variable muiTypeBehavior.
+     * @brief GroundComponent Constructeur de GroundComponent.
      */
     GroundComponent(){
-        muiTypeComponent = PHYSIC_COMPONENT;
-        mbInit = false;
+        muiTypeComponent = GROUND_COMPONENT;
         mbOnTheGround = false;
-        mvect2dCurrentPointColGround . mfX = 0;
-        mvect2dCurrentPointColGround . mfY = 0;
-        mvect2dPreviousPointColGround . mfX = 0;
-        mvect2dPreviousPointColGround . mfY = 0;
     }
 
 };

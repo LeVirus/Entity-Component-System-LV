@@ -9,7 +9,9 @@ QMAKE_CXXFLAGS += -std=c++14
 
 QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 
-#LIBS += -lsfml-graphics -lsfml-window -lsfml-system
+INCLUDEPATH += ../../LibInc/HeadLib/
+
+LIBS += -lColl -L ../../LibInc/Lib/
 
 SOURCES += main.cpp \
     entity.cpp \
@@ -21,7 +23,7 @@ SOURCES += main.cpp \
     iasystem.cpp \
     gravitysystem.cpp \
     inputsystem.cpp \
-    vector2D.cpp
+    collisionsystem.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -45,8 +47,9 @@ HEADERS += \
     inputsystem.hpp \
     inputcomponent.hpp \
     groundcomponent.hpp \
-    vector2D.hpp \
     ringbehaviorcomponent.hpp \
     sinusoidbehaviorcomponent.hpp \
-    roundtripbehaviorcomponent.hpp
+    roundtripbehaviorcomponent.hpp \
+    collsegmentcomponent.hpp \
+    collisionsystem.hpp
 

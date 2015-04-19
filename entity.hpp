@@ -20,7 +20,7 @@ private:
     /*mbActive détermine si l'entité est actuellement activée dans la scène du jeu.
      * mbEntityInUse détermine pour une entité activée si celle ci est "endormie" ou non.
      * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
-    */
+     */
     bool mbActive, mbUpToDate, mbEntityInUse;
 public:
     const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;

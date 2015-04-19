@@ -10,15 +10,13 @@
  * mbTerrestrial détermine si l'entité est de type terrestre ou volante.
  */
 struct PhysicComponent : public Component{
-    bool mbGhost;
+    unsigned int muiTag;
 
     /**
      * @brief PhysicComponent Constructeur de PhysicComponent.
      * Initialisation de la variable muiTypeBehavior.
      */
-    PhysicComponent(){
-        muiTypeComponent = PHYSIC_COMPONENT;
-    }
+    PhysicComponent() : muiTypeComponent{ PHYSIC_COMPONENT }, muiTag{ NUMBR_TAG_MAX } {}
 
     /**
      * @brief displayComponent Fonction dérivée d'affichage des variables de la structure PhysicComponent.
@@ -26,7 +24,6 @@ struct PhysicComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
-        std::cout << "\n ghost" << mbGhost << "\n";
     }
 };
 

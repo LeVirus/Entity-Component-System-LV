@@ -9,8 +9,8 @@
  * @brief La structure MoveableComponent possède les caractéristiques liées aux déplacements d'une entité. 
  */
 struct MoveableComponent : public Component{
-    Vector2D mVect2dDirection;
-    bool mbMoveUpToDate;
+    Vector2D mVect2dPreviousPosition;
+    bool mbMoveUpToDate, mbReactGround, mbReactPhysics;
     float mfVelocite;
 
     /**
@@ -20,8 +20,8 @@ struct MoveableComponent : public Component{
      * à des valeurs par défaut.
      */
     MoveableComponent(){
-        mVect2dDirection . mfX;
-        mVect2dDirection . mfY;
+        mVect2dPreviousPosition . mfX = 0;
+        mVect2dPreviousPosition . mfY = 0;
         muiTypeComponent = MOVEABLE_COMPONENT;
         mbMoveUpToDate = false;
         mfVelocite = 10;

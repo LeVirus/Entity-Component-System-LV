@@ -20,10 +20,6 @@ GravitySystem::GravitySystem(){
     if( ! bAddComponentToSystem( GROUND_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout GROUND_COMPONENT.\n";
     }
-    //TMP
-    if( ! bAddComponentToSystem( DISPLAY_COMPONENT ) ){
-        std::cout << "Erreur GravitySystem ajout DISPLAY_COMPONENT.\n";
-    }
 }
 
 /**
@@ -71,14 +67,9 @@ void GravitySystem::recupComponentToEntity(){
                 searchComponentByType < GroundComponent > ( mVectNumEntity[ i ], GROUND_COMPONENT );
         assert( groundComponent && "groundComponent non instancié" );
 
-        DisplayComponent * displayComponent = stairwayToComponentManager() .
-                searchComponentByType < DisplayComponent > ( mVectNumEntity[ i ], DISPLAY_COMPONENT );
-        assert( displayComponent && "displayComponent non instancié" );
-
-        unsigned int uiNumEntity = positionComp ->muiGetIdEntityAssociated();
             //mémorisation des composant pour le traitement des collisions avec le sol
             mVectTupleComponentGravitySystem.push_back( std::make_tuple( moveableComponent , positionComp,
-                                                                         groundComponent, displayComponent, uiNumEntity ) );
+                                                                         groundComponent, i ) );
 
     }
 }
@@ -108,7 +99,7 @@ void GravitySystem::execSystem(){
  * @brief GravitySystem::getMapComponentGravitySystem
  * @return
  */
-std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, DisplayComponent *, unsigned int > > *
+std::vector< std::tuple< MoveableComponent *, PositionComponent *, GroundComponent *, unsigned int > > *
 GravitySystem::getVectTupleComponentGravitySystem(){
     return &mVectTupleComponentGravitySystem;
 }
