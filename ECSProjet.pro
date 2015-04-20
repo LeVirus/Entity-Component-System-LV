@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     iasystem.cpp \
     gravitysystem.cpp \
     inputsystem.cpp \
-    collisionsystem.cpp
+    collisionsystem.cpp \
+    bitset2d.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -51,5 +52,6 @@ HEADERS += \
     sinusoidbehaviorcomponent.hpp \
     roundtripbehaviorcomponent.hpp \
     collsegmentcomponent.hpp \
-    collisionsystem.hpp
+    collisionsystem.hpp \
+    bitset2d.hpp
 
