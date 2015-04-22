@@ -16,7 +16,7 @@ struct PhysicComponent : public Component{
      * @brief PhysicComponent Constructeur de PhysicComponent.
      * Initialisation de la variable muiTypeBehavior.
      */
-    PhysicComponent() : muiTag{ NUMBR_TAG_MAX } {
+    PhysicComponent() : muiTag{ 0 } {
         muiTypeComponent = PHYSIC_COMPONENT;
     }
 
