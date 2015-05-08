@@ -4,6 +4,8 @@
 #include "physicscomponent.hpp"
 #include "entity.hpp"
 #include "engine.hpp"
+
+#include "segment.hpp"
 #include <cassert>
 
 /**
@@ -17,6 +19,8 @@ CollisionSystem::CollisionSystem():muiNumberTag{ 20 }{
     if( ! bAddComponentToSystem( PHYSIC_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout PHYSIC_COMPONENT.\n";
     }
+    mCompManager = &stairwayToComponentManager();
+    assert( mCompManager && "mCompManager non instancie\n" );
 }
 
 /**
@@ -78,11 +82,29 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
            & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
     for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
-        for( unsigned int j = i + 1; j < entityBitsetB . size(); ++j ){
+        for( unsigned int j = NUM_MIN_COLL_COMPONENT; j < NUM_MAX_COLL_COMPONENT; ++j ){
+            if( entityBitsetA[ i ] && entityBitsetB[ j ] ){
 
+            }
         }
     }
     return false;
+}
+
+/**
+ * @brief CollisionSystem::bCheckFigureCollision Fonction de vérification de collision entre 2 figure déterminées par les paramètres
+ * de la fonction.
+ * @param uiNumEntityA Le numéro de la première entité.
+ * @param uiNumEntityB Le numéro de la deuxième entité.
+ * @param uiNumComponentA Le numéro du composant de la première entité à tester.
+ * @param uiNumComponentB Le numéro du composant de la deuxième entité à tester.
+ * @return true si les 2 figures sont en collision, false sinon.
+ */
+bool CollisionSystem::bCheckFigureCollision( unsigned int uiNumEntityA, unsigned int uiNumEntityB,
+                            unsigned int uiNumComponentA, unsigned int uiNumComponentB ){
+    //mCompManager -> searchComponentByType<>
+            //assert(  )
+
 }
 
 /**
