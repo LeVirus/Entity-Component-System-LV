@@ -68,6 +68,18 @@ bool BitSet2d::bAttributeTab( const std::vector< bool > & vectBool, unsigned int
     return true;
 }
 
+/**
+ * @brief BitSet2d::attributeValToCase Fonction d'attribution d'une valeur(booléene) à une case du tableau déterminée par les paramètres
+ * uiX et uiY.
+ * un assert est appelé si les coordonnées de la case demandée sont hors du tableau.
+ * @param uiX L'abscisse de la case à modifier.
+ * @param uiY L'ordonnée de la case à modifier.
+ * @param bNewVal La valeur à entrer dans la case en question.
+ */
+void BitSet2d::attributeValToCase( unsigned int uiX, unsigned int uiY, bool bNewVal ){
+    assert( ( uiY * muiTabLength + uiX < mvectBool . size() ) && "Valeur hors tableau Bit\n" );
+    mvectBool[ uiY * muiTabLength + uiX ] = bNewVal;
+}
 
 /**
  * @brief BitSet2d::displayTab Fonction d'affichage du tableau.

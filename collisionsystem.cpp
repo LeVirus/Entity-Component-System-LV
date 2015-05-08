@@ -10,8 +10,8 @@
  * @brief CollisionSystem::CollisionSystem Constructeur de CollisionSystem.
  * Le nombre de tag est mis à une valeur par défaut.
  */
-CollisionSystem::CollisionSystem():muiNumberTag{ 20 * 20 }{
-    muiNumberTag = 20;
+CollisionSystem::CollisionSystem():muiNumberTag{ 20 }{
+    //muiNumberTag = 20;
     mBitSet2dTagCollision . resizeTab( 20, 20 );
 
     if( ! bAddComponentToSystem( PHYSIC_COMPONENT ) ){
@@ -35,7 +35,8 @@ void CollisionSystem::bModifyNumberTag( unsigned int uiNumTag ){
  * Un tableau stocke les résultat.
  */
 void CollisionSystem::execSystem(){
-    const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
+    bool bEtatCaseBitSet;
+    //const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
     System::execSystem();
 
@@ -44,7 +45,9 @@ void CollisionSystem::execSystem(){
 
 
         for( unsigned int j = i + 1; j < mVectNumEntity . size(); ++j ){
-            bEntityIsInCollision( i, j );
+            bEtatCaseBitSet = bEntityIsInCollision( i, j );
+            mBitSet2dInCollision . attributeValToCase( i, j, bEtatCaseBitSet );
+            mBitSet2dInCollision . attributeValToCase( j, i, bEtatCaseBitSet );
         }
     }
 
@@ -65,18 +68,21 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
 
     assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
 
+    //vérification des tags.
     if( ! bEntityTagMatches( uiEntityA, uiEntityB ) ){
         return false;
     }
+
     //recup des 2 bitset des 2 entités
     const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
            & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
-    for( unsigned int i = 0; i < entityBitsetA . size() - 1; ++i ){
+    for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
         for( unsigned int j = i + 1; j < entityBitsetB . size(); ++j ){
 
         }
     }
+    return false;
 }
 
 /**
@@ -93,6 +99,7 @@ bool CollisionSystem::bEntityTagMatches( unsigned int uiEntityA, unsigned int ui
 
             * physicComponentEntityB = stairwayToComponentManager() .
                     searchComponentByType< PhysicComponent >( uiEntityB, PHYSIC_COMPONENT );
+
     assert( ( physicComponentEntityA && physicComponentEntityB ) && "PhysicComp non instancié.\n" );
     return mBitSet2dTagCollision . getValAt( physicComponentEntityA -> muiTag, physicComponentEntityB -> muiTag );
 }

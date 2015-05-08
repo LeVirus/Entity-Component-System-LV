@@ -21,6 +21,7 @@ public:
 
     bool bAttributeTab( const std::vector< bool > & vectBool, unsigned int uiLenght, unsigned int uiHeight );
 
+    void attributeValToCase( unsigned int uiX, unsigned int uiY, bool bNewVal );
     unsigned int getLength()const{ return muiTabLength; }
     unsigned int getHeight()const{ return muiTabHeight; }
     unsigned int getTotalLength()const{ return muiTabLength * muiTabHeight; }
