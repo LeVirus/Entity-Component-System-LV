@@ -123,6 +123,9 @@ bool CollisionSystem::bEntityTagMatches( unsigned int uiEntityA, unsigned int ui
                     searchComponentByType< PhysicComponent >( uiEntityB, PHYSIC_COMPONENT );
 
     assert( ( physicComponentEntityA && physicComponentEntityB ) && "PhysicComp non instancié.\n" );
+
+    //if( physicComponentEntityA -> muiTag == SOL )
+
     return mBitSet2dTagCollision . getValAt( physicComponentEntityA -> muiTag, physicComponentEntityB -> muiTag );
 }
 
