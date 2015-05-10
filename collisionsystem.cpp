@@ -4,6 +4,7 @@
 #include "physicscomponent.hpp"
 #include "entity.hpp"
 #include "engine.hpp"
+#include "collsegmentcomponent.hpp"
 
 #include "segment.hpp"
 #include <cassert>
@@ -79,7 +80,7 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
 
     //recup des 2 bitset des 2 entités
     const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
-           & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
+            & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
     for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
         for( unsigned int j = NUM_MIN_COLL_COMPONENT; j < NUM_MAX_COLL_COMPONENT; ++j ){
@@ -101,9 +102,44 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
  * @return true si les 2 figures sont en collision, false sinon.
  */
 bool CollisionSystem::bCheckFigureCollision( unsigned int uiNumEntityA, unsigned int uiNumEntityB,
-                            unsigned int uiNumComponentA, unsigned int uiNumComponentB ){
-    //mCompManager -> searchComponentByType<>
-            //assert(  )
+                                             unsigned int uiNumComponentA, unsigned int uiNumComponentB ){
+
+    CollSegmentComponent * collSegmentCompA = nullptr, collSegmentCompB = nullptr, collSegmentCompCurrent = nullptr;
+
+    const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
+
+    unsigned int uiTabEntitySize = vectEntity . size(),
+            uiNumComponentCurrent = uiNumComponentA,
+            uiNumEntityCurrent = uiNumEntityA;
+
+    assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
+
+    for( unsigned int i = 0; i < 2; ++i ){
+
+        if( i == 1 ){
+            uiNumComponentCurrent = uiNumComponentB;
+            uiNumEntityCurrent = uiNumEntityB;
+        }
+
+        switch( uiNumComponentCurrent ){
+        case COLL_SEGMENT_COMPONENT:
+            CollSegmentComponent * collSegmentCompCurrent = stairwayToComponentManager() .
+                    searchComponentByType < CollSegmentComponent > ( uiNumEntityCurrent, COLL_SEGMENT_COMPONENT );
+
+            assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
+
+            if( i == 0 ){
+                collSegmentCompA = collSegmentCompCurrent;
+            }
+            else{
+                collSegmentCompB = collSegmentCompCurrent;
+            }
+
+            break;
+        default:
+            assert( false && "uiNumComponentCurrent non valide\n" );
+        }
+    }
 
 }
 
