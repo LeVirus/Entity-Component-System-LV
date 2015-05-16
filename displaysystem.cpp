@@ -38,7 +38,7 @@ void DisplaySystem::execSystem(){
             std::cout << " pointeur non NULL pos" << "\n";
         }*/
         if( displayComp && positionComp ){
-            mVectComponentDisplaySystem.push_back( { displayComp , positionComp } );
+            mVectComponentDisplaySystem . push_back( { displayComp , positionComp } );
         }
     }
 }

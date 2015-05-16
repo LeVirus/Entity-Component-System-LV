@@ -18,8 +18,6 @@ public:
     void bModifyNumberTag( unsigned int uiNumTag );
     void execSystem() override;
     bool bEntityIsInCollision( unsigned int uiEntityA, unsigned int uiEntityB );
-    bool bCheckFigureCollision( unsigned int uiNumEntityA, unsigned int uiNumEntityB,
-                                unsigned int uiNumComponentA, unsigned int uiNumComponentB );
     bool bEntityTagMatches( unsigned int uiEntityA, unsigned int uiEntityB );
     bool attributeVectTabTagCollision( const std::vector< bool > & vectBool, unsigned int uiLenght );
 };

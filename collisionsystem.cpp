@@ -50,7 +50,14 @@ void CollisionSystem::execSystem(){
 
 
         for( unsigned int j = i + 1; j < mVectNumEntity . size(); ++j ){
-            bEtatCaseBitSet = bEntityIsInCollision( i, j );
+
+            //vérification des tags.
+            if( ! bEntityTagMatches( uiEntityA, uiEntityB ) ){
+                bEtatCaseBitSet = false;
+            }
+            else{
+                bEtatCaseBitSet = bEntityIsInCollision( i, j );
+            }
             mBitSet2dInCollision . attributeValToCase( i, j, bEtatCaseBitSet );
             mBitSet2dInCollision . attributeValToCase( j, i, bEtatCaseBitSet );
         }
@@ -69,78 +76,64 @@ void CollisionSystem::execSystem(){
 bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int uiEntityB ){
     const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
-    unsigned int uiTabEntitySize =  vectEntity . size();
+    unsigned int uiTabEntitySize = vectEntity . size(),
+            uiNumComponentCurrent, uiNumEntityCurrent = uiEntityA, uiNumFigureEntityA, uiNumFigureEntityB;
 
     assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
 
-    //vérification des tags.
-    if( ! bEntityTagMatches( uiEntityA, uiEntityB ) ){
-        return false;
-    }
-
-    //recup des 2 bitset des 2 entités
     const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
             & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
+    Segment *collSegmentCompA = nullptr, *collSegmentCompB = nullptr;
+
     for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
         for( unsigned int j = NUM_MIN_COLL_COMPONENT; j < NUM_MAX_COLL_COMPONENT; ++j ){
+
+            //Verification de l'existance des figures
             if( entityBitsetA[ i ] && entityBitsetB[ j ] ){
+                //Récupération des 2 figures à tester
+                for( unsigned int k = 0; k < 2; ++k ){
 
-            }
-        }
-    }
+                    if( k == 1 ){
+                        uiNumComponentCurrent = j;
+                        uiNumEntityCurrent = uiEntityB;
+                    }
+
+                    switch( uiNumComponentCurrent ){
+                    case COLL_SEGMENT_COMPONENT:{
+                        CollSegmentComponent * collSegmentCompCurrent = stairwayToComponentManager() .
+                                searchComponentByType < CollSegmentComponent > ( uiNumEntityCurrent, COLL_SEGMENT_COMPONENT );
+
+                        assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
+
+                        if( k == 0 ){
+                            collSegmentCompA = collSegmentCompCurrent;
+                            uiNumFigureEntityA = 0;
+                        }
+                        else{
+                            collSegmentCompB = collSegmentCompCurrent;
+                            uiNumFigureEntityB = 0;
+                        }
+
+                        break;
+                    }
+                    default:{
+                        assert( false && "uiNumComponentCurrent non valide\n" );
+                        break;
+                    }
+                    }//Fin_Switch
+
+                }//Fin_Boucle_k
+
+                //Test
+                if( uiNumFigureEntityA == 0 && uiNumFigureEntityB == 0 ){
+                    if( bIsInCollision( *collSegmentCompA, *collSegmentCompB ) )return true;
+                }
+
+            }//Fin_if
+        }//Fin_Boucle_j
+    }//Fin_Boucle_i
     return false;
-}
-
-/**
- * @brief CollisionSystem::bCheckFigureCollision Fonction de vérification de collision entre 2 figure déterminées par les paramètres
- * de la fonction.
- * @param uiNumEntityA Le numéro de la première entité.
- * @param uiNumEntityB Le numéro de la deuxième entité.
- * @param uiNumComponentA Le numéro du composant de la première entité à tester.
- * @param uiNumComponentB Le numéro du composant de la deuxième entité à tester.
- * @return true si les 2 figures sont en collision, false sinon.
- */
-bool CollisionSystem::bCheckFigureCollision( unsigned int uiNumEntityA, unsigned int uiNumEntityB,
-                                             unsigned int uiNumComponentA, unsigned int uiNumComponentB ){
-
-    CollSegmentComponent * collSegmentCompA = nullptr, collSegmentCompB = nullptr, collSegmentCompCurrent = nullptr;
-
-    const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
-
-    unsigned int uiTabEntitySize = vectEntity . size(),
-            uiNumComponentCurrent = uiNumComponentA,
-            uiNumEntityCurrent = uiNumEntityA;
-
-    assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
-
-    for( unsigned int i = 0; i < 2; ++i ){
-
-        if( i == 1 ){
-            uiNumComponentCurrent = uiNumComponentB;
-            uiNumEntityCurrent = uiNumEntityB;
-        }
-
-        switch( uiNumComponentCurrent ){
-        case COLL_SEGMENT_COMPONENT:
-            CollSegmentComponent * collSegmentCompCurrent = stairwayToComponentManager() .
-                    searchComponentByType < CollSegmentComponent > ( uiNumEntityCurrent, COLL_SEGMENT_COMPONENT );
-
-            assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
-
-            if( i == 0 ){
-                collSegmentCompA = collSegmentCompCurrent;
-            }
-            else{
-                collSegmentCompB = collSegmentCompCurrent;
-            }
-
-            break;
-        default:
-            assert( false && "uiNumComponentCurrent non valide\n" );
-        }
-    }
-
 }
 
 /**
