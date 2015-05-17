@@ -53,5 +53,6 @@ HEADERS += \
     roundtripbehaviorcomponent.hpp \
     collsegmentcomponent.hpp \
     collisionsystem.hpp \
-    bitset2d.hpp
+    bitset2d.hpp \
+    collrectboxcomponent.hpp
 

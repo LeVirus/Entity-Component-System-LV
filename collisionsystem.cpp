@@ -5,8 +5,10 @@
 #include "entity.hpp"
 #include "engine.hpp"
 #include "collsegmentcomponent.hpp"
+#include "collrectboxcomponent.hpp"
 
 #include "segment.hpp"
+#include "rectbox.hpp"
 #include <cassert>
 
 /**
@@ -85,6 +87,7 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
             & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
     Segment *collSegmentCompA = nullptr, *collSegmentCompB = nullptr;
+    RectBox *collRectBoxCompA = nullptr, *collRectBoxCompB = nullptr;
 
     for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
         for( unsigned int j = NUM_MIN_COLL_COMPONENT; j < NUM_MAX_COLL_COMPONENT; ++j ){
@@ -108,11 +111,28 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
 
                         if( k == 0 ){
                             collSegmentCompA = collSegmentCompCurrent;
-                            uiNumFigureEntityA = 0;
+                            uiNumFigureEntityA = COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
                         else{
                             collSegmentCompB = collSegmentCompCurrent;
-                            uiNumFigureEntityB = 0;
+                            uiNumFigureEntityB = COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT;
+                        }
+
+                        break;
+                    }
+                    case COLL_RECTBOX_COMPONENT:{
+                        CollRectBoxComponent * collRectBoxCompCurrent = stairwayToComponentManager() .
+                                searchComponentByType < CollRectBoxComponent > ( uiNumEntityCurrent, COLL_RECTBOX_COMPONENT );
+
+                        assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
+
+                        if( k == 0 ){
+                            collRectBoxCompA = collRectBoxCompCurrent;
+                            uiNumFigureEntityA = COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT;
+                        }
+                        else{
+                            collRectBoxCompB = collRectBoxCompCurrent;
+                            uiNumFigureEntityB = COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
 
                         break;
@@ -126,8 +146,21 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
                 }//Fin_Boucle_k
 
                 //Test
-                if( uiNumFigureEntityA == 0 && uiNumFigureEntityB == 0 ){
+                if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
+                    uiNumFigureEntityB == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT ){
                     if( bIsInCollision( *collSegmentCompA, *collSegmentCompB ) )return true;
+                }
+                else if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
+                         uiNumFigureEntityB == COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT ){
+                    if( bIsInCollision( *collSegmentCompA, *collRectBoxCompB ) )return true;
+                }
+                else if( uiNumFigureEntityA == COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT &&
+                         uiNumFigureEntityB == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT ){
+                    if( bIsInCollision( *collSegmentCompB, *collRectBoxCompA ) )return true;
+                }
+                else if( uiNumFigureEntityA == COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT &&
+                         uiNumFigureEntityB == COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT ){
+                    if( bIsInCollision( *collRectBoxCompA, *collRectBoxCompB ) )return true;
                 }
 
             }//Fin_if
