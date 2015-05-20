@@ -54,7 +54,7 @@ void CollisionSystem::execSystem(){
         for( unsigned int j = i + 1; j < mVectNumEntity . size(); ++j ){
 
             //vérification des tags.
-            if( ! bEntityTagMatches( uiEntityA, uiEntityB ) ){
+            if( ! bEntityTagMatches( i, j ) ){
                 bEtatCaseBitSet = false;
             }
             else{
@@ -96,7 +96,7 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
             if( entityBitsetA[ i ] && entityBitsetB[ j ] ){
                 //Récupération des 2 figures à tester
                 for( unsigned int k = 0; k < 2; ++k ){
-
+                    uiNumComponentCurrent = i;
                     if( k == 1 ){
                         uiNumComponentCurrent = j;
                         uiNumEntityCurrent = uiEntityB;
@@ -110,11 +110,11 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
                         assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
 
                         if( k == 0 ){
-                            collSegmentCompA = collSegmentCompCurrent;
+                            collSegmentCompA = &collSegmentCompCurrent -> mCollSegment;;
                             uiNumFigureEntityA = COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
                         else{
-                            collSegmentCompB = collSegmentCompCurrent;
+                            collSegmentCompB = &collSegmentCompCurrent -> mCollSegment;;
                             uiNumFigureEntityB = COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
 
@@ -124,14 +124,14 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
                         CollRectBoxComponent * collRectBoxCompCurrent = stairwayToComponentManager() .
                                 searchComponentByType < CollRectBoxComponent > ( uiNumEntityCurrent, COLL_RECTBOX_COMPONENT );
 
-                        assert( collSegmentCompCurrent && "collSegmentComp non instancié\n" );
+                        assert( collRectBoxCompCurrent && "collSegmentComp non instancié\n" );
 
                         if( k == 0 ){
-                            collRectBoxCompA = collRectBoxCompCurrent;
+                            collRectBoxCompA = &collRectBoxCompCurrent -> mRectBox;
                             uiNumFigureEntityA = COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
                         else{
-                            collRectBoxCompB = collRectBoxCompCurrent;
+                            collRectBoxCompB = &collRectBoxCompCurrent -> mRectBox;
                             uiNumFigureEntityB = COLL_RECTBOX_COMPONENT - NUM_MIN_COLL_COMPONENT;
                         }
 
@@ -147,7 +147,7 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
 
                 //Test
                 if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
-                    uiNumFigureEntityB == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT ){
+                        uiNumFigureEntityB == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT ){
                     if( bIsInCollision( *collSegmentCompA, *collSegmentCompB ) )return true;
                 }
                 else if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
