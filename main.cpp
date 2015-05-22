@@ -24,6 +24,7 @@ int main(){
     engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM );
     engine.getSystemManager().bAddSystem( IA_SYSTEM );
     engine.getSystemManager().bAddSystem( GRAVITY_SYSTEM );
+    engine.getSystemManager().bAddSystem( COLLISION_SYSTEM );
     compMan . updateComponentFromEntity();
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posComp ){

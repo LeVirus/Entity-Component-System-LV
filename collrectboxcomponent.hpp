@@ -10,6 +10,7 @@
  */
 struct CollRectBoxComponent : public Component{
     RectBox mRectBox;
+    Vector2D mVect2dVectOrigins;
     /**
      * @brief CollRectBoxComponent Constructeur de la structure CollRectBoxComponent.
      * Initialisation des variables muiTypeComponent( présente dans la classe mère Component ).

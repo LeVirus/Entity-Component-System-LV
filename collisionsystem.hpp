@@ -17,9 +17,12 @@ public:
     CollisionSystem();
     void bModifyNumberTag( unsigned int uiNumTag );
     void execSystem() override;
+    void updateCollPosition( unsigned int uiEntity );
     bool bEntityIsInCollision( unsigned int uiEntityA, unsigned int uiEntityB );
     bool bEntityTagMatches( unsigned int uiEntityA, unsigned int uiEntityB );
     bool attributeVectTabTagCollision( const std::vector< bool > & vectBool, unsigned int uiLenght );
+    void displaySystem()const override;
+
 };
 
 #endif // COLLISIONSYSTEM_H

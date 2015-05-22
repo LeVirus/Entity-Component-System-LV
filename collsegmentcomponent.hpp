@@ -4,13 +4,15 @@
 #include "component.hpp"
 #include "ECSconstantes.hpp"
 #include "segment.hpp"
+#include "vector2d.hpp"
 
 /**
  * @brief La structure CollSegmentComponent stocke un masque de collision de type segment.
  */
 struct CollSegmentComponent : public Component{
     Segment mCollSegment;
-
+    //Le vecteur séparent la position de l'origine de la figure (ici le point A du segment)
+    Vector2D mVect2dVectOrigins;
     /**
      * @brief CollSegmentComponent Constructeur de la structure CollSegmentComponent.
      * Initialisation des variables muiTypeComponent(présente dans la classe mère Component).

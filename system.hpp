@@ -27,7 +27,7 @@ public:
     void linkSystemManager( SystemManager* ptrSystemManager );
     void refreshEntity();
     virtual void execSystem();
-    void displaySystem()const;
+    virtual void displaySystem()const;
     bool bComponentAlreadyExist( unsigned int uiTypeComponent );
     ComponentManager & stairwayToComponentManager();
 

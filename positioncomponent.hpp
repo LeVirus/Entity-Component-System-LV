@@ -10,6 +10,7 @@
  * Elle contient l'abscisse et l'ordonnée de l'entité.
  */
 struct PositionComponent : public Component{
+    Vector2D vect2DPosComp;
 
     /**
      * @brief PositionComponent Constructeur de PositionComponent.
@@ -28,7 +29,6 @@ struct PositionComponent : public Component{
         std::cout << "vect2DPosComp . mfX::" << vect2DPosComp . mfX << "\n";
         std::cout << "vect2DPosComp . mfY::" << vect2DPosComp . mfY << "\n";
     }
-    Vector2D vect2DPosComp;
     //float mfPositionX, mfPositionY;
 
 };

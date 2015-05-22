@@ -6,9 +6,11 @@
 #include "engine.hpp"
 #include "collsegmentcomponent.hpp"
 #include "collrectboxcomponent.hpp"
+#include "positioncomponent.hpp"
 
 #include "segment.hpp"
 #include "rectbox.hpp"
+#include "bitset2d.hpp"
 #include <cassert>
 
 /**
@@ -16,11 +18,13 @@
  * Le nombre de tag est mis à une valeur par défaut.
  */
 CollisionSystem::CollisionSystem():muiNumberTag{ 20 }{
-    //muiNumberTag = 20;
     mBitSet2dTagCollision . resizeTab( 20, 20 );
 
     if( ! bAddComponentToSystem( PHYSIC_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout PHYSIC_COMPONENT.\n";
+    }
+    if( ! bAddComponentToSystem( POSITION_COMPONENT ) ){
+        std::cout << "Erreur GravitySystem ajout POSITION_COMPONENT.\n";
     }
     mCompManager = &stairwayToComponentManager();
     assert( mCompManager && "mCompManager non instancie\n" );
@@ -54,14 +58,17 @@ void CollisionSystem::execSystem(){
         for( unsigned int j = i + 1; j < mVectNumEntity . size(); ++j ){
 
             //vérification des tags.
-            if( ! bEntityTagMatches( i, j ) ){
+            if( ! bEntityTagMatches( mVectNumEntity[ i ], mVectNumEntity[ j ] ) ){
                 bEtatCaseBitSet = false;
             }
             else{
-                bEtatCaseBitSet = bEntityIsInCollision( i, j );
+
+
+                bEtatCaseBitSet = bEntityIsInCollision( mVectNumEntity[ i ], mVectNumEntity[ j ] );
             }
-            mBitSet2dInCollision . attributeValToCase( i, j, bEtatCaseBitSet );
-            mBitSet2dInCollision . attributeValToCase( j, i, bEtatCaseBitSet );
+            //Mémorisations des collisions dans le tableau
+            mBitSet2dInCollision . attributeValToCase( mVectNumEntity[ i ], mVectNumEntity[ j ], bEtatCaseBitSet );
+            mBitSet2dInCollision . attributeValToCase( mVectNumEntity[ j ], mVectNumEntity[ i ], bEtatCaseBitSet );
         }
     }
 
@@ -176,6 +183,60 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
 }
 
 /**
+ * @brief CollisionSystem::updateCollPosition Fonction de mise à jour de la position de la figure de collision par rapport
+ * au composant position de l'entité.
+ * @param uiEntity Le numéro de l'entité à mettre à jour.
+ */
+void CollisionSystem::updateCollPosition( unsigned int uiEntity ){
+    PositionComponent * posCompEntity = stairwayToComponentManager() .
+            searchComponentByType < PositionComponent > ( uiEntity, POSITION_COMPONENT );
+    assert( posCompEntity && " posCompEntity non instancié\n " );
+
+    const std::bitset< NUMBR_COMPONENT > & bitSetEntity =
+            mptrSystemManager -> getptrEngine() -> getVectEntity()[ uiEntity ] . getEntityBitSet();
+
+    for( unsigned int i = NUM_MIN_COLL_COMPONENT ; i < NUM_MAX_COLL_COMPONENT ; ++i ){
+        if( bitSetEntity[ i ] ){
+            switch( i ){
+
+            case COLL_SEGMENT_COMPONENT:{
+                CollSegmentComponent * collSegmentEntity = stairwayToComponentManager() .
+                        searchComponentByType < CollSegmentComponent > ( uiEntity, COLL_SEGMENT_COMPONENT );
+                assert( collSegmentEntity && " collSegmentEntity non instancié\n " );
+
+                //mémorisation du vecteurAB
+                Vector2D vect2dMemVectSegmentAB = collSegmentEntity -> mCollSegment . getVect2dPointB() -
+                        collSegmentEntity -> mCollSegment . getVect2dPointA();
+                //calcul de la nouvelle position du point A du segment par rapport à PositionComponent
+                collSegmentEntity -> mCollSegment . bAttributePointAToSegment(
+                            posCompEntity -> vect2DPosComp + collSegmentEntity -> mVect2dVectOrigins );
+
+                //calcul du point B a partir du point A et du vecteur mémorisé
+                collSegmentEntity -> mCollSegment . bAttributePointBToSegment(
+                            collSegmentEntity -> mCollSegment . getVect2dPointA() + vect2dMemVectSegmentAB );
+                break;
+            }
+
+            case COLL_RECTBOX_COMPONENT:{
+                CollRectBoxComponent * collRectBoxEntity = stairwayToComponentManager() .
+                        searchComponentByType < CollRectBoxComponent > ( uiEntity, COLL_RECTBOX_COMPONENT );
+                assert( collRectBoxEntity && " collRectBoxEntity non instancié\n " );
+
+                collRectBoxEntity -> mRectBox . modifyOriginsRectBox(
+                            posCompEntity -> vect2DPosComp + collRectBoxEntity -> mVect2dVectOrigins );
+
+                break;
+            }
+            default:{
+                assert( false && "Numéro composant invalide\n" );
+                break;
+            }
+            }
+        }
+    }
+}
+
+/**
  * @brief CollisionSystem::bEntityTagMatches Fonction vérifiant dans le tableau du système( mBitSet2dTagCollision ) si les 2 tags des
  * 2 entités sont corespondant.
  * Un assert est appelé si au moins une des 2 entités ne possèdent pas le composant PHYSIC_COMPONENT.
@@ -205,4 +266,15 @@ bool CollisionSystem::bEntityTagMatches( unsigned int uiEntityA, unsigned int ui
  */
 bool CollisionSystem::attributeVectTabTagCollision( const std::vector< bool > & vectBool, unsigned int uiLenght ){
     return mBitSet2dTagCollision . bAttributeTab( vectBool, uiLenght, uiLenght );
+}
+
+/**
+ * @brief CollisionSystem::displayCollisionSystem Affichage des tableaux de collisions et de tags.
+ */
+void CollisionSystem::displaySystem()const{
+    std::cout << "Affichage Tableau Tag collisions\n";
+    mBitSet2dTagCollision . displayTab();
+    std::cout << "Affichage Tableau collisions\n";
+    mBitSet2dInCollision . displayTab();
+
 }
