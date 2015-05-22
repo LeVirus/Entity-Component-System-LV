@@ -81,19 +81,23 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
     unsigned int uiTabEntitySize = vectEntity . size(),
             uiNumComponentCurrent, uiNumEntityCurrent = uiEntityA, uiNumFigureEntityA, uiNumFigureEntityB;
 
+    //Verif si les numéros d'entités sont bien dans le tableau
     assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
 
+    //Récup des bitsets de composants des entités
     const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
             & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
     Segment *collSegmentCompA = nullptr, *collSegmentCompB = nullptr;
     RectBox *collRectBoxCompA = nullptr, *collRectBoxCompB = nullptr;
 
+    //parcours de tous les composants et traitement de chacun d'eux 2 à 2
     for( unsigned int i = NUM_MIN_COLL_COMPONENT; i < NUM_MAX_COLL_COMPONENT; ++i ){
         for( unsigned int j = NUM_MIN_COLL_COMPONENT; j < NUM_MAX_COLL_COMPONENT; ++j ){
 
             //Verification de l'existance des figures
             if( entityBitsetA[ i ] && entityBitsetB[ j ] ){
+
                 //Récupération des 2 figures à tester
                 for( unsigned int k = 0; k < 2; ++k ){
                     uiNumComponentCurrent = i;
@@ -144,10 +148,12 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
                     }//Fin_Switch
 
                 }//Fin_Boucle_k
+                //Récupération faite
 
-                //Test
+                //Test collision
                 if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
                         uiNumFigureEntityB == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT ){
+                    //appel de la fonction correspondante dans le bibliothèque de collisions
                     if( bIsInCollision( *collSegmentCompA, *collSegmentCompB ) )return true;
                 }
                 else if( uiNumFigureEntityA == COLL_SEGMENT_COMPONENT - NUM_MIN_COLL_COMPONENT &&
