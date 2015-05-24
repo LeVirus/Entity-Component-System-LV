@@ -12,7 +12,7 @@ class CollisionSystem : public System{
 private:
     BitSet2d mBitSet2dTagCollision, mBitSet2dInCollision;
     unsigned int muiNumberTag;
-    ComponentManager * mCompManager;
+    //ComponentManager * mCompManager;
 public:
     CollisionSystem();
     void bModifyNumberTag( unsigned int uiNumTag );

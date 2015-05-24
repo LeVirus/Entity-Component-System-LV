@@ -88,7 +88,7 @@ void BitSet2d::displayTab()const{
     std::cout << "AFFICHAGE TABLEAU BIT\n";
     for( unsigned int i = 0; i < mvectBool . size() ;++i ){
         std::cout << mvectBool[ i ];
-        if( i != 0 && i % muiTabLength == 0 )std::cout << "\n";
+        if( i != 0 && i % ( muiTabLength - 1 ) == 0 )std::cout << "\n";
     }
     std::cout << "FIN AFFICHAGE TABLEAU BIT\n";
 }

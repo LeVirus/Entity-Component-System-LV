@@ -11,7 +11,10 @@
 #include "ringbehaviorcomponent.hpp"
 #include "roundtripbehaviorcomponent.hpp"
 #include "sinusoidbehaviorcomponent.hpp"
+#include "collrectboxcomponent.hpp"
+#include "collsegmentcomponent.hpp"
 #include <iostream>
+#include <cassert>
 
 ComponentManager::ComponentManager(){
 }
@@ -97,7 +100,16 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
         mVectComponent[ uiNumCase ] = std::make_unique< RingBehaviorComponent >();
         break;
     }
+    case COLL_RECTBOX_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< CollRectBoxComponent >();
+        break;
+    }
+    case COLL_SEGMENT_COMPONENT :{
+        mVectComponent[ uiNumCase ] = std::make_unique< CollSegmentComponent >();
+        break;
+    }
     default :{
+        assert( false && " Num Component Incorrect\n " );
         break;
     }
     }

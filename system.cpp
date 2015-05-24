@@ -3,11 +3,13 @@
 #include "entity.hpp"
 #include "engine.hpp"
 #include <bitset>
+#include <cassert>
 
 /**
  * @brief System::System Constructeur de la classe System
  */
 System::System(){
+    mptrSystemManager = nullptr;
 }
 
 /**
@@ -104,6 +106,7 @@ bool System::bComponentAlreadyExist( unsigned int uiTypeComponent ){
  * @return Une référence vers le gestionnaire de composant( mComponentManager ).
  */
 ComponentManager & System::stairwayToComponentManager(){
+    assert( mptrSystemManager && "mptrSystemManager non instancié\n" );
    return mptrSystemManager -> getptrEngine() -> getComponentManager();
         //searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
 }

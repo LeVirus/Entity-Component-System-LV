@@ -26,8 +26,6 @@ CollisionSystem::CollisionSystem():muiNumberTag{ 20 }{
     if( ! bAddComponentToSystem( POSITION_COMPONENT ) ){
         std::cout << "Erreur GravitySystem ajout POSITION_COMPONENT.\n";
     }
-    mCompManager = &stairwayToComponentManager();
-    assert( mCompManager && "mCompManager non instancie\n" );
 }
 
 /**
@@ -62,8 +60,6 @@ void CollisionSystem::execSystem(){
                 bEtatCaseBitSet = false;
             }
             else{
-
-
                 bEtatCaseBitSet = bEntityIsInCollision( mVectNumEntity[ i ], mVectNumEntity[ j ] );
             }
             //Mémorisations des collisions dans le tableau
