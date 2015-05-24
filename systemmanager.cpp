@@ -2,10 +2,12 @@
 #include "ECSconstantes.hpp"
 #include "displaysystem.hpp"
 #include "gravitysystem.hpp"
+#include "collisionsystem.hpp"
 #include "inputsystem.hpp"
 #include "groundcomponent.hpp"
 #include "iasystem.hpp"
 #include <memory>
+#include <cassert>
 #include <iostream>
 
 /**
@@ -56,8 +58,13 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
             mVectSystem[ INPUT_SYSTEM ] = std::make_unique< InputSystem >();
             mBitSetSystem[ INPUT_SYSTEM ] = true;
             break;
-        default:
+        case COLLISION_SYSTEM:
 
+            mVectSystem[ COLLISION_SYSTEM ] = std::make_unique< CollisionSystem >();
+            mBitSetSystem[ COLLISION_SYSTEM ] = true;
+            break;
+        default:
+            assert( false && " Num système incorrect\n" );
             bReturn = false;
             break;
         }

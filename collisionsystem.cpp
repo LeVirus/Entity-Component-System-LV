@@ -72,6 +72,8 @@ void CollisionSystem::execSystem(){
         }
     }
 
+    displaySystem();
+
 }
 
 /**
