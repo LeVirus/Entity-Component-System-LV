@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include <vector>
 #include "engine.hpp"
 #include "ECSconstantes.hpp"
@@ -48,31 +49,32 @@ int main(){
         posComp -> vect2DPosComp . mfY = 158;
     }
 
-    PositionComponent * posCompB = compMan . searchComponentByType< PositionComponent >( 2, POSITION_COMPONENT );
+    PositionComponent * posCompB = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posCompB ){
-        posCompB -> vect2DPosComp . mfX = 150;
-        posCompB -> vect2DPosComp . mfY = 258;
+        posCompB -> vect2DPosComp . mfX = 1001;
+        posCompB -> vect2DPosComp . mfY = 159;
     }
 
     CollRectBoxComponent * collRect = compMan . searchComponentByType< CollRectBoxComponent >( 1, COLL_RECTBOX_COMPONENT );
-    if( collRect ){
-        collRect -> mRectBox . modifyOriginsRectBox( Vector2D( 10, 10 ) );
+    assert( collRect && "collRect non instancié\n" );
+    collRect -> mVect2dVectOrigins . mfX = 10;
+    collRect -> mVect2dVectOrigins . mfY = 10;
         collRect -> mRectBox . modifyHeightRectBox( 10 );
         collRect -> mRectBox . modifyLenghtRectBox( 10 );
-    }
-    CollRectBoxComponent * collRectB = compMan . searchComponentByType< CollRectBoxComponent >( 2, COLL_RECTBOX_COMPONENT );
-    if( collRectB ){
-        collRectB -> mRectBox . modifyOriginsRectBox( Vector2D( 10, 10 ) );
+
+    CollRectBoxComponent * collRectB = compMan . searchComponentByType< CollRectBoxComponent >( 0, COLL_RECTBOX_COMPONENT );
+    assert( collRectB && "collRectB non instancié\n" );
+    collRectB -> mVect2dVectOrigins . mfX = 10;
+    collRectB -> mVect2dVectOrigins . mfY = 10;
         collRectB -> mRectBox . modifyHeightRectBox( 10 );
         collRectB -> mRectBox . modifyLenghtRectBox( 10 );
-    }
+
 
     //MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 
     //engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->  initMoveable( 0 );
-    engine.execIteration();std::cout << "sdqsdT.\n";
-
-    compMan . displayComponent();
+    engine.execIteration();
+    //compMan . displayComponent();
 
     return 0;
 }

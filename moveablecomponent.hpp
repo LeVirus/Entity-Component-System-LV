@@ -29,7 +29,7 @@ struct MoveableComponent : public Component{
      * La fonction de base d'affichage de la classe mère est appelée en premier lieu.
      */
     void displayComponent()const override{
-        Component::displayComponent();
+        //Component::displayComponent();
         std::cout << "\n mfVelocite" << mfVelocite << "\n";
     }
 };

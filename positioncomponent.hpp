@@ -25,7 +25,7 @@ struct PositionComponent : public Component{
      * La fonction de base d'affichage de la classe mère est appelée en premier lieu.
      */
     void displayComponent()const override{
-        Component::displayComponent();
+        //Component::displayComponent();
         std::cout << "vect2DPosComp . mfX::" << vect2DPosComp . mfX << "\n";
         std::cout << "vect2DPosComp . mfY::" << vect2DPosComp . mfY << "\n";
     }

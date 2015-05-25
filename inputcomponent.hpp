@@ -18,6 +18,10 @@ struct InputComponent : public Component{
     InputComponent(){
         muiTypeComponent = INPUT_COMPONENT;
     }
+    void displayComponent()const override{
+
+
+    }
 };
 
 #endif // INPUTCOMPONENT_HPP

@@ -26,6 +26,10 @@ struct RingBehaviorComponent : public Component{
         mfCurrentAngle = 0;
         mfRadiusCircle = 30;
     }
+    void displayComponent()const override{
+
+
+    }
 };
 
 #endif // RINGBEHAVIORCOMPONENT_HPP

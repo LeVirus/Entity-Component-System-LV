@@ -19,7 +19,10 @@ struct GroundComponent : public Component{
         muiTypeComponent = GROUND_COMPONENT;
         mbOnTheGround = false;
     }
+    void displayComponent()const override{
 
+
+    }
 };
 
 #endif // GROUNDCOMPONENT_HPP

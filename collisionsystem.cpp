@@ -89,6 +89,10 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
     //Verif si les numéros d'entités sont bien dans le tableau
     assert( ( uiEntityA < uiTabEntitySize && uiEntityB < uiTabEntitySize ) && "Num Entity hors tableau.\n" );
 
+    //Maj de la position des figures de collisions.
+    updateCollPosition( uiEntityA );
+    updateCollPosition( uiEntityB );
+
     //Récup des bitsets de composants des entités
     const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
             & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();

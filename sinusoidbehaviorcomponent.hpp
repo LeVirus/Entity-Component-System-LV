@@ -25,6 +25,10 @@ struct SinusoidBehaviorComponent : public Component{
         mfAmplitudeSinusoid = 20;
         mfCurrentAngleSinusoid = 0;
     }
+    void displayComponent()const override{
+
+
+    }
 };
 
 #endif // SINUSOIDBEHAVIORCOMPONENT_HPP

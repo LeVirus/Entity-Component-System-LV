@@ -28,6 +28,10 @@ struct RoundTripBehaviorComponent : public Component{
         mfDestinationDirection = 0;
         mfTravelsLenght = 30;
     }
+    void displayComponent()const override{
+
+
+    }
 };
 
 #endif // ROUNDTRIPBEHAVIORCOMPONENT_HPP
