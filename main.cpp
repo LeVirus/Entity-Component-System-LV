@@ -10,6 +10,7 @@
 #include "moveablecomponent.hpp"
 #include "displaysystem.hpp"
 #include "collrectboxcomponent.hpp"
+#include "collsegmentcomponent.hpp"
 #include "collisionsystem.hpp"
 #include "iasystem.hpp"
 
@@ -32,7 +33,7 @@ int main(){
     engine.bAddComponentToEntity( 1, COLL_RECTBOX_COMPONENT );
     engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
     engine.bAddComponentToEntity( 0, PHYSIC_COMPONENT );
-    engine.bAddComponentToEntity( 0, COLL_RECTBOX_COMPONENT );
+    engine.bAddComponentToEntity( 0, COLL_SEGMENT_COMPONENT );
 
     /*engine.getSystemManager().bAddSystem( DISPLAY_SYSTEM );
     engine.getSystemManager().bAddSystem( IA_SYSTEM );
@@ -51,30 +52,24 @@ int main(){
 
     PositionComponent * posCompB = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posCompB ){
-        posCompB -> vect2DPosComp . mfX = 1001;
+        posCompB -> vect2DPosComp . mfX = 95;
         posCompB -> vect2DPosComp . mfY = 159;
     }
 
     CollRectBoxComponent * collRect = compMan . searchComponentByType< CollRectBoxComponent >( 1, COLL_RECTBOX_COMPONENT );
     assert( collRect && "collRect non instancié\n" );
-    collRect -> mVect2dVectOrigins . mfX = 10;
-    collRect -> mVect2dVectOrigins . mfY = 10;
-        collRect -> mRectBox . modifyHeightRectBox( 10 );
-        collRect -> mRectBox . modifyLenghtRectBox( 10 );
+    collRect -> mRectBox . modifyHeightRectBox( 100 );
+    collRect -> mRectBox . modifyLenghtRectBox( 100 );
 
-    CollRectBoxComponent * collRectB = compMan . searchComponentByType< CollRectBoxComponent >( 0, COLL_RECTBOX_COMPONENT );
-    assert( collRectB && "collRectB non instancié\n" );
-    collRectB -> mVect2dVectOrigins . mfX = 10;
-    collRectB -> mVect2dVectOrigins . mfY = 10;
-        collRectB -> mRectBox . modifyHeightRectBox( 10 );
-        collRectB -> mRectBox . modifyLenghtRectBox( 10 );
-
+    CollSegmentComponent * collSegmB = compMan . searchComponentByType< CollSegmentComponent >( 0, COLL_SEGMENT_COMPONENT );
+    assert( collSegmB && "collSegmB non instancié\n" );
+    collSegmB -> mCollSegment . bAttribuerPointsSegment( Vector2D( 100, 150 ), Vector2D( 150, 200 ) );
 
     //MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 
     //engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->  initMoveable( 0 );
     engine.execIteration();
-    //compMan . displayComponent();
+    compMan . displayComponent();
 
     return 0;
 }

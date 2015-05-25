@@ -25,12 +25,15 @@ struct CollRectBoxComponent : public Component{
      */
     void displayComponent()const override{
         Component::displayComponent();
+        std::cout << "RectBox Component\n";
         std::cout << "Position et caracteristique BoxRect\n";
         mRectBox . getOriginsRectBox() . displayVector();
         std::cout << "\n" << mRectBox . getLenghtRectBox() <<
                      "\n" << mRectBox . getHeightRectBox() << "\n";
         std::cout << "Origine\n";
         mVect2dVectOrigins . displayVector();
+        std::cout << "Fin RectBox Component\n";
+
     }
 };
 

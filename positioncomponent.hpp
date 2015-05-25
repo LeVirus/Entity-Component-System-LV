@@ -26,8 +26,10 @@ struct PositionComponent : public Component{
      */
     void displayComponent()const override{
         //Component::displayComponent();
+        std::cout << "Position Component\n";
         std::cout << "vect2DPosComp . mfX::" << vect2DPosComp . mfX << "\n";
         std::cout << "vect2DPosComp . mfY::" << vect2DPosComp . mfY << "\n";
+        std::cout << "Fin Position Component\n";
     }
     //float mfPositionX, mfPositionY;
 

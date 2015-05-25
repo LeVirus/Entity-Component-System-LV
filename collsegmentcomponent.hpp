@@ -26,7 +26,13 @@ struct CollSegmentComponent : public Component{
      * La fonction de base d'affichage de la classe mère est appelée en premier lieu.
      */
     void displayComponent()const override{
+        std::cout << "Segment Component\n";
         Component::displayComponent();
+        std::cout << "Point A\n";
+        mCollSegment . getVect2dPointA() . displayVector();
+        std::cout << "Point B\n";
+        mCollSegment . getVect2dPointB() . displayVector();
+        std::cout << "Fin Segment Component\n";
     }
 };
 
