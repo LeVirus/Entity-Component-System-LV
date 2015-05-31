@@ -206,16 +206,8 @@ void CollisionSystem::updateCollPosition( unsigned int uiEntity ){
                         searchComponentByType < CollSegmentComponent > ( uiEntity, COLL_SEGMENT_COMPONENT );
                 assert( collSegmentEntity && " collSegmentEntity non instancié\n " );
 
-                //mémorisation du vecteurAB
-                Vector2D vect2dMemVectSegmentAB = collSegmentEntity -> mCollSegment . getVect2dPointB() -
-                        collSegmentEntity -> mCollSegment . getVect2dPointA();
-                //calcul de la nouvelle position du point A du segment par rapport à PositionComponent
-                collSegmentEntity -> mCollSegment . bAttributePointAToSegment(
-                            posCompEntity -> vect2DPosComp + collSegmentEntity -> mVect2dVectOrigins );
+                collSegmentEntity -> mCollSegment . moveSegment( posCompEntity -> vect2DPosComp + collSegmentEntity -> mVect2dVectOrigins );
 
-                //calcul du point B a partir du point A et du vecteur mémorisé
-                collSegmentEntity -> mCollSegment . bAttributePointBToSegment(
-                            collSegmentEntity -> mCollSegment . getVect2dPointA() + vect2dMemVectSegmentAB );
                 break;
             }
 

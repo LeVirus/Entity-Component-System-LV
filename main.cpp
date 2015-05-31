@@ -46,14 +46,14 @@ int main(){
 
     PositionComponent * posComp = compMan . searchComponentByType< PositionComponent >( 1, POSITION_COMPONENT );
     if( posComp ){
-        posComp -> vect2DPosComp . mfX = 100;
-        posComp -> vect2DPosComp . mfY = 158;
+        posComp -> vect2DPosComp . mfX = 0;
+        posComp -> vect2DPosComp . mfY = 0;
     }
 
     PositionComponent * posCompB = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posCompB ){
-        posCompB -> vect2DPosComp . mfX = 95;
-        posCompB -> vect2DPosComp . mfY = 159;
+        posCompB -> vect2DPosComp . mfX = 40;
+        posCompB -> vect2DPosComp . mfY = -1;
     }
 
     CollRectBoxComponent * collRect = compMan . searchComponentByType< CollRectBoxComponent >( 1, COLL_RECTBOX_COMPONENT );
@@ -63,7 +63,7 @@ int main(){
 
     CollSegmentComponent * collSegmB = compMan . searchComponentByType< CollSegmentComponent >( 0, COLL_SEGMENT_COMPONENT );
     assert( collSegmB && "collSegmB non instancié\n" );
-    collSegmB -> mCollSegment . bAttribuerPointsSegment( Vector2D( 100, 150 ), Vector2D( 150, 200 ) );
+    collSegmB -> mCollSegment .attributeVectorAB( Vector2D( 100, 100 ) );
 
     //MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 
