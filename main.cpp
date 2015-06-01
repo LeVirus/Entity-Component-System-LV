@@ -30,7 +30,7 @@ int main(){
     engine.bAddComponentToEntity( 0, SINUSOID_BEHAVIOR_COMPONENT );*/
     engine.bAddComponentToEntity( 1, POSITION_COMPONENT );
     engine.bAddComponentToEntity( 1, PHYSIC_COMPONENT );
-    engine.bAddComponentToEntity( 1, COLL_RECTBOX_COMPONENT );
+    engine.bAddComponentToEntity( 1, COLL_SEGMENT_COMPONENT );
     engine.bAddComponentToEntity( 0, POSITION_COMPONENT );
     engine.bAddComponentToEntity( 0, PHYSIC_COMPONENT );
     engine.bAddComponentToEntity( 0, COLL_SEGMENT_COMPONENT );
@@ -52,14 +52,13 @@ int main(){
 
     PositionComponent * posCompB = compMan . searchComponentByType< PositionComponent >( 0, POSITION_COMPONENT );
     if( posCompB ){
-        posCompB -> vect2DPosComp . mfX = 40;
-        posCompB -> vect2DPosComp . mfY = -1;
+        posCompB -> vect2DPosComp . mfX = 50;
+        posCompB -> vect2DPosComp . mfY = 0;
     }
 
-    CollRectBoxComponent * collRect = compMan . searchComponentByType< CollRectBoxComponent >( 1, COLL_RECTBOX_COMPONENT );
-    assert( collRect && "collRect non instancié\n" );
-    collRect -> mRectBox . modifyHeightRectBox( 100 );
-    collRect -> mRectBox . modifyLenghtRectBox( 100 );
+    CollSegmentComponent * collSegmA = compMan . searchComponentByType< CollSegmentComponent >( 1, COLL_SEGMENT_COMPONENT );
+    assert( collSegmA && "collRect non instancié\n" );
+    collSegmA -> mCollSegment . attributeVectorAB( Vector2D( 100, 100 ) );
 
     CollSegmentComponent * collSegmB = compMan . searchComponentByType< CollSegmentComponent >( 0, COLL_SEGMENT_COMPONENT );
     assert( collSegmB && "collSegmB non instancié\n" );
@@ -69,7 +68,7 @@ int main(){
 
     //engine.getSystemManager().searchSystemByType< IASystem >( IA_SYSTEM ) ->  initMoveable( 0 );
     engine.execIteration();
-    compMan . displayComponent();
+    //compMan . displayComponent();
 
     return 0;
 }
