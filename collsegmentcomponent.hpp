@@ -4,7 +4,7 @@
 #include "component.hpp"
 #include "ECSconstantes.hpp"
 #include "segment.hpp"
-#include "vector2d.hpp"
+#include "vector2D.hpp"
 
 /**
  * @brief La structure CollSegmentComponent stocke un masque de collision de type segment.

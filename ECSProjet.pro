@@ -9,9 +9,9 @@ QMAKE_CXXFLAGS += -std=c++14
 
 QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 
-INCLUDEPATH += ../../LibInc/HeadLib/
+#INCLUDEPATH += ../../LibInc/HeadLib/
 
-LIBS += -lColl -L ../../LibInc/Lib/
+#LIBS += -lColl -L ../../LibInc/Lib/
 
 SOURCES += main.cpp \
     entity.cpp \
@@ -24,7 +24,10 @@ SOURCES += main.cpp \
     gravitysystem.cpp \
     inputsystem.cpp \
     collisionsystem.cpp \
-    bitset2d.cpp
+    bitset2d.cpp \
+    rectbox.cpp \
+    vector2d.cpp \
+    segment.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -54,5 +57,8 @@ HEADERS += \
     collsegmentcomponent.hpp \
     collisionsystem.hpp \
     bitset2d.hpp \
-    collrectboxcomponent.hpp
+    collrectboxcomponent.hpp \
+    vector2D.hpp \
+    rectbox.hpp \
+    segment.hpp
 
