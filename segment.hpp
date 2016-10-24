@@ -11,11 +11,17 @@ class Segment
 {
 private:
     Vector2D mVectPtA, mVectPtB;
-    RectBox RectBox;
+    RectBox mRectBox;
 public:
     Segment();
-    Segment( const Vector2D &vectA, const Vector2D &vectB );
-    void miseAJourSegment();
+    Segment( const Vector2D &vectA, const Vector2D &vectB ):
+        mVectPtA( vectA ), mVectPtB( vectB ) {};
+    void miseAJourRectBox();
+    const Vector2D &mVectGetPtA()const;
+    const Vector2D &mVectGetPtB()const;
+    const RectBox &mRectGetBox()const;
+    bool setPtsSegment( const Vector2D &vectA, const Vector2D &vectB );
+    bool moveSegment( const Vector2D &vect );
 };
 
 #endif // SEGMENT_H

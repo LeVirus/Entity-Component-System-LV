@@ -27,9 +27,9 @@ struct CollRectBoxComponent : public Component{
         Component::displayComponent();
         std::cout << "RectBox Component\n";
         std::cout << "Position et caracteristique BoxRect\n";
-        mRectBox . getOriginsRectBox() . displayVector();
-        std::cout << "\n" << mRectBox . getLenghtRectBox() <<
-                     "\n" << mRectBox . getHeightRectBox() << "\n";
+        mRectBox . mGetOriginsRectBox() . displayVector();
+        std::cout << "\n" << mRectBox . mfGetLenghtRectBox() <<
+                     "\n" << mRectBox . mfGetHeightRectBox() << "\n";
         std::cout << "Origine\n";
         mVect2dVectOrigins . displayVector();
         std::cout << "Fin RectBox Component\n";

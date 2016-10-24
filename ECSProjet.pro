@@ -27,7 +27,9 @@ SOURCES += main.cpp \
     bitset2d.cpp \
     rectbox.cpp \
     vector2d.cpp \
-    segment.cpp
+    segment.cpp \
+    geometriefreefunctions.cpp \
+    vector2d.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -60,5 +62,6 @@ HEADERS += \
     collrectboxcomponent.hpp \
     vector2D.hpp \
     rectbox.hpp \
-    segment.hpp
+    segment.hpp \
+    geometriefreefunctions.hpp
 

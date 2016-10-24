@@ -29,9 +29,9 @@ struct CollSegmentComponent : public Component{
         std::cout << "Segment Component\n";
         Component::displayComponent();
         std::cout << "Point A\n";
-        mCollSegment . getVect2dPointA() . displayVector();
+        mCollSegment . mVectGetPtA() . displayVector();
         std::cout << "Point B\n";
-        mCollSegment . getVect2dPointB() . displayVector();
+        mCollSegment . mVectGetPtB() . displayVector();
         std::cout << "Fin Segment Component\n";
     }
 };

@@ -56,13 +56,6 @@ int main(){
         posCompB -> vect2DPosComp . mfY = 0;
     }
 
-    CollSegmentComponent * collSegmA = compMan . searchComponentByType< CollSegmentComponent >( 1, COLL_SEGMENT_COMPONENT );
-    assert( collSegmA && "collRect non instancié\n" );
-    collSegmA -> mCollSegment . attributeVectorAB( Vector2D( 100, 100 ) );
-
-    CollSegmentComponent * collSegmB = compMan . searchComponentByType< CollSegmentComponent >( 0, COLL_SEGMENT_COMPONENT );
-    assert( collSegmB && "collSegmB non instancié\n" );
-    collSegmB -> mCollSegment .attributeVectorAB( Vector2D( 100, 100 ) );
 
     //MoveableComponent * moveComp = compMan . searchComponentByType< MoveableComponent >( 0, MOVEABLE_COMPONENT );
 

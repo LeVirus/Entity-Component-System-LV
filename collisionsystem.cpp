@@ -206,7 +206,8 @@ void CollisionSystem::updateCollPosition( unsigned int uiEntity ){
                         searchComponentByType < CollSegmentComponent > ( uiEntity, COLL_SEGMENT_COMPONENT );
                 assert( collSegmentEntity && " collSegmentEntity non instancié\n " );
 
-                collSegmentEntity -> mCollSegment . moveSegment( posCompEntity -> vect2DPosComp + collSegmentEntity -> mVect2dVectOrigins );
+                collSegmentEntity -> mCollSegment . moveSegment( posCompEntity -> vect2DPosComp +
+                                                                 collSegmentEntity -> mVect2dVectOrigins );
 
                 break;
             }

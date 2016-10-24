@@ -9,6 +9,7 @@
 #include "roundtripbehaviorcomponent.hpp"
 #include "sinusoidbehaviorcomponent.hpp"
 #include "vector2D.hpp"
+#include "geometriefreefunctions.hpp"
 #include <cassert>
 #include <cmath>
 //#include <limits>
@@ -327,7 +328,8 @@ void IASystem::actionRing( unsigned int uiNumEntity ){
     assert( moveComp && "Erreur moveComp non instancié \n" );
 
     ringBehaviorComponent -> mfCurrentAngle = addToAngle( ringBehaviorComponent -> mfCurrentAngle, moveComp -> mfVelocite );
-    posComp -> vect2DPosComp . rotate( ringBehaviorComponent -> mfCurrentAngle, ringBehaviorComponent -> mvect2DRotationCenter );
+    posComp -> vect2DPosComp = applyAngle( ringBehaviorComponent -> mfCurrentAngle, ringBehaviorComponent -> mfRadiusCircle,
+                                           ringBehaviorComponent -> mvect2DRotationCenter );
     std::cout << " positionX::"<< posComp -> vect2DPosComp . mfX << "\n";
     std::cout << " positionY::"<< posComp -> vect2DPosComp . mfY << "\n";
 }

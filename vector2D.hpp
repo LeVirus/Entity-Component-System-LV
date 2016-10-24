@@ -11,9 +11,15 @@ struct Vector2D
 
     float mfX = 0, mfY = 0;
     Vector2D();
-    Vector2D(float x, float y): nombre1_(nombre1), nombre2_(nombre2);
+    Vector2D( float x, float y ):
+        mfX( x ), mfY( y ){};
     void displayVector()const;
-    bool operator =( const Vector2D & vect );
+    Vector2D & operator =( const Vector2D & vect );
+    Vector2D & operator +( const Vector2D & vect );
+    Vector2D & operator -( const Vector2D & vect );
+    Vector2D & operator +=( const Vector2D & vect );
+    Vector2D & operator -=( const Vector2D & vect );
+
 };
 
 #endif // VECTOR2D_H
