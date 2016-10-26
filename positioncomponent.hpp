@@ -5,6 +5,8 @@
 #include "vector2D.hpp"
 #include "ECSconstantes.hpp"
 
+class Vector2D;
+
 /**
  * @brief La structure PositionComponent représente la position d'une entité.
  * Elle contient l'abscisse et l'ordonnée de l'entité.

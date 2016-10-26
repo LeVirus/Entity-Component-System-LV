@@ -13,17 +13,17 @@ private:
     Vector2D mVect2dOrigins;
     float mfLenght = 0, mfHeight = 0;
 public:
-    RectBox();
+	RectBox() = default;
     RectBox( const Vector2D & vectOrigins, float lenght, float height ):
         mVect2dOrigins( vectOrigins ), mfLenght( lenght ), mfHeight( height ){};
 
     const Vector2D & mGetOriginsRectBox()const;
     float mfGetLenghtRectBox()const;
     float mfGetHeightRectBox()const;
-    bool mSetOriginsRectBox( const Vector2D & vect );
+	void mSetOriginsRectBox( const Vector2D & vect );
     void mSetLenghtRectBox( float lenght );
     void mSetHeightRectBox( float height );
-    bool modifyOriginsRectBox( const Vector2D & vect2dVectOrigins );
+    void modifyOriginsRectBox( const Vector2D & vect2dVectOrigins );
 };
 
 #endif // RECTBOX_H

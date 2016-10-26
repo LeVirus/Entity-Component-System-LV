@@ -32,11 +32,9 @@ float RectBox::mfGetHeightRectBox()const
  * @param vect La référence contenant les données de l'origine à entrer dans le rectangle.
  * @return false si la référence est à nullptr, true sinon.
  */
-bool RectBox::modifyOriginsRectBox( const Vector2D & vect )
+void RectBox::mSetOriginsRectBox( const Vector2D & vect )
 {
-    if( vect == nullptr )return false;
     mVect2dOrigins = vect;
-    return true;
 }
 
 /**

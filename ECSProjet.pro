@@ -13,7 +13,12 @@ QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 
 #LIBS += -lColl -L ../../LibInc/Lib/
 
+DEPENDPATH += $${HEADERS}
+
 SOURCES += main.cpp \
+    vector2D.cpp \
+    rectbox.cpp \
+    segment.cpp \
     entity.cpp \
     engine.cpp \
     systemmanager.cpp \
@@ -25,11 +30,7 @@ SOURCES += main.cpp \
     inputsystem.cpp \
     collisionsystem.cpp \
     bitset2d.cpp \
-    rectbox.cpp \
-    vector2d.cpp \
-    segment.cpp \
-    geometriefreefunctions.cpp \
-    vector2d.cpp
+    geometriefreefunctions.cpp
 
 include(deployment.pri)
 qtcAddDeployment()

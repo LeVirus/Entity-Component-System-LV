@@ -12,11 +12,6 @@ float distance( const Vector2D & vectA, const Vector2D & vectB )
     return std::sqrt( memX * memX + memY * memY );
 }
 
-void moveVectorAngle( const Vector2D & vectA, float mfVelocite, float fCurrentAngle )
-{
-
-}
-
 float addToAngle( float fCurrentAngle, float fValAjout )
 {
 
@@ -41,10 +36,10 @@ float radian( float mfCurrentAngleSinusoid )
 bool bIsInCollision( const RectBox &collRectBoxCompA, const RectBox &collRectBoxCompB )
 {
     const Vector2D &vectHGA = collRectBoxCompA.mGetOriginsRectBox(),
-            &vectBDA( collRectBoxCompA.mGetOriginsRectBox().mfX + collRectBoxCompA.mfGetLenghtRectBox(),
+			&vectBDA = Vector2D( collRectBoxCompA.mGetOriginsRectBox().mfX + collRectBoxCompA.mfGetLenghtRectBox(),
                      collRectBoxCompA.mGetOriginsRectBox().mfY + collRectBoxCompA.mfGetHeightRectBox() ),
             &vectHGB = collRectBoxCompB.mGetOriginsRectBox(),
-            &vectBDB( collRectBoxCompB.mGetOriginsRectBox().mfX + collRectBoxCompB.mfGetLenghtRectBox(),
+			&vectBDB = Vector2D( collRectBoxCompB.mGetOriginsRectBox().mfX + collRectBoxCompB.mfGetLenghtRectBox(),
                      collRectBoxCompB.mGetOriginsRectBox().mfY + collRectBoxCompB.mfGetHeightRectBox() );
 
     if( vectBDA.mfX < vectHGB.mfX || vectBDB.mfX < vectHGA.mfX ||
@@ -65,16 +60,13 @@ bool bIsInCollision( const RectBox &collRectBoxCompA, const Segment &collSegmCom
 
 bool bIsInCollision( const Segment &collSegmCompA, const RectBox &collRectBoxCompB )
 {
-    if( ( bIsInCollision( collSegmCompA.mVectGetPtA(), collRectBoxCompB ) ) ||
-            ( bIsInCollision( collSegmCompA.mVectGetPtB(), collRectBoxCompB ) ) )
-        return true;
-    //A compléter
+    return bIsInCollision( collSegmCompA.mRectGetBox(), collRectBoxCompB );
 }
 
 bool bIsInCollision( const Vector2D &collVectA, const RectBox &collRectBoxCompB )
 {
     const Vector2D &vectHGB = collRectBoxCompB.mGetOriginsRectBox(),
-            &vectBDB( collRectBoxCompB.mGetOriginsRectBox().mfX + collRectBoxCompB.mfGetLenghtRectBox(),
+			&vectBDB = Vector2D( collRectBoxCompB.mGetOriginsRectBox().mfX + collRectBoxCompB.mfGetLenghtRectBox(),
                      collRectBoxCompB.mGetOriginsRectBox().mfY + collRectBoxCompB.mfGetHeightRectBox() );
     return ( collVectA.mfX <= vectBDB.mfX && collVectA.mfX >= vectHGB.mfX ) &&
           ( collVectA.mfY <= vectBDB.mfY && collVectA.mfY >= vectHGB.mfY );

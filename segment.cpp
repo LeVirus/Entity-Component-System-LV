@@ -1,4 +1,7 @@
+#include "vector2D.hpp"
 #include "segment.hpp"
+#include <cmath>
+
 
 /**
  * @brief Segment Constructeur avec 2 arguments représentant les 2 points du segment.
@@ -6,8 +9,10 @@
  * @param vectA Le point A.
  * @param vectB Le point B.
  */
-Segment( const Vector2D &vectA, const Vector2D &vectB )
+Segment::Segment( const Vector2D &vectA, const Vector2D &vectB )
 {
+    mVectPtA = vectA;
+    mVectPtB = vectB;
     miseAJourRectBox();
 }
 
@@ -36,7 +41,9 @@ void Segment::miseAJourRectBox()
     {
         memY = mVectPtB.mfY;
     }
-    mRectBox.mSetOriginsRectBox( Vector2D( memX, memY ) );
+	mRectBox.mSetOriginsRectBox( Vector2D( memX, memY ) );
+	mRectBox.mSetLenghtRectBox( std::abs( mVectPtA.mfX - mVectPtB.mfX ) );
+	mRectBox.mSetHeightRectBox( std::abs( mVectPtA.mfY - mVectPtB.mfY ) );
 }
 
 /**
@@ -72,13 +79,11 @@ const RectBox &Segment::mRectGetBox()const
  * @param vectB Le nouveau point B.
  * @return false si au moins un des 2 Vector2D est à null, true sinon.
  */
-bool Segment::setPtsSegment( const Vector2D &vectA, const Vector2D &vectB )
+void Segment::setPtsSegment( const Vector2D &vectA, const Vector2D &vectB )
 {
-    if( vectA == nullptr || vectB == nullptr )return false;
     mVectPtA = vectA;
     mVectPtB = vectB;
-    iseAJourRectBox();
-    return true;
+    miseAJourRectBox();
 }
 
 /**
@@ -87,13 +92,11 @@ bool Segment::setPtsSegment( const Vector2D &vectA, const Vector2D &vectB )
  * @param vect Le point où positionner le segment.
  * @return false si le paramètre est à null, true sinon.
  */
-bool Segment::moveSegment( const Vector2D &vect )
+void Segment::moveSegment( const Vector2D &vect )
 {
-    if( vect == nullptr )return false;
-    Vector2D vectMove = mRectBox.mGetOriginsRectBox() - vect;
-    if( mRectBox.modifyOriginsRectBox( vect ) )return false;
-    mVectPtA += vectMove;
-    mVectPtB += vectMove;
-    return true;
+	Vector2D vectMove = mRectBox.mGetOriginsRectBox() - vect;
+	mRectBox.mSetOriginsRectBox( vect );
+	mVectPtA += vectMove;
+	mVectPtB += vectMove;
 }
 

@@ -3,7 +3,6 @@
 
 #include "component.hpp"
 #include "ECSconstantes.hpp"
-#include "vector2D.hpp"
 #include "segment.hpp"
 
 /**

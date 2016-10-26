@@ -7,6 +7,7 @@
 #include "collsegmentcomponent.hpp"
 #include "collrectboxcomponent.hpp"
 #include "positioncomponent.hpp"
+#include "geometriefreefunctions.hpp"
 
 #include "segment.hpp"
 #include "rectbox.hpp"
@@ -217,7 +218,7 @@ void CollisionSystem::updateCollPosition( unsigned int uiEntity ){
                         searchComponentByType < CollRectBoxComponent > ( uiEntity, COLL_RECTBOX_COMPONENT );
                 assert( collRectBoxEntity && " collRectBoxEntity non instancié\n " );
 
-                collRectBoxEntity -> mRectBox . modifyOriginsRectBox(
+				collRectBoxEntity -> mRectBox . mSetOriginsRectBox(
                             posCompEntity -> vect2DPosComp + collRectBoxEntity -> mVect2dVectOrigins );
 
                 break;

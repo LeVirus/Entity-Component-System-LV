@@ -10,15 +10,16 @@ struct Vector2D
 {    
 
     float mfX = 0, mfY = 0;
-    Vector2D();
+	Vector2D() = default;
     Vector2D( float x, float y ):
         mfX( x ), mfY( y ){};
     void displayVector()const;
     Vector2D & operator =( const Vector2D & vect );
-    Vector2D & operator +( const Vector2D & vect );
-    Vector2D & operator -( const Vector2D & vect );
+	Vector2D & operator +( const Vector2D & vect )const;
+	Vector2D & operator -( const Vector2D &vect ) const;
     Vector2D & operator +=( const Vector2D & vect );
     Vector2D & operator -=( const Vector2D & vect );
+    bool operator ==( const Vector2D & vect )const;
 
 };
 
