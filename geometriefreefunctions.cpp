@@ -14,18 +14,18 @@ float distance( const Vector2D & vectA, const Vector2D & vectB )
 
 float addToAngle( float fCurrentAngle, float fValAjout )
 {
-
+	//a compléter
 }
 
 const Vector2D & applyAngle( float fAngle, float fRadiusCircle, const Vector2D & mvect2DRotationCenter )
 {
-
+	//a compléter
 }
 
 const Vector2D & moveVectorAngle( const Vector2D & mvect2DCurrentPositionSinusoidAxis,
                 float fMemAbscisseSinus, float mfDirectionAxisSinusoid )
 {
-
+//a compléter
 }
 
 float radian( float mfCurrentAngleSinusoid )
