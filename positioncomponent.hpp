@@ -5,6 +5,11 @@
 #include "vector2D.hpp"
 #include "ECSconstantes.hpp"
 
+
+
+namespace ecs
+{
+
 class Vector2D;
 
 /**
@@ -37,4 +42,5 @@ struct PositionComponent : public Component{
 
 };
 
+}//fin namespace
 #endif // POSITIONCOMPONENT_HPP

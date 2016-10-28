@@ -16,6 +16,9 @@
 #include <iostream>
 #include <cassert>
 
+namespace ecs
+{
+
 ComponentManager::ComponentManager(){
 }
 
@@ -152,3 +155,4 @@ void ComponentManager::linkEngineToComponentManager( Engine *ptrEngine ){
 }
 
 
+}//fin namespace

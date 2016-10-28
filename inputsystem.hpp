@@ -3,6 +3,10 @@
 
 #include "system.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La classe InputSystem gère les évènements venant du joueur.
  */
@@ -13,4 +17,5 @@ public:
     ~InputSystem();
 };
 
+}//fin namespace
 #endif // INPUTSYSTEM_H

@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "rectbox.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure CollRectBoxComponent stocke un masque de collision de type Boite englobante.
  */
@@ -37,5 +41,6 @@ struct CollRectBoxComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // COLLRECTBOXCOMPONENT_HPP
 

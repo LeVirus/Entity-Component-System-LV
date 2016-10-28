@@ -4,9 +4,15 @@
 //#include "vector2D.hpp"
 //#include "segment.hpp"
 //#include "rectbox.hpp"
+
+
+namespace ecs
+{
+
 class Vector2D;
 class RectBox;
 class Segment;
+
 
 float distance( const Vector2D & vectA, const Vector2D & vectB );
 float addToAngle( float fCurrentAngle, float fValAjout );
@@ -21,4 +27,5 @@ bool bIsInCollision( const Segment &collSegmCompA, const RectBox &collRectBoxCom
 bool bIsInCollision( const RectBox &collRectBoxCompA, const RectBox &collRectBoxCompB );
 bool bIsInCollision( const Vector2D &collVectA, const RectBox &collRectBoxCompB );
 
+}//fin namespace
 #endif // GEOMETRIEFREEFUNCTIONS_HPP

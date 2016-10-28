@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "segment.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure GroundComponent détermine les caractéristiques d'une entité pouvant se déplacer sur le sol.
  */
@@ -24,5 +28,6 @@ struct GroundComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // GROUNDCOMPONENT_HPP
 

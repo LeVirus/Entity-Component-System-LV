@@ -10,6 +10,9 @@
 #include <cassert>
 #include <iostream>
 
+namespace ecs
+{
+
 /**
  * @brief SystemManager::SystemManager Constructeur de la classe SystemManager.
  */
@@ -137,3 +140,5 @@ void SystemManager::bExecAllSystem(){
         }
     }
 }
+
+}//fin namespace

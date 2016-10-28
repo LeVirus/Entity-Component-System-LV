@@ -3,6 +3,9 @@
 #include <cmath>
 
 
+namespace ecs
+{
+
 /**
  * @brief Segment Constructeur avec 2 arguments représentant les 2 points du segment.
  * Quand les 2 point sont modifiés le RectBox(boite englobante) s'adapte aux 2 points.
@@ -100,3 +103,4 @@ void Segment::moveSegment( const Vector2D &vect )
 	mVectPtB += vectMove;
 }
 
+}//fin namespace

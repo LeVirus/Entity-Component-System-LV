@@ -14,6 +14,9 @@
 #include "collisionsystem.hpp"
 #include "iasystem.hpp"
 
+namespace ecs
+{
+
 int main(){
 
     std::vector< bool > vectBool;
@@ -65,3 +68,5 @@ int main(){
 
     return 0;
 }
+
+}//fin namespace

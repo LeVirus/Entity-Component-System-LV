@@ -2,6 +2,9 @@
 #include <cassert>
 #include <iostream>
 
+namespace ecs
+{
+
 /**
  * @brief BitSet2d::BitSet2d Constructeur de BitSet2d.
  */
@@ -98,3 +101,5 @@ void BitSet2d::displayTab()const{
  */
 BitSet2d::~BitSet2d(){
 }
+
+}//fin namespace

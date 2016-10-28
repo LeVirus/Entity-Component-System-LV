@@ -4,6 +4,12 @@
 #include <tuple>
 #include "system.hpp"
 
+
+
+
+namespace ecs
+{
+
 struct PositionComponent;
 struct MoveableComponent;
 struct GroundComponent;
@@ -28,4 +34,5 @@ public:
     ~GravitySystem();
 };
 
+}//fin namespace
 #endif // GRAVITYSYSTEM_H

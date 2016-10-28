@@ -2,6 +2,11 @@
 #define SEGMENT_H
 
 #include "rectbox.hpp"
+
+
+namespace ecs
+{
+
 class Vector2D;
 
 /**
@@ -23,4 +28,5 @@ public:
     void moveSegment( const Vector2D& vect );
 };
 
+}//fin namespace
 #endif // SEGMENT_H

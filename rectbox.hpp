@@ -3,6 +3,10 @@
 
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief The RectBox class Classe représentant un rectangle dont les cotés sont // aux axes
  * du repère orthonormée.
@@ -26,4 +30,5 @@ public:
     void modifyOriginsRectBox( const Vector2D & vect2dVectOrigins );
 };
 
+}//fin namespace
 #endif // RECTBOX_H

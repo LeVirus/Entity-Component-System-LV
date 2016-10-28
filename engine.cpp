@@ -2,6 +2,9 @@
 #include "ECSconstantes.hpp"
 #include <iostream>
 
+namespace ecs
+{
+
 /**
  * @brief Engine::Engine Constructeur de la classe Engine.
  */
@@ -161,3 +164,4 @@ ComponentManager &Engine::getComponentManager(){
     return mComponentManager;
 }
 
+}//fin namespace

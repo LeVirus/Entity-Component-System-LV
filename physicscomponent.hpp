@@ -4,6 +4,10 @@
 #include "component.hpp"
 #include "ECSconstantes.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure PhysicComponent détermine les caractéristiques physiques d'une entité.
  * mbGhost détermine si l'entité peut traverser les objets physiques.
@@ -29,5 +33,6 @@ struct PhysicComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // PHYSICSCOMPONENT_HPP
 

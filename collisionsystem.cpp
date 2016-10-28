@@ -14,6 +14,9 @@
 #include "bitset2d.hpp"
 #include <cassert>
 
+namespace ecs
+{
+
 /**
  * @brief CollisionSystem::CollisionSystem Constructeur de CollisionSystem.
  * Le nombre de tag est mis à une valeur par défaut.
@@ -274,3 +277,5 @@ void CollisionSystem::displaySystem()const{
     mBitSet2dInCollision . displayTab();
 
 }
+
+}//fin namespace

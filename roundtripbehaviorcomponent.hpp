@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure RoundTripBehaviorComponent comporte les variables nécessaires pour le comportement ROUND_TRIP.
  * Le composant doit correspondre à son numéro de comportement ( BehaviorComponent . muiTypeComponent ).
@@ -34,5 +38,6 @@ struct RoundTripBehaviorComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // ROUNDTRIPBEHAVIORCOMPONENT_HPP
 

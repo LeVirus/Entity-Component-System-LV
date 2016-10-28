@@ -2,6 +2,11 @@
 #define BITSET2D_H
 
 #include <vector>
+
+
+namespace ecs
+{
+
 /**
  * @brief La classe BitSet2d représente un tableau à 2 dimensions de bit, dans un bitset unidimentionnel.
  * Le tableau est
@@ -31,4 +36,5 @@ public:
     ~BitSet2d();
 };
 
+}//fin namespace
 #endif // BITSET2D_H

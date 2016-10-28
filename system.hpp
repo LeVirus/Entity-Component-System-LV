@@ -7,6 +7,12 @@
 #include <bitset>
 #include <memory>
 
+
+
+
+namespace ecs
+{
+
 class SystemManager;
 
 /**
@@ -20,11 +26,11 @@ protected:
     unsigned int muiIdSystem, muiTypeSystem;
     std::vector< unsigned int > mVectNumEntity;
     std::bitset< 16 > mBitSetComponentSystem;
-    SystemManager* mptrSystemManager;
+	ecs::SystemManager* mptrSystemManager;
     bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:
     System();
-    void linkSystemManager( SystemManager* ptrSystemManager );
+	void linkSystemManager( SystemManager* ptrSystemManager );
     void refreshEntity();
     virtual void execSystem();
     virtual void displaySystem()const;
@@ -38,4 +44,5 @@ public:
     inline void modValueTypeSystem( unsigned int uiTypeSystem ){ muiTypeSystem = uiTypeSystem; }
 };
 
+}//fin namespace
 #endif // SYSTEM_HPP

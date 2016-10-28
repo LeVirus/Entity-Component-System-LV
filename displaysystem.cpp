@@ -4,6 +4,9 @@
 #include "engine.hpp"
 #include <iostream>
 
+namespace ecs
+{
+
 /**
  * @brief DisplaySystem::DisplaySystem Constructeur de la classe DisplaySystem.
  * Ajout des composants au système.
@@ -52,3 +55,5 @@ const std::vector<std::pair<DisplayComponent *, PositionComponent *> > * Display
     return &mVectComponentDisplaySystem;
 }
 
+
+}//fin namespace

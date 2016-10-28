@@ -14,6 +14,9 @@
 #include <cmath>
 //#include <limits>
 
+namespace ecs
+{
+
 /**
  * @brief IASystem::IASystem Constructeur de la classe IASystem.
  */
@@ -394,3 +397,4 @@ IASystem::~IASystem(){
 
 }
 
+}//fin namespace

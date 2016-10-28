@@ -3,6 +3,10 @@
 
 #include <iostream>
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure Component est la classe mère de tous les composants.
  * Un composant représente un élément d'une entité.
@@ -35,4 +39,5 @@ struct Component{
         inline Component(){}
 };
 
+}//fin namespace
 #endif // COMPONENT_HPP

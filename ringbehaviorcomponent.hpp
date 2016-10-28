@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure RingBehaviorComponent comporte les variables nécessaires pour le comportement RING.
  * Le composant doit correspondre à son numéro de comportement ( BehaviorComponent . muiTypeComponent ).
@@ -32,5 +36,6 @@ struct RingBehaviorComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // RINGBEHAVIORCOMPONENT_HPP
 

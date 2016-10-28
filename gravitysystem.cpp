@@ -6,6 +6,9 @@
 #include "displaycomponent.hpp"
 #include <cassert>
 
+namespace ecs
+{
+
 /**
  * @brief GravitySystem::GravitySystem Constructeur de GravitySystem.
  */
@@ -111,3 +114,5 @@ GravitySystem::~GravitySystem(){
 
 }
 
+
+}//fin namespace

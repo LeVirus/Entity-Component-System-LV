@@ -1,4 +1,3 @@
-#TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
@@ -10,9 +9,6 @@ QMAKE_CXXFLAGS_DEBUG += -Wall -Wextra -Wpedantic -Og
 
 TARGET = ECS
 TEMPLATE = lib
-#INCLUDEPATH += ../../LibInc/HeadLib/
-
-#LIBS += -lColl -L ../../LibInc/Lib/
 
 DEPENDPATH += $${HEADERS}
 

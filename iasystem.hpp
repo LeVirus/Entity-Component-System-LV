@@ -3,6 +3,12 @@
 
 #include "system.hpp"
 
+
+
+
+namespace ecs
+{
+
 struct PositionComponent;
 struct MoveableComponent;
 struct BehaviorComponent;
@@ -29,4 +35,5 @@ public:
     ~IASystem();
 };
 
+}//fin namespace
 #endif // IASYSTEM_H

@@ -4,6 +4,10 @@
 #include "bitset2d.hpp"
 #include "system.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La classe CollisionSystem détermine les entités qui sont en collisions.
  * Un tableau détermine quelles type d'entité peut entrer en collision avec d'autres.
@@ -25,4 +29,5 @@ public:
 
 };
 
+}//fin namespace
 #endif // COLLISIONSYSTEM_H

@@ -9,6 +9,10 @@
 #include "componentmanager.hpp"
 
 
+
+namespace ecs
+{
+
 /**
  * @brief La classe Engine est la classe de base de la bibliothèque.
  * Elle contient un vector d'Entity le gestionnaire de système et le gestionnaire de composant.
@@ -37,4 +41,5 @@ public:
     ComponentManager &getComponentManager();
 };
 
+}//fin namespace
 #endif // ENGINE_HPP

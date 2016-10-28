@@ -1,5 +1,8 @@
 #include "rectbox.hpp"
 
+namespace ecs
+{
+
 /**
  * @brief RectBox::mGetOriginsRectBox Fonction retournant l'origine du rectangle.
  * @return Une référence condtante du vector2d de l'origine du rectangle(coin haut gauche).
@@ -55,3 +58,4 @@ void RectBox::mSetHeightRectBox( float height )
     mfHeight = height;
 }
 
+}//fin namespace

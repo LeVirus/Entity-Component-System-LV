@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure MoveableComponent possède les caractéristiques liées aux déplacements d'une entité. 
  */
@@ -34,5 +38,6 @@ struct MoveableComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // MOVEABLECOMPONENT_HPP
 

@@ -6,6 +6,10 @@
 #include "segment.hpp"
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure CollSegmentComponent stocke un masque de collision de type segment.
  */
@@ -36,5 +40,6 @@ struct CollSegmentComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // COLLSEGMENTCOMPONENT_HPP
 

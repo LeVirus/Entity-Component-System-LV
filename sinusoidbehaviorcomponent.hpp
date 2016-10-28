@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include "vector2D.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure SinusoidBehaviorComponent comporte les variables nécessaires pour le comportement SINUSOIDAL.
  * Le composant doit correspondre à son numéro de comportement ( BehaviorComponent . muiTypeComponent ).
@@ -31,5 +35,6 @@ struct SinusoidBehaviorComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // SINUSOIDBEHAVIORCOMPONENT_HPP
 

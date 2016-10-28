@@ -6,6 +6,10 @@
 #include "system.hpp"
 #include <vector>
 
+
+namespace ecs
+{
+
 /**
  * @brief La classe DisplaySystem permet l'affichage des entités qui ont les
  * composants nécessaires(POSITION_COMPONENT, DISPLAY_COMPONENT).
@@ -19,4 +23,5 @@ public:
     const std::vector< std::pair< DisplayComponent *, PositionComponent * > > * getVectComponentDisplaySystem()const;
 };
 
+}//fin namespace
 #endif // DISPLAYSYSTEM_HPP

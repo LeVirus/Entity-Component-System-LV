@@ -3,6 +3,10 @@
 
 #include <iostream>
 
+
+namespace ecs
+{
+
 /**
  * @brief The Vector2D struct Structure représentant un point dans un espace 2 dimentions.
  */
@@ -23,4 +27,5 @@ struct Vector2D
 
 };
 
+}//fin namespace
 #endif // VECTOR2D_H

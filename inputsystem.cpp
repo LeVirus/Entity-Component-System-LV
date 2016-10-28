@@ -3,6 +3,9 @@
 #include "moveablecomponent.hpp"
 #include "positioncomponent.hpp"
 
+namespace ecs
+{
+
 /**
  * @brief InputSystem::InputSystem Constructeur de InputSystem.
 */
@@ -91,3 +94,4 @@ InputSystem::~InputSystem(){
 
 }
 
+}//fin namespace

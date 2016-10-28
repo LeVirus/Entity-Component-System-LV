@@ -4,6 +4,9 @@
 #include "displaycomponent.hpp"
 #include "positioncomponent.hpp"
 
+namespace ecs
+{
+
 /**
  * @brief Entity::Entity Constructeur de la classe Engine.
  */
@@ -173,3 +176,5 @@ void Entity::RmAllComponent(){
     mBitSetComponent.reset();
     mbUpToDate = false;
 }
+
+}//fin namespace

@@ -7,6 +7,10 @@
 #include "component.hpp"
 #include "ECSconstantes.hpp"
 
+
+namespace ecs
+{
+
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.
  * Elle contient un bitset qui indique quels sont les composants que contient l'entité,
@@ -44,4 +48,5 @@ public:
     inline unsigned int muiGetIDEntity()const{ return mUiIDEntity; }
 };
 
+}//fin namespace
 #endif // ENTITY_HPP

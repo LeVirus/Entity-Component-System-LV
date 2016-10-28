@@ -6,6 +6,10 @@
 #include <vector>
 #include <memory>
 
+
+namespace ecs
+{
+
 class Engine;
 
 /**
@@ -50,4 +54,5 @@ public:
     }
 };
 
+}//fin namespace
 #endif // COMPONENTMANAGER_H

@@ -5,6 +5,9 @@
 #include <bitset>
 #include <cassert>
 
+namespace ecs
+{
+
 /**
  * @brief System::System Constructeur de la classe System
  */
@@ -110,3 +113,5 @@ ComponentManager & System::stairwayToComponentManager(){
    return mptrSystemManager -> getptrEngine() -> getComponentManager();
         //searchComponentByType < DisplayComponent > ( 1, DISPLAY_COMPONENT );
 }
+
+}//fin namespace

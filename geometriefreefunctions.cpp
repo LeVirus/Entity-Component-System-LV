@@ -5,6 +5,9 @@
 #include "rectbox.hpp"
 #include <cmath>
 
+namespace ecs
+{
+
 float distance( const Vector2D & vectA, const Vector2D & vectB )
 {
     float memX = vectA.mfX - vectB.mfX;
@@ -73,3 +76,4 @@ bool bIsInCollision( const Vector2D &collVectA, const RectBox &collRectBoxCompB 
 }
 
 
+}//fin namespace

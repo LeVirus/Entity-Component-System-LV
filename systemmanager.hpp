@@ -8,6 +8,11 @@
 #include <iostream>
 #include <memory>
 
+
+
+namespace ecs
+{
+
 class Engine;
 class System;
 
@@ -54,4 +59,5 @@ public:
     }
 };
 
+}//fin namespace
 #endif // SYSTEMMANAGER_HPP

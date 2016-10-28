@@ -5,6 +5,10 @@
 #include "ECSconstantes.hpp"
 #include <bitset>
 
+
+namespace ecs
+{
+
 /**
  * @brief La structure InputComponent comporte les associations de numéros avec les
  * intéractivités que peut effectuer le joueur avec l'entité associée.
@@ -24,5 +28,6 @@ struct InputComponent : public Component{
     }
 };
 
+}//fin namespace
 #endif // INPUTCOMPONENT_HPP
 
