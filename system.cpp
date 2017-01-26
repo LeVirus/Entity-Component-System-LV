@@ -12,7 +12,12 @@ namespace ecs
  * @brief System::System Constructeur de la classe System
  */
 System::System(){
-    mptrSystemManager = nullptr;
+	mptrSystemManager = nullptr;
+}
+
+const std::vector< unsigned int > &System::getVectNumEntity() const
+{
+	return mVectNumEntity;
 }
 
 /**

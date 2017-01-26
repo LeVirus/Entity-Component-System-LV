@@ -30,6 +30,7 @@ protected:
     bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:
     System();
+	const std::vector< unsigned int > &getVectNumEntity()const;
 	void linkSystemManager( SystemManager* ptrSystemManager );
     void refreshEntity();
     virtual void execSystem();
