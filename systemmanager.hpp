@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "system.hpp"
+#include "ECSconstantes.hpp"
 //#include "engine.hpp"
 #include <bitset>
 #include <iostream>
@@ -25,14 +26,16 @@ class System;
  */
 class SystemManager{
     std::vector< std::unique_ptr< System > > mVectSystem;
-    std::bitset< 16 > mBitSetSystem;
+	std::bitset< NUMBR_SYSTEM_MAX > mBitSetSystem;
     Engine* mptrEngine;
+	unsigned int muiNumberSystem = 5;
 public:
     SystemManager();
     Engine* getptrEngine();
     void linkEngine( Engine* ptrEngine );
     bool bAddSystem( unsigned int uiIdSystem );
-    bool bRmSystem( unsigned int uiIdSystem );
+	bool bAddExternSystem( std::unique_ptr<System> &newSystem );
+	bool bRmSystem( unsigned int uiIdSystem );
     void RmAllSystem();
     bool bExexSystem( unsigned int uiIdSystem );
     void bExecAllSystem();
@@ -49,7 +52,6 @@ public:
      * @return Un pointeur vers le système demandé, NULL en cas de paramètre invalide.
      */
     template < typename systemTemplate >
-
      systemTemplate * searchSystemByType( unsigned int uiTypeSystem ){
 
         if( uiTypeSystem >= mVectSystem.size() || ! mVectSystem[ uiTypeSystem ] )return NULL;

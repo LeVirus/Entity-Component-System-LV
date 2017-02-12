@@ -16,15 +16,18 @@ namespace ecs
 /**
  * @brief SystemManager::SystemManager Constructeur de la classe SystemManager.
  */
-SystemManager::SystemManager(){
-    mVectSystem.resize( NUMBR_SYSTEM );
+SystemManager::SystemManager()
+{
+	//init pour les 5 systèmes déja existant au sein de l'ECS
+	mVectSystem.resize( 5 );
 }
 
 /**
  * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
  * @param ptrEngine Un pointeur d'Engine
  */
-void SystemManager::linkEngine( Engine* ptrEngine ){
+void SystemManager::linkEngine( Engine* ptrEngine )
+{
     mptrEngine = ptrEngine;
 }
 
@@ -35,7 +38,8 @@ void SystemManager::linkEngine( Engine* ptrEngine ){
  * @param uiIdSystem Le numéro du système à ajouter.
  * @return true si le système a été ajouté, false sinon.
  */
-bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
+bool SystemManager::bAddSystem( unsigned int uiIdSystem )
+{//FONCTION A MODIFIER
 
     bool bReturn = false;
     if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == false ){
@@ -74,14 +78,29 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem ){//FONCTION A MODIFIER
         //envoie du pointeur de systemManager vers tous les systèmes créé
         mVectSystem[ uiIdSystem ] -> linkSystemManager( this );
     }
-    return bReturn;
+	return bReturn;
+}
+
+/**
+ * @brief SystemManager::bAddExternSystem Ajout d'un système implémenté en dehors de la bibliothèque.
+ * @param newSystem Le pointeur du nouveau système.
+ * @return true si le systeme a été créer avec succés, false sinon
+ */
+bool SystemManager::bAddExternSystem( std::unique_ptr<System> &newSystem )
+{
+	if( newSystem == nullptr || muiNumberSystem >= ecs::NUMBR_SYSTEM_MAX )return false;
+	mVectSystem.push_back( std::move( newSystem ) );
+	mBitSetSystem[ muiNumberSystem++ ] = true;
+	mVectSystem[ mVectSystem.size() - 1 ] -> linkSystemManager( this );
+	return true;
 }
 
 /**
  * @brief SystemManager::getptrEngine fonction renvoyant un pointeur vers Engine.
  * @return Un pointeur vers Engine.
  */
-Engine* SystemManager::getptrEngine(){
+Engine* SystemManager::getptrEngine()
+{
     return mptrEngine;
 }
 
@@ -92,7 +111,8 @@ Engine* SystemManager::getptrEngine(){
  * @param uiIdSystem Le numéro du système à supprimer.
  * @return true si le système est trouvé et supprimé, false sinon.
  */
-bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
+bool SystemManager::bRmSystem( unsigned int uiIdSystem )
+{
     bool bReturn = false;
     if( uiIdSystem < mBitSetSystem.size() && mBitSetSystem[ uiIdSystem ] == true ){
         mBitSetSystem[ uiIdSystem ] = false;
@@ -106,8 +126,10 @@ bool SystemManager::bRmSystem( unsigned int uiIdSystem ){
 /**
  * @brief SystemManager::bRmAllSystem Fonction supprimant tous les systèmes de SystemManager, mBitSetSystem est réinitialisé.
  */
-void SystemManager::RmAllSystem(){
-    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
+void SystemManager::RmAllSystem()
+{
+	for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i )
+	{
         if( mVectSystem[ i ] )
             mVectSystem[ i ].reset();
     }
@@ -120,9 +142,11 @@ void SystemManager::RmAllSystem(){
  * @param uiIdSystem Le numéro du système à exécuter.
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
-bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
+bool SystemManager::bExexSystem( unsigned int uiIdSystem )
+{
     bool bReturn = false;
-    if( uiIdSystem < mVectSystem.size() && mVectSystem[ uiIdSystem ] ){
+	if( uiIdSystem < mVectSystem.size() && mVectSystem[ uiIdSystem ] )
+	{
         mVectSystem[ uiIdSystem ] -> execSystem();
         bReturn = true;
     }
@@ -133,9 +157,12 @@ bool SystemManager::bExexSystem( unsigned int uiIdSystem ){
  * @brief SystemManager::bExecAllSystem Fonction déclanchant les exécutions de tous les systèmes présents dans SystemManager.
  * @return false si la liste des système est vide, true sinon.
  */
-void SystemManager::bExecAllSystem(){
-    for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i ){
-        if( mVectSystem[ i ] ){
+void SystemManager::bExecAllSystem()
+{
+	for( unsigned int i = 0 ; i < mVectSystem.size() ; ++i )
+	{
+		if( mVectSystem[ i ] )
+		{
             mVectSystem[ i ] ->  execSystem();
         }
     }
