@@ -19,7 +19,9 @@
 namespace ecs
 {
 
-ComponentManager::ComponentManager(){
+ComponentManager::ComponentManager(): muiNumberComponent(12)
+{
+
 }
 
 /**
@@ -31,25 +33,25 @@ void ComponentManager::updateComponentFromEntity(){
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
 
     //en cas de besoin resize du tableau de composants
-    if( mVectComponent.size() < vectEntitycst.size() * NUMBR_COMPONENT ){
-        mVectComponent.resize( vectEntitycst.size() * NUMBR_COMPONENT );
+	if( mVectComponent.size() < vectEntitycst.size() * muiNumberComponent ){
+		mVectComponent.resize( vectEntitycst.size() * muiNumberComponent );
     }
 
     for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
         //si l'entité est à jour
         if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;
 
-        const std::bitset< NUMBR_COMPONENT > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
+		const std::bitset< muiNumberComponent > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
         for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
             //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
-            if( bitsetComponent[ j ] && ! mVectComponent[ i * NUMBR_COMPONENT + j ] ){
-                instanciateComponent( i * NUMBR_COMPONENT + j );
+			if( bitsetComponent[ j ] && ! mVectComponent[ i * muiNumberComponent + j ] ){
+				instanciateComponent( i * muiNumberComponent + j );
                 //Indiquer le numéro de l'entité associé au composant
-                mVectComponent[ i * NUMBR_COMPONENT + j ] -> setIDEntityAssociated( vectEntitycst[ i ] . muiGetIDEntity() );
+				mVectComponent[ i * muiNumberComponent + j ] -> setIDEntityAssociated( vectEntitycst[ i ] . muiGetIDEntity() );
             }
             //si la case du bitset est à false et que la case correspondante dans le vector de component est instanciée
-            else if( ! bitsetComponent[ j ] && mVectComponent[ i * NUMBR_COMPONENT + j ] ){
-                mVectComponent[ i * NUMBR_COMPONENT + j ].reset();
+			else if( ! bitsetComponent[ j ] && mVectComponent[ i * muiNumberComponent + j ] ){
+				mVectComponent[ i * muiNumberComponent + j ].reset();
             }
         }
     }
@@ -62,7 +64,7 @@ void ComponentManager::updateComponentFromEntity(){
  * @param uiNumCase Le numéro de case ou sera instancié le nouveau composant.
  */
 void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
-    switch( uiNumCase % NUMBR_COMPONENT ){
+	switch( uiNumCase % muiNumberComponent ){
     case DISPLAY_COMPONENT :{
         mVectComponent[ uiNumCase ] = std::make_unique< DisplayComponent >();
         break;
@@ -112,7 +114,7 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
         break;
     }
     default :{
-        assert( false && " Num Component Incorrect\n " );
+		assert( false && " Num Component Incorrect ou composant externe\n " );
         break;
     }
     }
@@ -126,11 +128,36 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
  * @return false si le pointeur est NULL, true sinon.
  */
 bool ComponentManager::bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
-    if( uiNumEntity * NUMBR_COMPONENT + uiTypeComponent >= mVectComponent.size() )
+	if( uiNumEntity * muiNumberComponent + uiTypeComponent >= mVectComponent.size() )
         return false;
-    if( mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )
+	if( mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ] )
         return true;
-    return false;
+	return false;
+}
+
+/**
+ * @brief ComponentManager::addExternComponent
+ * !!! L'appel de la fonction réinitialise le tableau de composants !!!
+ * @param numberNewComponent
+ */
+void ComponentManager::addExternComponent( unsigned int numberNewComponent )
+{
+	if( numberNewComponent == 0 )return;
+	muiNumberComponent += numberNewComponent;
+	mVectComponent.clear();
+}
+
+void ComponentManager::instanciateExternComponent( unsigned int uiNumEntity,
+												   std::unique_ptr< Component > &ptrComp )
+{
+	if( ptrComp == nullptr )return;
+	unsigned int typeComp = ptrComp.get()->muiTypeComponent;
+	mVectComponent[ uiNumEntity * muiNumberComponent + typeComp ] = std::move( ptrComp );
+}
+
+unsigned int ComponentManager::getNumberComponent()
+{
+	return muiNumberComponent;
 }
 
 /**

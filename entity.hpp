@@ -5,12 +5,14 @@
 #include <bitset>
 #include <memory>
 #include "component.hpp"
+#include "componentmanager.hpp"
 #include "ECSconstantes.hpp"
 
 
 namespace ecs
 {
 
+class ComponentManager;
 /**
  * @brief La classe Entity est représentative d'un élément de la scène du jeu.
  * Elle contient un bitset qui indique quels sont les composants que contient l'entité,
@@ -20,14 +22,14 @@ class Entity
 {
 private:
     unsigned int mUiIDEntity;
-    std::bitset< NUMBR_COMPONENT > mBitSetComponent;
+	std::bitset< ComponentManager::getNumberComponent() > mBitSetComponent;
     /*mbActive détermine si l'entité est actuellement activée dans la scène du jeu.
      * mbEntityInUse détermine pour une entité activée si celle ci est "endormie" ou non.
      * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
      */
     bool mbActive, mbUpToDate, mbEntityInUse;
 public:
-    const std::bitset< NUMBR_COMPONENT > & getEntityBitSet()const;
+	const std::bitset< ComponentManager::getNumberComponent() > & getEntityBitSet()const;
 
     Entity();
     Entity( unsigned int uiIdEntity );

@@ -22,13 +22,19 @@ class ComponentManager{
 private:
     Engine * mptrEngine;
     std::vector< std::unique_ptr< Component > > mVectComponent;
+	static unsigned int muiNumberComponent;//a la base dans l'ECS
 public:
+
     ComponentManager();
     void updateComponentFromEntity();
     void linkEngineToComponentManager( Engine *ptrEngine );
     void instanciateComponent( unsigned int uiNumCase );
     void displayComponent()const;
     bool bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent );
+	void addExternComponent( unsigned int numberNewComponent );
+	void instanciateExternComponent( unsigned int uiNumEntity, std::unique_ptr< Component > &ptrComp );
+
+	static unsigned int getNumberComponent();
 
     /**
      * @brief ComponentManager::searchComponentByType
@@ -46,11 +52,11 @@ public:
 
      componentTemplate * searchComponentByType( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
 
-        if( ( uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ) >=  mVectComponent.size() ||
-              !  mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ] )return nullptr;
+		if( ( uiNumEntity * muiNumberComponent + uiTypeComponent ) >=  mVectComponent.size() ||
+			  !  mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ] )return nullptr;
         static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
         //récupérer un pointeur vers l'objet contenu dans le unique_ptr
-        return static_cast< componentTemplate* >( mVectComponent[ uiNumEntity * NUMBR_COMPONENT + uiTypeComponent ].get() );
+		return static_cast< componentTemplate* >( mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ].get() );
     }
 };
 
