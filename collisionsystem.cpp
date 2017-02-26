@@ -98,7 +98,7 @@ bool CollisionSystem::bEntityIsInCollision( unsigned int uiEntityA, unsigned int
     updateCollPosition( uiEntityB );
 
     //Récup des bitsets de composants des entités
-    const std::bitset< NUMBR_COMPONENT > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
+	const std::vector< bool > & entityBitsetA = vectEntity[ uiEntityA ] . getEntityBitSet(),
             & entityBitsetB = vectEntity[ uiEntityB ] . getEntityBitSet();
 
     Segment *collSegmentCompA = nullptr, *collSegmentCompB = nullptr;
@@ -198,7 +198,7 @@ void CollisionSystem::updateCollPosition( unsigned int uiEntity ){
             searchComponentByType < PositionComponent > ( uiEntity, POSITION_COMPONENT );
     assert( posCompEntity && " posCompEntity non instancié\n " );
 
-    const std::bitset< NUMBR_COMPONENT > & bitSetEntity =
+	const std::vector< bool > & bitSetEntity =
             mptrSystemManager -> getptrEngine() -> getVectEntity()[ uiEntity ] . getEntityBitSet();
 
     for( unsigned int i = NUM_MIN_COLL_COMPONENT ; i < NUM_MAX_COLL_COMPONENT ; ++i ){

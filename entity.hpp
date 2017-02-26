@@ -22,14 +22,14 @@ class Entity
 {
 private:
     unsigned int mUiIDEntity;
-	std::bitset< ComponentManager::getNumberComponent() > mBitSetComponent;
+	std::vector< bool > mBitSetComponent;
     /*mbActive détermine si l'entité est actuellement activée dans la scène du jeu.
      * mbEntityInUse détermine pour une entité activée si celle ci est "endormie" ou non.
      * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
      */
     bool mbActive, mbUpToDate, mbEntityInUse;
 public:
-	const std::bitset< ComponentManager::getNumberComponent() > & getEntityBitSet()const;
+	const std::vector< bool > & getEntityBitSet()const;
 
     Entity();
     Entity( unsigned int uiIdEntity );

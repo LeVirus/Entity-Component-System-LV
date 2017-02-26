@@ -10,7 +10,8 @@ namespace ecs
 /**
  * @brief Entity::Entity Constructeur de la classe Engine.
  */
-Entity::Entity(){
+Entity::Entity():mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) )
+{
     initEntity();
 }
 
@@ -18,8 +19,9 @@ Entity::Entity(){
  * @brief Entity::Entity
  * @param uiIdEntity L'identifiant à attribuer à la nouvelle entité.
  */
-Entity::Entity( unsigned int uiIdEntity ){
-    mUiIDEntity = uiIdEntity;
+Entity::Entity( unsigned int uiIdEntity ):mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) ),
+	mUiIDEntity( uiIdEntity )
+{
     initEntity();
 }
 
@@ -48,8 +50,8 @@ bool Entity::bInUse()const{
  */
 void Entity::modifyEntityInUse( bool bInUse ){
     if( ! bInUse ){
-        mBitSetComponent.reset();
-        mbEntityInUse = bInUse;
+		ComponentManager::resetVectBitSet( mBitSetComponent );
+		mbEntityInUse = bInUse;
     }
     else {
         initEntity();
@@ -124,7 +126,7 @@ bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
  * @brief Entity::getEntityBitSet Fonction retournant le bitset(représentant les composants de l'entité) associé a l'entité.
  * @return Une référence constante du bitset.
  */
-const std::bitset< NUMBR_COMPONENT > & Entity::getEntityBitSet()const{
+const std::vector< bool > & Entity::getEntityBitSet()const{
     return mBitSetComponent;
 }
 
@@ -173,7 +175,7 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
 void Entity::RmAllComponent(){
-    mBitSetComponent.reset();
+	ComponentManager::resetVectBitSet( mBitSetComponent );
     mbUpToDate = false;
 }
 

@@ -11,9 +11,15 @@ namespace ecs
 /**
  * @brief System::System Constructeur de la classe System
  */
-System::System(){
-	mptrSystemManager = nullptr;
+System::System():mBitSetComponentSystem(std::vector<bool>( ComponentManager::getNumberComponent() ) ),
+	mptrSystemManager( nullptr )
+{
+
 }
+
+/*System::System( SystemManager* ptrSystemManager ){
+	linkSystemManager( ptrSystemManager );
+}*/
 
 const std::vector< unsigned int > &System::getVectNumEntity() const
 {
@@ -24,7 +30,8 @@ const std::vector< unsigned int > &System::getVectNumEntity() const
  * @brief SystemManager::linkEngine fonction envoyant un pointeur d'Engine à SystemManager.
  * @param ptrEngine Un pointeur d'Engine
  */
-void System::linkSystemManager( SystemManager* ptrSystemManager ){
+void System::linkSystemManager( SystemManager* ptrSystemManager )
+{
     mptrSystemManager = ptrSystemManager;
 }
 
@@ -42,7 +49,7 @@ void System::refreshEntity(){
 
         if( ! vectEntity[ i ].bEntityIsActive() )continue;
         //récupération du bitset de l'entité
-        const std::bitset< NUMBR_COMPONENT > & bitSetEntity = vectEntity[ i ] . getEntityBitSet();
+		const std::vector< bool > & bitSetEntity = vectEntity[ i ] . getEntityBitSet();
         for( unsigned int j = 0 ; j < bitSetEntity.size() ; ++j ){
             //si le composant nécessaire au système n'est pas présent dans l'entité
             if( mBitSetComponentSystem[ j ] == true &&  bitSetEntity[ j ] == false ){
@@ -50,7 +57,8 @@ void System::refreshEntity(){
                 break;
             }
         }
-        if( granted ){
+		if( granted )
+		{
             if( count >=  mVectNumEntity.size() ){
                mVectNumEntity.resize( count + 1 );
             }

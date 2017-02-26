@@ -18,23 +18,25 @@ class Engine;
  * Leurs emplacements sont déterminés par le numéro de leur entité associée ainsi que par leurs type(associé à une énumération).
  * numéro emplacement = numéro entité * nombre total de type de composant + numéro type de composant.
  */
-class ComponentManager{
+class ComponentManager
+{
 private:
     Engine * mptrEngine;
     std::vector< std::unique_ptr< Component > > mVectComponent;
-	static unsigned int muiNumberComponent;//a la base dans l'ECS
+	static unsigned int muiNumberComponent;//à la base dans l'ECS
 public:
 
-    ComponentManager();
+	ComponentManager();
     void updateComponentFromEntity();
     void linkEngineToComponentManager( Engine *ptrEngine );
     void instanciateComponent( unsigned int uiNumCase );
     void displayComponent()const;
     bool bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent );
-	void addExternComponent( unsigned int numberNewComponent );
+	void addEmplacementsForExternComponent( unsigned int uiNumberExternalComponent );
 	void instanciateExternComponent( unsigned int uiNumEntity, std::unique_ptr< Component > &ptrComp );
 
 	static unsigned int getNumberComponent();
+	static void resetVectBitSet( std::vector< bool > &bitset );
 
     /**
      * @brief ComponentManager::searchComponentByType

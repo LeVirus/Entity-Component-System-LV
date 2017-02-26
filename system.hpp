@@ -23,9 +23,9 @@ class SystemManager;
  */
 class System{
 protected:
-    unsigned int muiIdSystem, muiTypeSystem;
+	unsigned int muiIdSystem, muiTypeSystem, muiMemNumberComponent;
     std::vector< unsigned int > mVectNumEntity;
-    std::bitset< 16 > mBitSetComponentSystem;
+	std::vector< bool > mBitSetComponentSystem;
 	ecs::SystemManager* mptrSystemManager;
     bool bAddComponentToSystem( unsigned int uiTypeComponent );
 public:

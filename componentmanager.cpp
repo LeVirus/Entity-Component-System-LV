@@ -19,9 +19,9 @@
 namespace ecs
 {
 
-ComponentManager::ComponentManager(): muiNumberComponent(12)
+ComponentManager::ComponentManager()
 {
-
+   muiNumberComponent = NUMBER_COMPONENT_BASE_ECS;
 }
 
 /**
@@ -35,13 +35,13 @@ void ComponentManager::updateComponentFromEntity(){
     //en cas de besoin resize du tableau de composants
 	if( mVectComponent.size() < vectEntitycst.size() * muiNumberComponent ){
 		mVectComponent.resize( vectEntitycst.size() * muiNumberComponent );
-    }
+	}
 
     for( unsigned int i = 0 ; i < vectEntitycst . size() ; ++i ){
         //si l'entité est à jour
         if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;
 
-		const std::bitset< muiNumberComponent > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
+		const std::vector< bool > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
         for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
             //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
 			if( bitsetComponent[ j ] && ! mVectComponent[ i * muiNumberComponent + j ] ){
@@ -114,7 +114,6 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
         break;
     }
     default :{
-		assert( false && " Num Component Incorrect ou composant externe\n " );
         break;
     }
     }
@@ -127,7 +126,9 @@ void ComponentManager::instanciateComponent( unsigned int uiNumCase ){
  * @param uiTypeComponent Le type de composant demandé.
  * @return false si le pointeur est NULL, true sinon.
  */
-bool ComponentManager::bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
+bool ComponentManager::bVerifComponentInstanciate( unsigned int uiNumEntity,
+												   unsigned int uiTypeComponent )
+{
 	if( uiNumEntity * muiNumberComponent + uiTypeComponent >= mVectComponent.size() )
         return false;
 	if( mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ] )
@@ -137,22 +138,27 @@ bool ComponentManager::bVerifComponentInstanciate( unsigned int uiNumEntity, uns
 
 /**
  * @brief ComponentManager::addExternComponent
- * !!! L'appel de la fonction réinitialise le tableau de composants !!!
+ * !!! L'appel de la fonction réinitialise le tableau de composants et la liste des systèmes!!!
+ * A utiliser avant d'instancier les systèmes et les composants.
  * @param numberNewComponent
  */
-void ComponentManager::addExternComponent( unsigned int numberNewComponent )
+void ComponentManager::addEmplacementsForExternComponent( unsigned int uiNumberExternalComponent )
 {
-	if( numberNewComponent == 0 )return;
-	muiNumberComponent += numberNewComponent;
+	if( uiNumberExternalComponent == 0 )return;
+	muiNumberComponent += uiNumberExternalComponent;
 	mVectComponent.clear();
+	mptrEngine->getSystemManager().RmAllSystem();
 }
 
 void ComponentManager::instanciateExternComponent( unsigned int uiNumEntity,
 												   std::unique_ptr< Component > &ptrComp )
 {
 	if( ptrComp == nullptr )return;
-	unsigned int typeComp = ptrComp.get()->muiTypeComponent;
-	mVectComponent[ uiNumEntity * muiNumberComponent + typeComp ] = std::move( ptrComp );
+	unsigned int typeComp = ptrComp.get()->muiGetTypeComponent(),
+			uiEmplacementNewComp = uiNumEntity * muiNumberComponent + typeComp;
+	assert( !(mVectComponent.size() <= uiEmplacementNewComp)
+			&& "Instanciate extern component out of range\n");
+	mVectComponent[ uiEmplacementNewComp ] = std::move( ptrComp );
 }
 
 unsigned int ComponentManager::getNumberComponent()
@@ -177,8 +183,17 @@ void ComponentManager::displayComponent()const{
  * @brief ComponentManager::linkEngineToComponentManager Fonction liant Engine à ComponentManager par un pointeur.
  * @param ptrEngine Un pointeur vers Engine
  */
-void ComponentManager::linkEngineToComponentManager( Engine *ptrEngine ){
+void ComponentManager::linkEngineToComponentManager( Engine *ptrEngine )
+{
     mptrEngine = ptrEngine;
+}
+
+void ComponentManager::resetVectBitSet( std::vector< bool > &bitset )
+{
+	for( unsigned int i = 0; i < bitset.size(); ++i )
+	{
+		bitset[ i ] = false;
+	}
 }
 
 
