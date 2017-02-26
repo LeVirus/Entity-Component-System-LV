@@ -163,7 +163,7 @@ void ComponentManager::instanciateExternComponent( unsigned int uiNumEntity,
 
 unsigned int ComponentManager::getNumberComponent()
 {
-	return muiNumberComponent;
+	return ComponentManager::muiNumberComponent;
 }
 
 /**

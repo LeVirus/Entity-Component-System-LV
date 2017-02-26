@@ -54,11 +54,11 @@ public:
 
      componentTemplate * searchComponentByType( unsigned int uiNumEntity, unsigned int uiTypeComponent ){
 
-		if( ( uiNumEntity * muiNumberComponent + uiTypeComponent ) >=  mVectComponent.size() ||
-			  !  mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ] )return nullptr;
+		if( ( uiNumEntity * ComponentManager::getNumberComponent() + uiTypeComponent ) >=  mVectComponent.size() ||
+			  !  mVectComponent[ uiNumEntity * ComponentManager::getNumberComponent() + uiTypeComponent ] )return nullptr;
         static_assert( std::is_base_of< Component, componentTemplate >(), "componentTemplate n'est pas un composant" );
         //récupérer un pointeur vers l'objet contenu dans le unique_ptr
-		return static_cast< componentTemplate* >( mVectComponent[ uiNumEntity * muiNumberComponent + uiTypeComponent ].get() );
+		return static_cast< componentTemplate* >( mVectComponent[ uiNumEntity * ComponentManager::getNumberComponent() + uiTypeComponent ].get() );
     }
 };
 
