@@ -19,6 +19,9 @@
 namespace ecs
 {
 
+unsigned int ComponentManager::muiNumberComponent = NUMBER_COMPONENT_BASE_ECS;
+
+
 ComponentManager::ComponentManager()
 {
    muiNumberComponent = NUMBER_COMPONENT_BASE_ECS;
