@@ -11,12 +11,13 @@ namespace ecs
  * @brief DisplaySystem::DisplaySystem Constructeur de la classe DisplaySystem.
  * Ajout des composants au système.
  */
-DisplaySystem::DisplaySystem(){
+DisplaySystem::DisplaySystem()
+{
     if( ! bAddComponentToSystem( POSITION_COMPONENT ) ){
-        std::cout << "Erreur displaySystem ajout positionComponent." << "\n";
+		std::cout << "Erreur displaySystem ajout positionComponent.\n";
     }
     if( ! bAddComponentToSystem( DISPLAY_COMPONENT ) ){
-        std::cout << "Erreur displaySystem ajout displayComponent." << "\n";
+		std::cout << "Erreur displaySystem ajout displayComponent.\n";
     }
 }
 
