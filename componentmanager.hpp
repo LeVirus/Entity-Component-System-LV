@@ -33,7 +33,7 @@ public:
     void displayComponent()const;
     bool bVerifComponentInstanciate( unsigned int uiNumEntity, unsigned int uiTypeComponent );
 	void addEmplacementsForExternComponent( unsigned int uiNumberExternalComponent );
-	void instanciateExternComponent( unsigned int uiNumEntity, std::unique_ptr< Component > &ptrComp );
+	void instanciateExternComponent( unsigned int uiNumEntity, std::unique_ptr< Component > ptrComp );
 
 	static unsigned int getNumberComponent();
 	static void resetVectBitSet( std::vector< bool > &bitset );

@@ -86,7 +86,7 @@ bool SystemManager::bAddSystem( unsigned int uiIdSystem )
  * @param newSystem Le pointeur du nouveau système.
  * @return true si le systeme a été créer avec succés, false sinon
  */
-bool SystemManager::bAddExternSystem( std::unique_ptr<System> &newSystem )
+bool SystemManager::bAddExternSystem( std::unique_ptr<System> newSystem )
 {
 	if( newSystem == nullptr || muiNumberSystem >= ecs::NUMBR_SYSTEM_MAX )return false;
 	mVectSystem.push_back( std::move( newSystem ) );

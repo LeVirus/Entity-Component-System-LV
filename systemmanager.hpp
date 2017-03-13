@@ -28,13 +28,13 @@ class SystemManager{
     std::vector< std::unique_ptr< System > > mVectSystem;
 	std::bitset< NUMBR_SYSTEM_MAX > mBitSetSystem;
     Engine* mptrEngine;
-	unsigned int muiNumberSystem = 5;
+	unsigned int muiNumberSystem = NUMBER_SYSTEM_BASE_ECS;
 public:
     SystemManager();
     Engine* getptrEngine();
     void linkEngine( Engine* ptrEngine );
     bool bAddSystem( unsigned int uiIdSystem );
-	bool bAddExternSystem( std::unique_ptr<System> &newSystem );
+	bool bAddExternSystem(std::unique_ptr<System> newSystem );
 	bool bRmSystem( unsigned int uiIdSystem );
     void RmAllSystem();
     bool bExexSystem( unsigned int uiIdSystem );

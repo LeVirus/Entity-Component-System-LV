@@ -44,19 +44,21 @@ void ComponentManager::updateComponentFromEntity(){
         //si l'entité est à jour
         if( vectEntitycst[ i ] . bEntityIsUpToDate() )continue;
 
-		const std::vector< bool > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
-        for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
-            //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
-			if( bitsetComponent[ j ] && ! mVectComponent[ i * muiNumberComponent + j ] ){
-				instanciateComponent( i * muiNumberComponent + j );
-                //Indiquer le numéro de l'entité associé au composant
-				mVectComponent[ i * muiNumberComponent + j ] -> setIDEntityAssociated( vectEntitycst[ i ] . muiGetIDEntity() );
-            }
-            //si la case du bitset est à false et que la case correspondante dans le vector de component est instanciée
-			else if( ! bitsetComponent[ j ] && mVectComponent[ i * muiNumberComponent + j ] ){
-				mVectComponent[ i * muiNumberComponent + j ].reset();
-            }
-        }
+	const std::vector< bool > & bitsetComponent = vectEntitycst[ i ].getEntityBitSet();
+	for( unsigned int j = 0 ; j < bitsetComponent.size() ; ++j ){
+	    //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
+	    if( bitsetComponent[ j ] && j < NUMBER_COMPONENT_BASE_ECS &&
+	            ! mVectComponent[ i * muiNumberComponent + j ] )
+	    {
+		instanciateComponent( i * muiNumberComponent + j );
+		//Indiquer le numéro de l'entité associé au composant
+		mVectComponent[ i * muiNumberComponent + j ] -> setIDEntityAssociated( vectEntitycst[ i ] . muiGetIDEntity() );
+	    }
+	    //si la case du bitset est à false et que la case correspondante dans le vector de component est instanciée
+	    else if( ! bitsetComponent[ j ] && mVectComponent[ i * muiNumberComponent + j ] ){
+		mVectComponent[ i * muiNumberComponent + j ].reset();
+	    }
+	}
     }
 }
 
@@ -153,8 +155,8 @@ void ComponentManager::addEmplacementsForExternComponent( unsigned int uiNumberE
 	mptrEngine->getSystemManager().RmAllSystem();
 }
 
-void ComponentManager::instanciateExternComponent( unsigned int uiNumEntity,
-												   std::unique_ptr< Component > &ptrComp )
+void ComponentManager::instanciateExternComponent(unsigned int uiNumEntity,
+												   std::unique_ptr<Component> ptrComp )
 {
 	if( ptrComp == nullptr )return;
 	unsigned int typeComp = ptrComp.get()->muiGetTypeComponent(),
