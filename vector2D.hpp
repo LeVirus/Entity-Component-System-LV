@@ -19,8 +19,8 @@ struct Vector2D
         mfX( x ), mfY( y ){};
     void displayVector()const;
     Vector2D & operator =( const Vector2D & vect );
-	Vector2D & operator +( const Vector2D & vect )const;
-	Vector2D & operator -( const Vector2D &vect ) const;
+	Vector2D operator +( const Vector2D & vect )const;
+	Vector2D operator -( const Vector2D &vect ) const;
     Vector2D & operator +=( const Vector2D & vect );
     Vector2D & operator -=( const Vector2D & vect );
     bool operator ==( const Vector2D & vect )const;

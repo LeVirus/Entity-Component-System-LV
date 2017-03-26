@@ -16,16 +16,14 @@ Vector2D & Vector2D::operator =( const Vector2D & vect )
 	return *this;
 }
 
-Vector2D & Vector2D::operator +( const Vector2D & vect )const
+Vector2D Vector2D::operator +( const Vector2D & vect )const
 {
-    std::shared_ptr< Vector2D > vectPtr( new Vector2D( mfX + vect.mfX, mfY + vect.mfY ) );
-    return *vectPtr;
+	return {mfX + vect.mfX, mfY + vect.mfY};
 }
 
-Vector2D & Vector2D::operator -( const Vector2D & vect )const
+Vector2D Vector2D::operator -( const Vector2D & vect )const
 {
-    std::shared_ptr< Vector2D > vectPtr( new Vector2D( mfX - vect.mfX, mfY - vect.mfY ) );
-	return *vectPtr;
+	return {mfX - vect.mfX, mfY - vect.mfY};
 }
 
 Vector2D & Vector2D::operator -=( const Vector2D & vect )
