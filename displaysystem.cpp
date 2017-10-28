@@ -29,8 +29,8 @@ DisplaySystem::DisplaySystem()
  */
 void DisplaySystem::execSystem(){
     System::execSystem();
+mVectComponentDisplaySystem.clear();
     for( unsigned int i = 0 ; i < mVectNumEntity.size() ; ++i ){
-        std::cout << mVectNumEntity[ i ] << "\n";
         DisplayComponent * displayComp = stairwayToComponentManager() .
                 searchComponentByType < DisplayComponent > ( mVectNumEntity[ i ], DISPLAY_COMPONENT );
         /*if( displayComp ){

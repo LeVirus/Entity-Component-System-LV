@@ -33,6 +33,7 @@ public:
     bool bRmEntity( unsigned int uiIdEntity );
     void RmAllEntity();
     bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
+    bool bRmAllComponentToEntity(unsigned int uiIdEntity);
     bool bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
     void displayVectEntity()const;
     void setEntityUpToDate();

@@ -46,6 +46,7 @@ bool Engine::bRmEntity( unsigned int uiIdEntity ){
     bool bReturn = false;
     if( uiIdEntity < mVectEntity.size() ){
         mVectEntity[ uiIdEntity ] . modifyEntityInUse( false );
+	bRmAllComponentToEntity(uiIdEntity);
         bReturn = true;
     }
     return bReturn;
@@ -118,6 +119,14 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
     return bReturn;
 }
 
+bool Engine::bRmAllComponentToEntity(unsigned int uiIdEntity)
+{
+	for(unsigned int i = 0; i < NUMBER_COMPONENT_BASE_ECS;++i)
+	{
+		bRmComponentToEntity(uiIdEntity, i);
+	}
+}
+
 /**
  * @brief Engine::bRmComponentToEntity Fonction de suppression d'un component à une entité.
  * La fonction vérifie si l'entité est bien présente dans le vector.
@@ -142,10 +151,14 @@ bool Engine::bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeC
 
 /**
  * @brief Engine::bRmAllEntity Fonction supprimant toutes les entitées présentes dans Engine.
- * @return true si la suppression a été effectuée avec succés, false sinon.
  */
 void Engine::RmAllEntity(){
-    mVectEntity.clear();
+	std::vector<Entity>::const_iterator it = mVectEntity.begin();
+	for(;it != mVectEntity.end();++it)
+	{
+		bRmEntity((*it).muiGetIDEntity());
+	}
+	mVectEntity.clear();
 }
 
 /**
