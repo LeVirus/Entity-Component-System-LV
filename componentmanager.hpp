@@ -36,7 +36,6 @@ public:
 	void instanciateExternComponent( unsigned int uiNumEntity, std::unique_ptr< Component > ptrComp );
 
 	static unsigned int getNumberComponent();
-	static void resetVectBitSet( std::vector< bool > &bitset );
 
     /**
      * @brief ComponentManager::searchComponentByType

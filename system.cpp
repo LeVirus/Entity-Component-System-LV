@@ -44,6 +44,7 @@ void System::refreshEntity(){
     unsigned int count = 0;
     const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
 
+    mVectNumEntity.clear();
     for( unsigned int i = 0 ; i < vectEntity . size() ; ++i ){
         granted = true;
 

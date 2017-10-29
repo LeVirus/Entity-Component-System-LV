@@ -193,13 +193,5 @@ void ComponentManager::linkEngineToComponentManager( Engine *ptrEngine )
     mptrEngine = ptrEngine;
 }
 
-void ComponentManager::resetVectBitSet( std::vector< bool > &bitset )
-{
-	for( unsigned int i = 0; i < bitset.size(); ++i )
-	{
-		bitset[ i ] = false;
-	}
-}
-
 
 }//fin namespace

@@ -46,7 +46,7 @@ bool Engine::bRmEntity( unsigned int uiIdEntity ){
     bool bReturn = false;
     if( uiIdEntity < mVectEntity.size() ){
         mVectEntity[ uiIdEntity ] . modifyEntityInUse( false );
-	bRmAllComponentToEntity(uiIdEntity);
+    //bRmAllComponentToEntity(uiIdEntity);
         bReturn = true;
     }
     return bReturn;
@@ -117,16 +117,6 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
         bReturn = false;
     }
     return bReturn;
-}
-
-bool Engine::bRmAllComponentToEntity(unsigned int uiIdEntity)
-{
-    if(uiIdEntity >= mVectEntity.size())
-    {
-        return false;
-    }
-    mVectEntity[uiIdEntity].RmAllComponent();
-    return true;
 }
 
 /**

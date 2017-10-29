@@ -50,8 +50,9 @@ bool Entity::bInUse()const{
  */
 void Entity::modifyEntityInUse( bool bInUse ){
     if( ! bInUse ){
-		ComponentManager::resetVectBitSet( mBitSetComponent );
+        mBitSetComponent.clear();
 		mbEntityInUse = bInUse;
+        mbActive = false;
     }
     else {
         initEntity();
