@@ -109,11 +109,9 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
     //vérification si l'entité demandé est bien dans le vector
     if( uiIdEntity >= mVectEntity.size() ){
         bReturn = false;
-        std::cout << "false" << std::endl;
     }
     //vérification si le composant a ajouter n'est pas déja dans l'entité
     if( ! bReturn || ! mVectEntity[ uiIdEntity ].bAddComponent( uiTypeComponent ) ){
-        std::cout << "false2" << std::endl;
         bReturn = false;
     }
     return bReturn;
@@ -131,11 +129,9 @@ bool Engine::bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeC
     //vérification si l'entité demandé est bien dans le vector
     if( uiIdEntity >= mVectEntity.size() ){
         bReturn = false;
-        std::cout << "false" << std::endl;
     }
     //vérification si le composant a supprimer existe bien dans l'entité
     if( ! bReturn || ! mVectEntity[ uiIdEntity ].bRmComponent( uiTypeComponent ) ){
-        std::cout << "false2" << std::endl;
         bReturn = false;
     }
     return bReturn;

@@ -50,8 +50,8 @@ bool Entity::bInUse()const{
  */
 void Entity::modifyEntityInUse( bool bInUse ){
     if( ! bInUse ){
-        mBitSetComponent.clear();
-		mbEntityInUse = bInUse;
+        reinitComponentBitSet();
+        mbEntityInUse = bInUse;
         mbActive = false;
     }
     else {
@@ -127,6 +127,15 @@ bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
  * @brief Entity::getEntityBitSet Fonction retournant le bitset(représentant les composants de l'entité) associé a l'entité.
  * @return Une référence constante du bitset.
  */
+void Entity::reinitComponentBitSet()
+{
+    std::vector<bool>::iterator it = mBitSetComponent.begin();
+    for(;it != mBitSetComponent.end();++it)
+    {
+        *it = false;
+    }
+}
+
 const std::vector< bool > & Entity::getEntityBitSet()const{
     return mBitSetComponent;
 }
@@ -147,8 +156,11 @@ bool Entity::bEntityIsActive()const{
  */
 bool Entity::bAddComponent( unsigned int uiTypeComponent ){
     bool bReturn = true;
-     if( ! bInUse() || uiTypeComponent >= mBitSetComponent . size() )bReturn = false;
-    if( bReturn && ! ComponentExist( uiTypeComponent ) ){
+     if( ! bInUse() || uiTypeComponent >= mBitSetComponent . size() )
+     {
+         bReturn = false;
+     }
+      if( bReturn && ! ComponentExist( uiTypeComponent ) ){
         bReturn = true;
         mBitSetComponent[ uiTypeComponent ] = true;
         mbUpToDate = false;
@@ -175,8 +187,9 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
  * @brief Entity::bRmAllComponent Fonction supprimant tous les composants présents dans l"entité.
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
-void Entity::RmAllComponent(){
-    mBitSetComponent.clear();
+void Entity::RmAllComponent()
+{
+    reinitComponentBitSet();
     mbUpToDate = false;
 }
 

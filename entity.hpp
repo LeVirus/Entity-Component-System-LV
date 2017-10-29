@@ -28,6 +28,8 @@ private:
      * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
      */
     bool mbActive, mbUpToDate, mbEntityInUse;
+
+    void reinitComponentBitSet();
 public:
 	const std::vector< bool > & getEntityBitSet()const;
 
