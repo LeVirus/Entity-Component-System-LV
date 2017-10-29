@@ -175,7 +175,7 @@ bool Entity::bRmComponent( unsigned int uiTypeComponent ){
  * @return true si la suppression a été effectuée avec succés, false sinon.
  */
 void Entity::RmAllComponent(){
-	ComponentManager::resetVectBitSet( mBitSetComponent );
+    mBitSetComponent.clear();
     mbUpToDate = false;
 }
 

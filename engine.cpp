@@ -121,10 +121,12 @@ bool Engine::bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiType
 
 bool Engine::bRmAllComponentToEntity(unsigned int uiIdEntity)
 {
-	for(unsigned int i = 0; i < NUMBER_COMPONENT_BASE_ECS;++i)
-	{
-		bRmComponentToEntity(uiIdEntity, i);
-	}
+    if(uiIdEntity >= mVectEntity.size())
+    {
+        return false;
+    }
+    mVectEntity[uiIdEntity].RmAllComponent();
+    return true;
 }
 
 /**
