@@ -18,7 +18,7 @@ struct DisplayComponent : public Component{
      * @brief DisplayComponent Constructeur de la structure BehaviorComponent.
      * Initialisation de la variable muiTypeBehavior.
      */
-    DisplayComponent(){
+    DisplayComponent():mVisible(true){
         muiTypeComponent = DISPLAY_COMPONENT;
     }
 
@@ -31,6 +31,7 @@ struct DisplayComponent : public Component{
         std::cout << "muiNumSprite" << muiNumSprite << "\n";
     }
     unsigned int muiNumSprite;
+    bool mVisible;
 };
 
 }//fin namespace
