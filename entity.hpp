@@ -22,7 +22,7 @@ class Entity
 {
 private:
     unsigned int mUiIDEntity;
-	std::vector< bool > mBitSetComponent;
+    std::vector<bool> mBitSetComponent;
     /*mbActive détermine si l'entité est actuellement activée dans la scène du jeu.
      * mbEntityInUse détermine pour une entité activée si celle ci est "endormie" ou non.
      * Exemple: mbEntityInUse = false si l'entité est hors de l'écran.
@@ -31,25 +31,25 @@ private:
 
     void reinitComponentBitSet();
 public:
-	const std::vector< bool > & getEntityBitSet()const;
+    const std::vector<bool> & getEntityBitSet()const;
 
     Entity();
-    Entity( unsigned int uiIdEntity );
+    Entity(unsigned int uiIdEntity);
     void displayEntity()const;
-    bool ComponentExist( unsigned int uiTypeComponent )const;
+    bool ComponentExist(unsigned int uiTypeComponent)const;
     bool bEntityIsUpToDate()const;
     bool bInUse()const;
     void initEntity();
 
-    void modifyEntityInUse( bool bInUse );
+    void modifyEntityInUse(bool bInUse);
     void setUpToDate();
-    void attributeIDEntity( unsigned int uiIdEntity );
-    bool bAddComponent( unsigned int uiTypeComponent );
-    bool bRmComponent( unsigned int uiTypeComponent );
+    void attributeIDEntity(unsigned int uiIdEntity);
+    bool bAddComponent(unsigned int uiTypeComponent);
+    bool bRmComponent(unsigned int uiTypeComponent);
     void RmAllComponent();
     bool bEntityIsActive()const;
 
-    inline unsigned int muiGetIDEntity()const{ return mUiIDEntity; }
+    inline unsigned int muiGetIDEntity()const{return mUiIDEntity;}
 };
 
 }//fin namespace

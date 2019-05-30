@@ -19,8 +19,8 @@ Entity::Entity():mBitSetComponent(std::vector< bool >( ComponentManager::getNumb
  * @brief Entity::Entity
  * @param uiIdEntity L'identifiant à attribuer à la nouvelle entité.
  */
-Entity::Entity( unsigned int uiIdEntity ):mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) ),
-	mUiIDEntity( uiIdEntity )
+Entity::Entity( unsigned int uiIdEntity ):mUiIDEntity(uiIdEntity),
+    mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) )
 {
     initEntity();
 }
