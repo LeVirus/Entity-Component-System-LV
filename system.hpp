@@ -21,28 +21,28 @@ class SystemManager;
  * cela en fonction des données présentes dans le bitset mBitSetComponentSystem.
  * Les composants nécessaires sont déterminés dans les classes filles de System.
  */
-class System{
+class System
+{
 protected:
 	unsigned int muiIdSystem, muiTypeSystem, muiMemNumberComponent;
     std::vector< unsigned int > mVectNumEntity;
 	std::vector< bool > mBitSetComponentSystem;
 	ecs::SystemManager* mptrSystemManager;
-    bool bAddComponentToSystem( unsigned int uiTypeComponent );
+    bool bAddComponentToSystem(unsigned int uiTypeComponent);
 public:
     System();
 	const std::vector< unsigned int > &getVectNumEntity()const;
-	void linkSystemManager( SystemManager* ptrSystemManager );
+    void linkSystemManager(SystemManager* ptrSystemManager);
     void refreshEntity();
     virtual void execSystem();
-    virtual void displaySystem()const;
-    bool bComponentAlreadyExist( unsigned int uiTypeComponent );
+    bool bComponentAlreadyExist(unsigned int uiTypeComponent);
     ComponentManager & stairwayToComponentManager();
 
     inline unsigned int uiGetIdSystem()const{ return muiIdSystem; }
     inline unsigned int uiGetTypeSystem()const{ return muiTypeSystem; }
 
-    inline void modValueIdSystem( unsigned int uiIdSystem ){ muiIdSystem = uiIdSystem; }
-    inline void modValueTypeSystem( unsigned int uiTypeSystem ){ muiTypeSystem = uiTypeSystem; }
+    inline void modValueIdSystem(unsigned int uiIdSystem){ muiIdSystem = uiIdSystem; }
+    inline void modValueTypeSystem(unsigned int uiTypeSystem){ muiTypeSystem = uiTypeSystem; }
 };
 
 }//fin namespace

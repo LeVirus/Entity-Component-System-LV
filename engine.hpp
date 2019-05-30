@@ -1,14 +1,11 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-
 #include <vector>
 #include <map>
 #include "systemmanager.hpp"
 #include "entity.hpp"
 #include "componentmanager.hpp"
-
-
 
 namespace ecs
 {
@@ -30,11 +27,10 @@ public:
     const std::vector< Entity > & getVectEntity()const;
     void synchronizeVectorEntity();
     unsigned int AddEntity();
-    bool bRmEntity( unsigned int uiIdEntity );
+    bool bRmEntity(unsigned int uiIdEntity);
     void RmAllEntity();
-    bool bAddComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
-    bool bRmComponentToEntity( unsigned int uiIdEntity, unsigned int uiTypeComponent );
-    void displayVectEntity()const;
+    bool bAddComponentToEntity(unsigned int uiIdEntity, unsigned int uiTypeComponent);
+    bool bRmComponentToEntity(unsigned int uiIdEntity, unsigned int uiTypeComponent);
     void setEntityUpToDate();
     void execIteration();
     SystemManager &getSystemManager();

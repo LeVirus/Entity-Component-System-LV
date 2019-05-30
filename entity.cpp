@@ -1,8 +1,6 @@
 #include <iostream>
 #include "entity.hpp"
 #include "ECSconstantes.hpp"
-#include "displaycomponent.hpp"
-#include "positioncomponent.hpp"
 
 namespace ecs
 {
@@ -10,7 +8,7 @@ namespace ecs
 /**
  * @brief Entity::Entity Constructeur de la classe Engine.
  */
-Entity::Entity():mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) )
+Entity::Entity():mBitSetComponent(std::vector< bool >(ComponentManager::getNumberComponent()))
 {
     initEntity();
 }
@@ -19,8 +17,8 @@ Entity::Entity():mBitSetComponent(std::vector< bool >( ComponentManager::getNumb
  * @brief Entity::Entity
  * @param uiIdEntity L'identifiant à attribuer à la nouvelle entité.
  */
-Entity::Entity( unsigned int uiIdEntity ):mUiIDEntity(uiIdEntity),
-    mBitSetComponent(std::vector< bool >( ComponentManager::getNumberComponent() ) )
+Entity::Entity(unsigned int uiIdEntity):mUiIDEntity(uiIdEntity),
+    mBitSetComponent(std::vector< bool >(ComponentManager::getNumberComponent()))
 {
     initEntity();
 }
@@ -28,7 +26,8 @@ Entity::Entity( unsigned int uiIdEntity ):mUiIDEntity(uiIdEntity),
 /**
  * @brief initEntity Fonction initialisant les variables booléenne de la classe Entity
  */
-void Entity::initEntity(){
+void Entity::initEntity()
+{
     mbActive = true;
     mbUpToDate = false;
     mbEntityInUse = true;
@@ -38,7 +37,8 @@ void Entity::initEntity(){
  * @brief Entity::bInUse Fonction informant si l'emplacement de l'entité est utilisé.
  * @return Le booléen mbEntityInUse.
  */
-bool Entity::bInUse()const{
+bool Entity::bInUse()const
+{
     return mbEntityInUse;
 }
 
@@ -48,8 +48,9 @@ bool Entity::bInUse()const{
  * mBitSetComponent est remis à 0.
  * @param bInUse La nouvelle valeur à associé à mbEntityInUse
  */
-void Entity::modifyEntityInUse( bool bInUse ){
-    if( ! bInUse ){
+void Entity::modifyEntityInUse(bool bInUse)
+{
+    if(! bInUse){
         reinitComponentBitSet();
         mbEntityInUse = bInUse;
         mbActive = false;
@@ -63,40 +64,17 @@ void Entity::modifyEntityInUse( bool bInUse ){
  * @brief Entity::setUpToDate Fonctionn modifiant la valeur de mbUpToDate a true.
  * Cette fonction est appelée aprés la mise à jour de ComponentManager sur toutes les entités.
  */
-void Entity::setUpToDate(){
+void Entity::setUpToDate()
+{
     mbUpToDate = true;
-}
-
-/**
- * @brief Entity::displayEntity Fonction d'affichage d'une entité.
- * Elle affiche l'ID de l'entité ainsi que la liste de ses composants.
- */
-void Entity::displayEntity()const{
-    std::cout << "Identifiant::" << mUiIDEntity << "\n";
-    for( unsigned int i = 0 ; i < mBitSetComponent.size() ; ++i ){
-        switch( i ){
-        case DISPLAY_COMPONENT :{
-            std::cout << "Display Component::  ";
-            break;
-        }
-        case POSITION_COMPONENT :{
-            std::cout << "Position Component::   ";
-            break;
-        }
-        default :{
-            std::cout << "MISSINGNO::   ";
-            break;
-        }
-        }
-        std::cout << mBitSetComponent[ i ] << "\n";
-    }
 }
 
 /**
  * @brief attributeIDEntity
  * @param uiIdEntity L'identifiant à attribuer l'entité.
  */
-void Entity::attributeIDEntity( unsigned int uiIdEntity ){
+void Entity::attributeIDEntity(unsigned int uiIdEntity)
+{
     mUiIDEntity = uiIdEntity;
 }
 
@@ -105,7 +83,8 @@ void Entity::attributeIDEntity( unsigned int uiIdEntity ){
  * l'entité est à mettre à jour dans ComponentManager.
  * @return true si une mise à jour est nécessaire, false sinon.
  */
-bool Entity::bEntityIsUpToDate()const{
+bool Entity::bEntityIsUpToDate()const
+{
     return mbUpToDate;
 }
 
@@ -115,10 +94,12 @@ bool Entity::bEntityIsUpToDate()const{
  * @param uiTypeComponent le type de composant à vérifier.
  * @return true si le composant existe, false sinon
  */
-bool Entity::ComponentExist( unsigned int uiTypeComponent )const{
+bool Entity::ComponentExist(unsigned int uiTypeComponent)const
+{
     //vérification de la présence du component dans le bitset
-    if( uiTypeComponent < mBitSetComponent . size() ){
-        return mBitSetComponent[ uiTypeComponent ];
+    if(uiTypeComponent < mBitSetComponent.size())
+    {
+        return mBitSetComponent[uiTypeComponent];
     }
     return false;
 }
@@ -136,7 +117,8 @@ void Entity::reinitComponentBitSet()
     }
 }
 
-const std::vector< bool > & Entity::getEntityBitSet()const{
+const std::vector< bool > & Entity::getEntityBitSet()const
+{
     return mBitSetComponent;
 }
 
@@ -145,7 +127,8 @@ const std::vector< bool > & Entity::getEntityBitSet()const{
  * (si elle doit être traité par les systèmes).
  * @return true si l'entité est activée, false sinon.
  */
-bool Entity::bEntityIsActive()const{
+bool Entity::bEntityIsActive()const
+{
     return mbActive;
 }
 
@@ -154,15 +137,16 @@ bool Entity::bEntityIsActive()const{
  * @param uiTypeComponent le type de composant à créer.
  * @return true si le composant a été créé avec succés, false sinon.
  */
-bool Entity::bAddComponent( unsigned int uiTypeComponent ){
+bool Entity::bAddComponent(unsigned int uiTypeComponent)
+{
     bool bReturn = true;
-     if( ! bInUse() || uiTypeComponent >= mBitSetComponent . size() )
+     if(! bInUse() || uiTypeComponent >= mBitSetComponent . size())
      {
          bReturn = false;
      }
-      if( bReturn && ! ComponentExist( uiTypeComponent ) ){
+      if(bReturn && ! ComponentExist(uiTypeComponent)){
         bReturn = true;
-        mBitSetComponent[ uiTypeComponent ] = true;
+        mBitSetComponent[uiTypeComponent] = true;
         mbUpToDate = false;
     }
     return bReturn;
@@ -173,10 +157,12 @@ bool Entity::bAddComponent( unsigned int uiTypeComponent ){
  * @param uiTypeComponent L'identifiant du composant a supprimer.
  * @return true si le composant a été trouvé, false sinon.
  */
-bool Entity::bRmComponent( unsigned int uiTypeComponent ){
+bool Entity::bRmComponent(unsigned int uiTypeComponent)
+{
     bool breturn = false;
-    if( bInUse() && ComponentExist( uiTypeComponent ) ){
-        mBitSetComponent[ uiTypeComponent ] = false;
+    if(bInUse() && ComponentExist(uiTypeComponent))
+    {
+        mBitSetComponent[uiTypeComponent] = false;
         breturn = true;
         mbUpToDate = false;
     }

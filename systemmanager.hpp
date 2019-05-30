@@ -2,14 +2,10 @@
 #define SYSTEMMANAGER_HPP
 
 #include <vector>
-#include "system.hpp"
-#include "ECSconstantes.hpp"
-//#include "engine.hpp"
-#include <bitset>
 #include <iostream>
 #include <memory>
 
-
+#include "system.hpp"
 
 namespace ecs
 {
@@ -20,26 +16,19 @@ class System;
 /**
  * @brief La classe SystemManager gère les systèmes actifs.
  * Elle contient un tableau de système dont le nombre de case est égal au nombre de type de système.
- * Chaque système à un emplacement prédéfinis dans le tableau, le type de système détermine l'emplacement de ce dernier.
- * Tous les types de système étant présents dans une énumération.
  * Cette classe permet d'ajouter/supprimer les systèmes et de les exécuter.
  */
 class SystemManager{
-    std::vector< std::unique_ptr< System > > mVectSystem;
-	std::bitset< NUMBR_SYSTEM_MAX > mBitSetSystem;
+    std::vector<std::unique_ptr<System>> mVectSystem;
     Engine* mptrEngine;
-	unsigned int muiNumberSystem = NUMBER_SYSTEM_BASE_ECS;
+    unsigned int muiNumberSystem = 0;
 public:
     SystemManager();
     Engine* getptrEngine();
-    void linkEngine( Engine* ptrEngine );
-    bool bAddSystem( unsigned int uiIdSystem );
-	bool bAddExternSystem(std::unique_ptr<System> newSystem );
-	bool bRmSystem( unsigned int uiIdSystem );
+    void linkEngine(Engine* ptrEngine);
+    bool bAddExternSystem(std::unique_ptr<System> newSystem);
     void RmAllSystem();
-    bool bExexSystem( unsigned int uiIdSystem );
     void bExecAllSystem();
-
 
     /**
      * @brief SystemManager::searchSystemByType
@@ -51,13 +40,13 @@ public:
      * @param uiTypeSystem le type de système a rechercher.
      * @return Un pointeur vers le système demandé, NULL en cas de paramètre invalide.
      */
-    template < typename systemTemplate >
-     systemTemplate * searchSystemByType( unsigned int uiTypeSystem ){
-
-        if( uiTypeSystem >= mVectSystem.size() || ! mVectSystem[ uiTypeSystem ] )return NULL;
-        static_assert( std::is_base_of< System, systemTemplate >(), "systemTemplate n'est pas un système" );
+    template <typename systemTemplate>
+     systemTemplate * searchSystemByType(unsigned int uiTypeSystem)
+     {
+        if(uiTypeSystem >= mVectSystem.size() || ! mVectSystem[uiTypeSystem])return nullptr;
+        static_assert(std::is_base_of<System, systemTemplate>(), "systemTemplate n'est pas un système");
         //récupérer un pointeur vers l'objet contenu dans le unique_ptr
-        return static_cast< systemTemplate* >( mVectSystem[ uiTypeSystem ].get() );
+        return static_cast<systemTemplate*>(mVectSystem[uiTypeSystem].get());
     }
 };
 
