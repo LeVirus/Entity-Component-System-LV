@@ -38,7 +38,6 @@ void System::linkSystemManager(SystemManager* ptrSystemManager)
 void System::refreshEntity()
 {
     bool granted;
-    unsigned int count = 0;
     const std::vector< Entity > & vectEntity = mptrSystemManager -> getptrEngine() -> getVectEntity();
     mVectNumEntity.clear();
     for(unsigned int i = 0 ; i < vectEntity . size() ; ++i)
@@ -51,7 +50,12 @@ void System::refreshEntity()
         for(unsigned int j = 0 ; j < bitSetEntity.size() ; ++j)
         {
             //si le composant nécessaire au système n'est pas présent dans l'entité
-            if(mBitSetComponentSystem[j] == true &&  bitSetEntity[j] == false)
+            if(mBitSetComponentSystem[j] && !bitSetEntity[j])
+            {
+                granted = false;
+                break;
+            }
+            if(mBitSetExcludeComponentSystem[j] && bitSetEntity[j])
             {
                 granted = false;
                 break;
@@ -59,15 +63,9 @@ void System::refreshEntity()
         }
         if(granted)
 		{
-            if(count >=  mVectNumEntity.size())
-            {
-               mVectNumEntity.resize(count + 1);
-            }
-            mVectNumEntity[count] = i;
-            count++;
+            mVectNumEntity.emplace_back(i);
         }
     }
-    if(mVectNumEntity.size() != count)mVectNumEntity.resize(count);
 }
 
 /**
@@ -76,15 +74,16 @@ void System::refreshEntity()
  * @return false si le composant est déja présent ou si uiTypeComponent ne correspond à aucun composants
  * true sinon.
  */
-bool System::bAddComponentToSystem(unsigned int uiTypeComponent)
+void System::bAddComponentToSystem(unsigned int uiTypeComponent)
 {
-    bool bReturn = false;
-    if(! bComponentAlreadyExist(uiTypeComponent))
-    {//A MODIFIER
-        bReturn = true;
-        mBitSetComponentSystem[uiTypeComponent] = true;
-    }
-    return bReturn;
+    assert(uiTypeComponent < mBitSetComponentSystem.size() && "Bad component number.");
+    mBitSetComponentSystem[uiTypeComponent] = true;
+}
+
+void System::bAddExcludeComponentToSystem(unsigned int uiTypeComponent)
+{
+    assert(uiTypeComponent < mBitSetExcludeComponentSystem.size() && "Bad component number.");
+    mBitSetExcludeComponentSystem[uiTypeComponent] = true;
 }
 
 /**
