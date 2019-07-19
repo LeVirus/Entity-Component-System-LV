@@ -23,27 +23,18 @@ ComponentManager::ComponentManager()
 void ComponentManager::updateComponentFromEntity()
 {
     const std::vector< Entity > & vectEntitycst = mptrEngine -> getVectEntity();
-
     //en cas de besoin resize du tableau de composants
     if(mVectComponent.size() < vectEntitycst.size() * muiNumberComponent){
         mVectComponent.resize(vectEntitycst.size() * muiNumberComponent);
     }
-
     for(unsigned int i = 0 ; i < vectEntitycst . size() ; ++i){
         //si l'entité est à jour
         if(vectEntitycst[i] . bEntityIsUpToDate())continue;
-
         const std::vector< bool > & bitsetComponent = vectEntitycst[i].getEntityBitSet();
         for(unsigned int j = 0 ; j < bitsetComponent.size() ; ++j)
         {
-            //si la case du bitset est à true et que la case correspondante dans le vector de component est à NULL
-            if(bitsetComponent[j] && !mVectComponent[i * muiNumberComponent + j])
-            {
-                //Indiquer le numéro de l'entité associé au composant
-                mVectComponent[i * muiNumberComponent + j] -> setIDEntityAssociated(vectEntitycst[i] . muiGetIDEntity());
-            }
             //si la case du bitset est à false et que la case correspondante dans le vector de component est instanciée
-            else if(! bitsetComponent[j] && mVectComponent[i * muiNumberComponent + j])
+            if(! bitsetComponent[j] && mVectComponent[i * muiNumberComponent + j])
             {
                 mVectComponent[i * muiNumberComponent + j].reset();
             }

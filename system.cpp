@@ -12,9 +12,9 @@ namespace ecs
  * @brief System::System Constructeur de la classe System
  */
 System::System():mBitSetComponentSystem(std::vector<bool>(ComponentManager::getNumberComponent())),
+    mBitSetExcludeComponentSystem(std::vector<bool>(ComponentManager::getNumberComponent())),
     mptrSystemManager(nullptr)
 {
-
 }
 
 const std::vector< unsigned int > &System::getVectNumEntity() const
